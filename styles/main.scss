@@ -122,6 +122,13 @@
   }
 }
 
+.details-bottom {
+  form {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
 //about-area
 #about-area {
   background-size: cover;
