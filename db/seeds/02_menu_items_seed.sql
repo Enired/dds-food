@@ -66,7 +66,7 @@ VALUES
 (
   'Uni Shooter',
   'Uni, Ikura, Mountain Potate, Quail Egg, with Dashi Ponzu truffle jelly.',
-  1100
+  1100,
   'https://instagram.fyvr3-1.fna.fbcdn.net/v/t51.2885-15/286320999_761814561935460_8081945160148255135_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fyvr3-1.fna.fbcdn.net&_nc_cat=100&_nc_ohc=pjzs9OlYpTQAX-0Vb-i&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjg1NjIyNjg2OTM2MDMzNzAwNQ%3D%3D.2-ccb7-5&oh=00_AT8soEhot-e5zlh8RyHroZ1VE3Ec7mxfd6sY9_DAyHVHdw&oe=62C740DA&_nc_sid=30a2ef',
   'Appetizer'
 ),
@@ -107,7 +107,7 @@ VALUES
 ),
 (
   '100% Wagyu Croquette',
-  '100% KOBE Wagyu beef croquette made with original panic breading. Served with Takana Tartar sauce and Tonkatsu sauce.'
+  '100% KOBE Wagyu beef croquette made with original panic breading. Served with Takana Tartar sauce and Tonkatsu sauce.',
   1300,
   'https://instagram.fyvr3-1.fna.fbcdn.net/v/t51.2885-15/289303384_729695428369625_372057442968528469_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fyvr3-1.fna.fbcdn.net&_nc_cat=105&_nc_ohc=35_ScM46Ru0AX_wZRv3&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjg2NDkyNTYwMDY5MTc4MTM2MQ%3D%3D.2-ccb7-5&oh=00_AT99RxJ0XOYkESC0HIPF3CoeTA4a0zTXWbMhwK_cSL7Ohg&oe=62C87635&_nc_sid=30a2ef',
   'Appeztizer'
@@ -138,7 +138,7 @@ VALUES
   'Green Tea in a bottle.',
   350,
   'https://tb-static.uber.com/prod/image-proc/processed_images/439289d48cc94c59d68b55c3cb3a6235/859baff1d76042a45e319d1de80aec7a.jpeg',
-  'Drink',
+  'Drink'
 ),
 (
   'Coca-Cola',
