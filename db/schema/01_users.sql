@@ -7,5 +7,4 @@ CREATE TABLE users
     name VARCHAR(255)       NOT NULL
 );
 
-# just a test to github branch stuff
 
