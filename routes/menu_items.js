@@ -4,7 +4,16 @@ const router = express.Router();
 
 module.exports = (db) => {
   getAllMenuItems = (db, res) => {
-    db.query(`SELECT * FROM menu_items ORDER BY menu_items.category`)
+    db.query(`
+    SELECT *
+    FROM menu_items
+    ORDER BY CASE
+      WHEN menu_items.category = 'Appetizer' THEN 1
+      WHEN menu_items.category = 'Main' THEN 2
+      WHEN menu_items.category = 'Dessert' THEN 3
+      WHEN menu_items.category = 'Drink' THEN 4
+      END ASC`
+      )
       .then((data)=>{
         const menuItems = data.rows;
         console.log(menuItems.length)
@@ -29,7 +38,8 @@ module.exports = (db) => {
     )
     .then((data)=>{
       const menuItems = data.rows;
-      res.json({menuItems});
+      const vars = {menuItems}
+      res.render('index', vars);
     })
     .catch((err) => {
       res
