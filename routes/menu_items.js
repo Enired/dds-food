@@ -1,3 +1,4 @@
+const { Template } = require('ejs');
 const express = require('express');
 const router = express.Router();
 
@@ -6,8 +7,9 @@ module.exports = (db) => {
     db.query(`SELECT * FROM menu_items ORDER BY menu_items.category`)
       .then((data)=>{
         const menuItems = data.rows;
-        menuItems.forEach(item=>{console.log(item.id)})
-        res.json({menuItems});
+        console.log(menuItems.length)
+        const vars = {menuItems}
+        res.render('index', vars);
       })
       .catch((err) => {
         res
