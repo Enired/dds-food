@@ -32,7 +32,7 @@ VALUES
   'Almond Tofu',
   'Light and refreshing almond tofu with fresh orange sauce',
   1100,
-  'https://instagram.fyvr3-1.fna.fbcdn.net/v/t51.2885-15/290788034_352047747082961_69026224827241735_n.jpg?stp=dst-jpg_e35_s640x640_sh0.08&_nc_ht=instagram.fyvr3-1.fna.fbcdn.net&_nc_cat=105&_nc_ohc=kh47bfIO6dcAX8rs5rJ&edm=APU89FABAAAA&ccb=7-5&oh=00_AT9DS1wN_xrnzblR2PSy7Ynnr8mEVp2TVM6uUGoKfOUkwg&oe=62C80F08&_nc_sid=86f79a',
+  'https://www.raisu.ca/wp-content/uploads/2020/10/Almond-Tofu-768x768.png',
   'Dessert'
 ),
 (
@@ -60,77 +60,77 @@ VALUES
   'Yuzu Parfait',
   'Original yuzu gelato, yuzu rare cheese cake sponge cake, yuzu cream on top.',
   1100,
-  'https://instagram.fyvr3-1.fna.fbcdn.net/v/t51.2885-15/284711472_1294310617764020_7371866270660688927_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fyvr3-1.fna.fbcdn.net&_nc_cat=108&_nc_ohc=BdBGeeUBcIAAX-AbwFN&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjg0OTcxMTA0MzMwNDE4NDE4Nw%3D%3D.2-ccb7-5&oh=00_AT9-S2xZIYnAlmIQnXlORA7e_ZDSWe9qi0Li2ezTFf3H-Q&oe=62C87D45&_nc_sid=30a2ef',
+  'https://foodology.ca/wp-content/uploads/2020/07/raisu-lunch-set-32.jpg',
   'Dessert'
 ),
 (
   'Uni Shooter',
   'Uni, Ikura, Mountain Potate, Quail Egg, with Dashi Ponzu truffle jelly.',
   1100,
-  'https://instagram.fyvr3-1.fna.fbcdn.net/v/t51.2885-15/286320999_761814561935460_8081945160148255135_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fyvr3-1.fna.fbcdn.net&_nc_cat=100&_nc_ohc=pjzs9OlYpTQAX-0Vb-i&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjg1NjIyNjg2OTM2MDMzNzAwNQ%3D%3D.2-ccb7-5&oh=00_AT8soEhot-e5zlh8RyHroZ1VE3Ec7mxfd6sY9_DAyHVHdw&oe=62C740DA&_nc_sid=30a2ef',
+  'https://i0.wp.com/sincerelyloewe.com/wp-content/uploads/2022/03/IMG_4357.jpg?fit=726%2C968&ssl=1',
   'Appetizer'
 ),
 (
   'Plum Wine Sangria',
   'Original plum wine sangria pitcher🍹',
   3000,
-  'https://instagram.fyvr3-1.fna.fbcdn.net/v/t51.2885-15/280958885_1038420706768657_2448675490488516074_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fyvr3-1.fna.fbcdn.net&_nc_cat=101&_nc_ohc=zA2rSFnczRUAX8bKT9q&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=MjgzOTIxMDAxNzQ3MzI2MTk1Mw%3D%3D.2-ccb7-5&oh=00_AT-yGv4amuQkBWy0QHmCo2W_yPrSBOplQm3lhk4K9VIhwQ&oe=62C6C629&_nc_sid=30a2ef',
+  'https://is2.ecplaza.com/ecplaza2/products/2/21/215/906947381/4653124.jpg',
   'Drink'
 ),
 (
   'Lemon Sour',
   'Splash Lemon Sour Pitcher🍋',
   2000,
-  'https://instagram.fyvr3-1.fna.fbcdn.net/v/t51.2885-15/282031039_165345869240217_4973407023335783998_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fyvr3-1.fna.fbcdn.net&_nc_cat=109&_nc_ohc=fSwPrUPZzIMAX9ZaptM&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjg0MjEzNzU5OTg2NDg0MTU1OA%3D%3D.2-ccb7-5&oh=00_AT-EiULjmxDQ24_RDwJ7U9HhoIJjZJW2l16dHAGQlWzv6Q&oe=62C6E806&_nc_sid=30a2ef',
+  'https://japanmcconnell.com/wp-content/uploads/2020/04/homeizakaya-cocktails-how-to-make-Japanese-style-lemon-sour-at-home.jpg',
   'Drink'
 ),
 (
   'Sea Urchin Donabe Rice',
   'Sea urchin and snow crab and inure, cooked with original broth',
   2800,
-  'https://instagram.fyvr3-1.fna.fbcdn.net/v/t51.2885-15/277855182_132738175994218_7732951601405733990_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fyvr3-1.fna.fbcdn.net&_nc_cat=110&_nc_ohc=jSVyjZLfBtkAX9fJT22&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=MjgxMDI2Nzc5NzcwMDc4NTQ2NQ%3D%3D.2-ccb7-5&oh=00_AT80tU-a7ZHFYdC5GliG3WtvxWmnuHWUKj6QvTwQ_R3Y4A&oe=62C83C65&_nc_sid=30a2ef',
+  'https://scontent.fyvr3-1.fna.fbcdn.net/v/t1.6435-9/120404374_1240588952941322_5941435128560075503_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=a26aad&_nc_ohc=Ce7kQmLoXXEAX9MJKLD&_nc_ht=scontent.fyvr3-1.fna&oh=00_AT-k52w85Q_NarngS95RVAjWDA89W6o6SQB9tomxwl8Vjw&oe=62E6905B',
   'Main'
 ),
 (
   'Snow Crab on the Egg',
   'Snow crab and salmon caviar on the top of the boiled egg.',
   900,
-  'https://instagram.fyvr3-1.fna.fbcdn.net/v/t51.2885-15/275008201_157124476733933_1818323469237537019_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fyvr3-1.fna.fbcdn.net&_nc_cat=105&_nc_ohc=2GSniL5_dBwAX8cjzfp&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjc4NTYxMDgzMjE0ODI3MDgzOQ%3D%3D.2-ccb7-5&oh=00_AT8uyX8uOnxfHQ8EFkc4XgWLIMfR52U0w3g1lSAJrW1ytg&oe=62C7E342&_nc_sid=30a2ef',
+  'https://digitalmarketing.blob.core.windows.net/12489/images/items/image657818.jpg',
   'Appetizer'
 ),
 (
   'Seafood Bara Chirashi Bowl',
   'Fresh seafood cubes are festively spread on top of original sushi rice mix with root vegetables and Shiitake mushroom.',
   2700,
-  'https://instagram.fyvr3-1.fna.fbcdn.net/v/t51.2885-15/271393984_427182582475646_3264541553577865951_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fyvr3-1.fna.fbcdn.net&_nc_cat=102&_nc_ohc=13eMe1jUfbYAX-a3aMs&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjc0NjEzMjM0NDMwMDQzNzQwMQ%3D%3D.2-ccb7-5&oh=00_AT_spiyz9iW-QIIJg-rKV0GiZSKZPBEyUcHCEtuaIvl7lg&oe=62C7A8FA&_nc_sid=30a2ef',
+  'https://digitalmarketing.blob.core.windows.net/12489/images/items/image641248.jpg',
   'Main'
 ),
 (
   '100% Wagyu Croquette',
   '100% KOBE Wagyu beef croquette made with original panic breading. Served with Takana Tartar sauce and Tonkatsu sauce.',
   1300,
-  'https://instagram.fyvr3-1.fna.fbcdn.net/v/t51.2885-15/289303384_729695428369625_372057442968528469_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fyvr3-1.fna.fbcdn.net&_nc_cat=105&_nc_ohc=35_ScM46Ru0AX_wZRv3&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjg2NDkyNTYwMDY5MTc4MTM2MQ%3D%3D.2-ccb7-5&oh=00_AT99RxJ0XOYkESC0HIPF3CoeTA4a0zTXWbMhwK_cSL7Ohg&oe=62C87635&_nc_sid=30a2ef',
+  'https://digitalmarketing.blob.core.windows.net/12489/images/items/image657490.jpg',
   'Appeztizer'
 ),
 (
   'Hell Chicken Karrage',
   'Signature chicken karrage tossed in hell sauce. (Original spicy sauce)',
   1300,
-  'https://instagram.fyvr3-1.fna.fbcdn.net/v/t51.2885-15/290517060_119803380754624_2822404132614588902_n.jpg?stp=dst-jpg_e35_p240x240&_nc_ht=instagram.fyvr3-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=YE7bekZrBigAX-jXAIY&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjg3MDkwMzIwMTI3ODY5NTcyOA%3D%3D.2-ccb7-5&oh=00_AT-AXCnsL4MLxw935oYx_rL0MiH5ycLbGN8Piw8BqEc-sw&oe=62C7539B&_nc_sid=30a2ef',
+  'https://glutenfreewithme.com/wp-content/uploads/2021/03/IMG_2374-e1616788141454.jpeg',
   'Appetizer'
 ),
 (
   'Miso Port Cutlet',
   'Pork cutlet with miso demi glace sauce. Soft boiled egg and grilled vegetables.',
   2400,
-  'https://instagram.fyvr3-1.fna.fbcdn.net/v/t51.2885-15/289550110_2026103340911239_7214876988580597453_n.jpg?stp=dst-jpg_e35_s240x240&_nc_ht=instagram.fyvr3-1.fna.fbcdn.net&_nc_cat=107&_nc_ohc=zANNceDEUB8AX-cm_Jh&tn=gCSoVS2xp048EH0-&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjg2Nzc1Njg2MTg0ODYyMDk2Ng%3D%3D.2-ccb7-5&oh=00_AT_HNswrnnxnH3P33bwXmBBHnL31XsZihHlEkahL3TRISg&oe=62C802CF&_nc_sid=30a2ef',
+  'https://digitalmarketing.blob.core.windows.net/12489/images/items/image654184.jpg',
   'Main'
 ),
 (
   'Snow Crab and Ikura Hitsumabushi',
   'Snow crab and ikura served on top of rice in a sizzling hot stone bowl. For the second half of the meal, pour the lightly flavored dashi soup to blend and savor all the deliciousness to the last drop.',
   2200,
-  'https://instagram.fyvr3-1.fna.fbcdn.net/v/t51.2885-15/284657043_158335590020805_2099053382286761405_n.jpg?stp=dst-jpg_e35_p750x750_sh0.08&_nc_ht=instagram.fyvr3-1.fna.fbcdn.net&_nc_cat=109&_nc_ohc=uBlBbNgVrKMAX90r0jC&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjg0ODk4MDg5MjAyNzAzMTQzMA%3D%3D.2-ccb7-5&oh=00_AT_dczsIlzrAW-rNwr1FWn34BouHChx8vJXWsxpi2gXiHA&oe=62C70032&_nc_sid=30a2ef',
+  'https://digitalmarketing.blob.core.windows.net/12489/images/items/image654185.jpg',
   'Main'
 ),
 (
