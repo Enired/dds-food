@@ -37,6 +37,7 @@ module.exports = (db) => {
         req.session["phone_number"] = result.rows[0]['phone_number']
         res.redirect('/')
       })
+      .catch(err => console.error(err))
   })
   return router;
 };
