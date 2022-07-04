@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--favicon icon-->
+    <link rel="icon" href="/ddsFood.ico">
+    <title>Register</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css"/>
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css"/>
+    <link rel="stylesheet" href="/styles/main.css" type="text/css"/>
+    <link rel="stylesheet" href="/styles/register-login.css" type="text/css"/>
+    <!--Google Fonts-->
+    <link
+            href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&family=Bebas+Neue&family=Satisfy&family=Quattrocento:wght@400;700&display=swap"
+            rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+    <!-- font awesome    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+</head>
+<body>
+  <!--navBar Start-->
+  <%- include("./partials/header") %>
+  <!--navBar End-->
+
+  <div id="register-container">
+    <form id="register-form" action="/register" method="POST">
+      <label for="register-form">Create an account to be<br>on your way to deliciousness!</label>
+      <input name="firstname" type="text" class="register-input" placeholder="First Name">
+      <input name="lastname" type="text" class="register-input" placeholder="Last Name">
+      <input name="phone" type="tel" class="register-input" placeholder="Phone Number">
+      <input name="email" type="email" class="register-input" placeholder="Email">
+      <input name="password" type="password" class="register-input" placeholder="Password">
+      <button type="submit" id="register-button">Register</button>
+    </form>
+  </div>
+
+  <!-- footer area start -->
+  <%- include("./partials/footer") %>
+  <!-- footer area end -->
+</body>
+</html>
