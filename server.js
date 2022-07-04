@@ -52,6 +52,18 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+
+// TESTING TWILIO API
+// Does a GET request then redirects to home
+const sendSMS = require('./lib/twilio');
+const myPhoneNumber = process.env.MY_PHONE_NUMBER;
+app.get("/api/twiliotest", (req, res) => {
+  console.log('Sending the Twilio test message...');
+  sendSMS(myPhoneNumber, 'Hi!! This is an SMS from /api/twiliotest!');
+  res.redirect('/');
+});
+
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
