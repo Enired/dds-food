@@ -34,13 +34,13 @@
   <!--navBar End-->
 
   <div id="register-container">
-    <form id="register-form" action="/user/register" method="POST">
+    <form id="register-form" action="/register" method="POST">
       <label for="register-form">Create an account to be<br>on your way to deliciousness!</label>
-      <input class="register-input" placeholder="First Name">
-      <input class="register-input" placeholder="Last Name">
-      <input class="register-input" placeholder="Phone Number">
-      <input class="register-input" placeholder="Email">
-      <input class="register-input" type="password" placeholder="Password">
+      <input name="firstname" type="text" class="register-input" placeholder="First Name">
+      <input name="lastname" type="text" class="register-input" placeholder="Last Name">
+      <input name="phone" type="tel" class="register-input" placeholder="Phone Number">
+      <input name="email" type="email" class="register-input" placeholder="Email">
+      <input name="password" type="password" class="register-input" placeholder="Password">
       <button type="submit" id="register-button">Register</button>
     </form>
   </div>

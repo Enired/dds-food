@@ -34,10 +34,10 @@
   <!--navBar End-->
 
   <div id="login-container">
-    <form id="login-form" action="/user/login" method="POST">
+    <form id="login-form" action="/login" method="POST">
       <label for="login-form">Login to order pick-up today!</label>
-      <input class="login-input" placeholder="Email">
-      <input class="login-input" type="password" placeholder="Password">
+      <input name="email" type="email" class="login-input" placeholder="Email">
+      <input name="password" type="password" class="login-input" placeholder="Password">
       <button type="submit" id="login-button">Login</button>
     </form>
   </div>
