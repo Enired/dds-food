@@ -1,20 +1,1411 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-  <title>Home Page</title>
-
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-
-  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/app.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DDS_Food - Food Ordering, Delivery & Restuarent</title>
+    <!--favicon icon-->
+    <link rel="icon" href="/ddsFood.ico">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css"/>
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css"/>
+    <link rel="stylesheet" href="/styles/main.css" type="text/css"/>
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css"/>
+    <!--Google Fonts-->
+    <link
+            href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&family=Bebas+Neue&family=Satisfy&family=Quattrocento:wght@400;700&display=swap"
+            rel="stylesheet">
+    <!-- font awesome    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
 </head>
-
 <body>
-  <h1>Have fun! 🥔</h1>
-</body>
+<!--navBar Start-->
+<%- include("./partials/header") %>
+<!--navBar End-->
+<!-- Banner Area Start-->
+<section id="banner" class="mt-4 pb-4">
+    <div class="container-lg">
+        <div class="row g-4 pt-5 justify-content-center align-items-center">
+            <div class="banner-inner col-md-5 text-center text-md-start">
+                <h3>Japanese Test</h3>
+                <h1>Different spice for a Different taste</h1>
+                <p class="lead my-4 text-muted">You need not only Just Food Stalls with Persons but also specialized
+                    equipment start the Fast
+                    Food</p>
+                <a href="#pricing" class="btn btn-warning btn-lg">GET IT NOW</a>
+                <!-- open sidebar / offcanvas -->
+            </div>
+            <div class="col-md-5 text-center d-none d-md-block">
+                <img src="assets/image/home-2/banner/1.png" class="img-fluid" alt=banner>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Banner Area End -->
 
+<!--product Area Start-->
+<section id="product-area" class="product-area pt-4">
+    <div class="container">
+        <!--  product header       -->
+        <div class="row justify-content-center">
+            <div class="col-12 product-area-top-wrapper">
+                <div class="section-title text-center">
+                    <h3 class="sub-title">Our signature</h3>
+                    <h2 class="title">Delicious Deals for Delicious Meals</h2>
+                </div>
+                <ul class="product-nav style-2 nav nav-pills" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-ramen-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-ramen"
+                                type="button" role="tab" aria-controls="pills-ramen" aria-selected="true"><img
+                                    src="assets/image/category/1.png" alt="img">Ramen
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-pizza-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-pizza"
+                                type="button" role="tab" aria-controls="pills-pizza" aria-selected="false"><img
+                                    src="assets/image/category/2.png" alt="img">Pizza
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-burger-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-burger"
+                                type="button" role="tab" aria-controls="pills-burger" aria-selected="false"><img
+                                    src="assets/image/category/3.png" alt="img">Burger
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-french-fry-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-french-fry"
+                                type="button" role="tab" aria-controls="pills-french-fry" aria-selected="false">
+                            <img
+                                    src="assets/image/category/4.png" alt="img">French fries
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-fast-food-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-fast-food"
+                                type="button" role="tab" aria-controls="pills-fast-food" aria-selected="false">
+                            <img
+                                    src="assets/image/category/5.png" alt="img">Fast food
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-drinks-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-drinks"
+                                type="button" role="tab" aria-controls="pills-drinks" aria-selected="false"><img
+                                    src="assets/image/category/6.png" alt="img">Soft drinks
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--  product list        -->
+        <div class="tab-content mt-5" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-ramen" role="tabpanel" aria-labelledby="pills-ramen-tab">
+                <div class="row justify-content-center">
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/03.png" alt="img">
+                            </div>
+                            <div class="wrap-details ">
+                                <h4>Cheese Momos</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/02.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/03.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/04.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/05.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/06.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-pizza" role="tabpanel" aria-labelledby="pills-pizza-tab">
+                <div class="row justify-content-center">
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/05.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Maxican Pizza</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/02.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/03.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/04.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/01.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/06.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-burger" role="tabpanel" aria-labelledby="pills-burger-tab">
+                <div class="row justify-content-center">
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/01.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/02.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/03.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/04.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/05.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/06.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-french-fry" role="tabpanel" aria-labelledby="pills-french-fry-tab">
+                <div class="row justify-content-center">
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/01.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/02.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/03.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/04.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/05.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/06.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-fast-food" role="tabpanel" aria-labelledby="pills-fast-food-tab">
+                <div class="row justify-content-center">
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/01.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/02.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/03.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/04.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/05.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/06.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-drinks" role="tabpanel" aria-labelledby="pills-drinks-tab">
+                <div class="row justify-content-center">
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/01.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/02.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/03.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/04.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/05.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-3">
+                                <img src="assets/image/home-2/product/06.png" alt="img">
+                            </div>
+                            <div class="wrap-details">
+                                <h4>Double Burger</h4>
+                                <h6 class="price">$17.00</h6>
+                                <p class="text-center text-muted">Pizza is a savory dish of Italian origin consisting of
+                                    a
+                                    usually
+                                    round, flattened base of leavened wheat-based dough topped with tomatoes, cheese,
+                                    and often various other ingredients, which is then baked at a high temperature,
+                                    traditionally in a wood-fired oven. </p>
+                                <div class="details-bottom p-3">
+                                    <form action="">
+                                        <div>
+                                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                                            <select style="width: 120px" class="form-select" id="quantity">
+                                                <option selected>Quantity</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <div style="width: 130px;height: 38px">
+                                            <a class="btn btn-warning" href="#">Add <i
+                                                        class="fa-solid fa-cart-plus"></i></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- product Area End -->
+
+<!-- about Area Start-->
+<section id="about-area" class="d-none d-lg-block about-area pd-top-100 pd-bottom-90">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="about-default-thumb">
+                    <img src="assets/image/home-2/about/1.png" alt="img">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-10 order-lg-first align-self-center">
+                <div class="section-title text-lg-start text-center">
+                    <h3 class="sub-title">Why choose us</h3>
+                    <h2 class="title">We Have Excellent Of Quality Japanese Food</h2>
+                    <p>A, blandit euismod ullamcorper vestibulum enim habitasse. Ultrices tincidunt scelerisque elit
+                        enim. A neque
+                        malesuada in tortor eget justo mauris nec dolor. Consequat risus vitae, ac ac et preparation. He
+                        wanted to
+                        serve burgers, fries and beverages that tasted .</p>
+                    <a class="btn btn-warning" href="#product-area">CHECK OUR MENU</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- about Area End -->
+
+
+<!-- footer area start -->
+<%- include("./partials/footer") %>
+<!-- footer area end -->
+
+
+<!-- back-to-top end -->
+<div class="back-to-top">
+    <span class="back-top"><i class="fas fa-angle-double-up"></i></span>
+</div>
+
+
+<!-- Bootstrap JavaScript Bundle with Popper-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
 </html>
