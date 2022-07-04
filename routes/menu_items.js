@@ -78,8 +78,9 @@ module.exports = (db) => {
       vars.desserts = desserts
     })
     //FINAL RENDER
-    .then(
+    .then(()=>{
       res.render('index', {menuItems: vars.menuItems, drinks : vars.drinks, appetizers : vars.appetizers, mains : vars.mains, desserts: vars.desserts})
+    }
     )
     .catch((err) => {
       res
