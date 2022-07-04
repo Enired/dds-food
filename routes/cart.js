@@ -2,9 +2,27 @@ const express = require('express');
 const router = express.Router();
 
 
+//Getting Cart Total
+getCartTotal = (db, orderId) => {
+  const queryParams = [orderId]
+  const query =
+  `
+  SELECT SUM(menu_items.price * order_items.quantity)/100 as subtotal
+  FROM order_items
+  JOIN menu_items on menu_items.id = order_items.menu_item
+  JOIN orders on orders.id = order_items.order_id
+  WHERE orders.id = $1;
+  `
+
+  return db.query(query, queryParams)
+}
+
+
+
 module.exports = (db) => {
   router.get("/",
     (req, res) => {
+      getCartTotal(db, 2)
       res.render("cart");
     });
   return router;
@@ -79,9 +97,6 @@ UPDATE orders SET accepted_at = now() where orders.id = 2;
 //
 SELECT users.id from users where users.email = 'octane@legends.com'
 ;
-
-
-
 
 
 
