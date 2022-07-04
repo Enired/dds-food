@@ -4,6 +4,14 @@ const bcrypt = require('bcryptjs')
 router.use(express.urlencoded({extended: true}))
 
 module.exports = (db) => {
+  router.get("/", (req, res) => {
+    //if user already login cannot show register page
+    console.log(req.session['user_id'])
+    if(req.session['user_id']){
+      res.redirect('/')
+    }
+    res.render("register")
+  })
   //  register
   router.post("/", (req, res) => {
     console.log('register~~~~~~')
@@ -42,7 +50,9 @@ module.exports = (db) => {
             req.session["phone_number"] = result.rows[0]['phone_number']
             res.redirect('/')
           })
-          .catch()
+          .catch(err => {
+            console.log(err.message)
+          })
       })
 
   })

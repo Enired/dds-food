@@ -5,6 +5,14 @@ router.use(express.urlencoded({extended: true}))
 
 module.exports = (db) => {
   //  login
+  router.get('/', (req, res) => {
+    //if user already login cannot show login page
+    if (req.session['user_id']) {
+      res.redirect('/')
+    }
+    res.render("login")
+  })
+
   router.post("/", (req, res) => {
     const {email, password} = req.body;
     if (!email) {
@@ -18,7 +26,10 @@ module.exports = (db) => {
       .then(result => {
         if (!result.rows[0]) {
           const errMsg = 'Authentication failed!'
-          res.status(400).redirect(`/user/login/${errMsg}`)
+          const templateVars = {
+            errMsg
+          }
+          res.status(400).render('login', templateVars)
           return
         }
         const hashedPassword = result.rows[0].password
@@ -28,8 +39,9 @@ module.exports = (db) => {
           return res.redirect("?error=Authentication failed - Please try again");
         }
         //  login success
-        // console.log('success!')
+        console.log('login success!')
         const user = result.rows[0]
+        // console.log(user)
         req.session["user_id"] = result.rows[0].id
         req.session["email"] = result.rows[0].email
         req.session["first_name"] = result.rows[0]['first_name']

@@ -1,3 +1,8 @@
 // Client facing scripts here
 
-console.log('jsjsjsjs')
+
+
+
+$(document).ready(function () {
+  // console.log('jequry')
+})

@@ -29,21 +29,22 @@
     <script type="text/javascript" src="/scripts/app.js"></script>
 </head>
 <body>
-  <!--navBar Start-->
-  <%- include("./partials/header") %>
-  <!--navBar End-->
+<!--navBar Start-->
+<%- include("./partials/header") %>
+<!--navBar End-->
 
-  <div id="login-container">
+<div id="login-container">
     <form id="login-form" action="/login" method="POST">
-      <label for="login-form">Login to order pick-up today!</label>
-      <input name="email" type="email" class="login-input" placeholder="Email">
-      <input name="password" type="password" class="login-input" placeholder="Password">
-      <button type="submit" id="login-button">Login</button>
-    </form>
-  </div>
+        <label for="login-form">Login to order pick-up today!</label>
+        <input name="email" type="email" required class="login-input" placeholder="Email">
+        <input name="password" type="password" required class="login-input" placeholder="Password">
 
-  <!-- footer area start -->
-  <%- include("./partials/footer") %>
-  <!-- footer area end -->
+        <button type="submit" id="login-button">Login</button>
+    </form>
+</div>
+
+<!-- footer area start -->
+<%- include("./partials/footer") %>
+<!-- footer area end -->
 </body>
 </html>
