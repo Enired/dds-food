@@ -110,7 +110,7 @@ VALUES
   '100% KOBE Wagyu beef croquette made with original panic breading. Served with Takana Tartar sauce and Tonkatsu sauce.',
   1300,
   'https://digitalmarketing.blob.core.windows.net/12489/images/items/image657490.jpg',
-  'Appeztizer'
+  'Appetizer'
 ),
 (
   'Hell Chicken Karrage',
