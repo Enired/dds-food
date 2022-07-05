@@ -16,6 +16,27 @@ $(document).scroll(function () {
   }
 })
 
+//cartQuantity
+const minusQuantity = function () {
+  $('.minus').on('click', function () {
+    let quantity = parseInt($('.input-text').val())
+    if (quantity === 1) {
+      return
+    }
+    quantity -= 1
+    $('.input-text').val(quantity)
+  })
+}
+const addQuantity = function () {
+  $('.plus').on('click', function () {
+    let quantity = parseInt($('.input-text').val())
+    quantity += 1
+    $('.input-text').val(quantity)
+  })
+}
+
 $(document).ready(function () {
   backToTop()
+  addQuantity()
+  minusQuantity()
 })
