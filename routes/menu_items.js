@@ -15,67 +15,35 @@ module.exports = (db) => {
       WHEN menu_items.category = 'Main' THEN 2
       WHEN menu_items.category = 'Dessert' THEN 3
       WHEN menu_items.category = 'Drink' THEN 4
-      END ASC`
+      END ASC, menu_items.name`
       )
     .then((data)=>{
       const menuItems = data.rows;
       vars.menuItems = menuItems
     })
-    // DRINKS QUERY
     .then(()=>{
-      return db.query(
-        `
-        SELECT *
-        FROM menu_items
-        WHERE menu_items.category = 'Drink'
-        `,
-      )
-    })
-    .then((data)=>{
-      const drinks = data.rows;
-      vars.drinks = drinks
-    })
-    // APPY QUERY
-    .then(()=>{
-      return db.query(
-        `
-        SELECT *
-        FROM menu_items
-        WHERE menu_items.category = 'Appetizer'
-        `,
-      )
-    })
-    .then((data)=>{
-      const appetizers = data.rows;
-      vars.appetizers = appetizers
-    })
-    // Main Dishes Query
-    .then(()=>{
-      return db.query(
-        `
-        SELECT *
-        FROM menu_items
-        WHERE menu_items.category = 'Main'
-        `,
-      )
-    })
-    .then((data)=>{
-      const mains = data.rows;
-      vars.mains = mains
-    })
-    // Main Dishes Query
-    .then(()=>{
-      return db.query(
-        `
-        SELECT *
-        FROM menu_items
-        WHERE menu_items.category = 'Dessert'
-        `,
-      )
-    })
-    .then((data)=>{
-      const desserts = data.rows;
-      vars.desserts = desserts
+      vars.appetizers = [];
+      vars.mains = [];
+      vars.desserts = [];
+      vars.drinks = [];
+      for(item of vars.menuItems){
+        switch (item.category) {
+          case 'Appetizer':
+            vars.appetizers.push(item);
+            break;
+          case 'Main':
+            vars.mains.push(item);
+            break;
+          case 'Dessert':
+            vars.desserts.push(item);
+            break;
+          case 'Drink':
+            vars.drinks.push(item);
+            break;
+          default:
+            break;
+        }
+      }
     })
     //FINAL RENDER
     .then(()=>{
