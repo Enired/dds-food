@@ -25,7 +25,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/menu_script.js"></script>
 </head>
 <body>
 <!--navBar Start-->
@@ -64,38 +64,38 @@
                 </div>
                 <ul class="product-nav style-2 nav nav-pills" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="pills-ramen-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-ramen"
-                                type="button" role="tab" aria-controls="pills-ramen" aria-selected="true"><img
+                        <button class="nav-link active" id="pills-allItems-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-allItems"
+                                type="button" role="tab" aria-controls="pills-allItems" aria-selected="true"><img
                                     src="/assets/image/category/1.png" alt="img">ALL ITEMS
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-pizza-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-pizza"
-                                type="button" role="tab" aria-controls="pills-pizza" aria-selected="false"><img
+                        <button class="nav-link" id="pills-appetizer-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-appetizer"
+                                type="button" role="tab" aria-controls="pills-appetizer" aria-selected="false"><img
                                     src="/assets/image/category/2.png" alt="img">APPETIZERS
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-burger-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-burger"
-                                type="button" role="tab" aria-controls="pills-burger" aria-selected="false"><img
+                        <button class="nav-link" id="pills-main-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-main"
+                                type="button" role="tab" aria-controls="pills-main" aria-selected="false"><img
                                     src="/assets/image/category/3.png" alt="img">MAINS
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-french-fry-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-french-fry"
-                                type="button" role="tab" aria-controls="pills-french-fry" aria-selected="false">
+                        <button class="nav-link" id="pills-dessert-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-dessert"
+                                type="button" role="tab" aria-controls="pills-dessert" aria-selected="false">
                             <img
                                     src="/assets/image/category/4.png" alt="img">DESSERTS
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-fast-food-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-fast-food"
-                                type="button" role="tab" aria-controls="pills-fast-food" aria-selected="false">
+                        <button class="nav-link" id="pills-drink-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-drink"
+                                type="button" role="tab" aria-controls="pills-drink" aria-selected="false">
                             <img
                                     src="/assets/image/category/5.png" alt="img">DRINKS
                         </button>
@@ -110,205 +110,43 @@
                 </ul>
             </div>
         </div>
-        <!--  product list        -->
-        <!-- ALL ITEMS -->
-        <div class="tab-content mt-5" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-ramen" role="tabpanel" aria-labelledby="pills-ramen-tab">
-                <div class="row justify-content-center">
-                  <!-- BUILDING THE ALL ITEMS TAB -->
-                  <% for(let item of menuItems) { %>
-                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
-                        <div class="single-item-wrap">
-                            <div class="thumb ps-3">
-                                <img class="img-fluid" src=<%=item.image_url%> alt="img">
-                            </div>
-                            <br/>
-                            <div class="wrap-details ">
-                                <h4><%=item.name%></h4>
-                                <h6 class="price">$<%=Math.floor(item.price/100).toFixed(2)%></h6>
-                                <p class="text-center text-muted"><%=item.description%></p>
-                                <div class="details-bottom p-3">
-                                    <form action="">
-                                        <div>
-                                            <!-- <label class="visually-hidden" for="autoSizingSelect">Preference</label>
-                                            <select style="width: 120px" class="form-select" id="quantity">
-                                                <option selected>Quantity</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select> -->
-                                            <input type="number" min='0' class="form-control" id="input1" placeholder="Quantity">
-                                        </div>
-                                        <div style="width: 130px;height: 38px">
-                                          <a class="btn btn-warning" href="#" value="<%item.id%>">Add <i
-                                                        class="fa-solid fa-cart-plus"></i></a>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <% } %>
-                </div>
-            </div>
-          </div>
 
-          <!-- APPETIZERS -->
+        <!-- menu creation -->
+        <% for (const [category, items] of Object.entries(menu)) { %>
           <div class="tab-content mt-5" id="pills-tabContent">
-            <div class="tab-pane fade show" id="pills-pizza" role="tabpanel" aria-labelledby="pills-pizza-tab">
+            <div class="tab-pane fade show <%=category === 'allItems' ? 'active' : ''%>" id="pills-<%=category%>" role="tabpanel" aria-labelledby="pills-<%=category%>-tab">
                 <div class="row justify-content-center">
-
-                  <% for(let item of appetizers) { %>
-                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
-                        <div class="single-item-wrap">
-                            <div class="thumb ps-3">
-                                <img class="img-fluid" src=<%=item.image_url%> alt="img">
-                            </div>
-                            <div class="wrap-details ">
-                                <h4><%=item.name%></h4>
-                                <h6 class="price">$<%=Math.floor(item.price/100).toFixed(2)%></h6>
-                                <p class="text-center text-muted"><%=item.description%></p>
-                                <div class="details-bottom p-3">
-                                    <form action="">
-                                        <div>
-                                            <!-- <label class="visually-hidden" for="autoSizingSelect">Preference</label>
-                                            <select style="width: 120px" class="form-select" id="quantity">
-                                                <option selected>Quantity</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                            </select> -->
+                  <% for (const item of items) { %>
+                      <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                          <div class="single-item-wrap">
+                              <div class="thumb ps-1">
+                                  <img class="img-fluid img-thumbnail" src=<%=item.image_url%> alt="img">
+                              </div>
+                              <br>
+                              <div class="wrap-details">
+                                  <h4><%=item.name%></h4>
+                                  <h6 class="price">$<%=(item.price/100).toFixed(2)%></h6>
+                                  <p class="text-center text-muted"><%=item.description%></p>
+                                  <div class="details-bottom p-3">
+                                      <form action="">
+                                          <div>
                                             <input type="number" min='0' class="form-control" id="input1" placeholder="Quantity">
-                                        </div>
-                                        <div style="width: 130px;height: 38px">
-                                          <a class="btn btn-warning" href="#" value="<%item.id%>">Add <i
-                                                        class="fa-solid fa-cart-plus"></i></a>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                          </div>
+                                          <div style="width: 150px; height: 3px;">
+                                            <button class="btn btn-warning" value=<%=item.id%>>Add
+                                              <i class="fa-solid fa-cart-plus"></i>
+                                            </button>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
                     <% } %>
-                </div>
+                  </div>
+              </div>
             </div>
-          </div>
-
-          <!-- Mains -->
-          <div class="tab-content mt-5" id="pills-tabContent">
-            <div class="tab-pane fade show" id="pills-burger" role="tabpanel" aria-labelledby="pills-burger-tab">
-                <div class="row justify-content-center">
-
-                  <% for(let item of mains) { %>
-                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
-                        <div class="single-item-wrap">
-                            <div class="thumb ps-3">
-                                <img class="img-fluid" src=<%=item.image_url%> alt="img">
-                            </div>
-                            <div class="wrap-details ">
-                                <h4><%=item.name%></h4>
-                                <h6 class="price">$<%=Math.floor(item.price/100).toFixed(2)%></h6>
-                                <p class="text-center text-muted"><%=item.description%></p>
-                                <div class="details-bottom p-3">
-                                    <form action="">
-                                        <div>
-                                            <input type="number" min='0' class="form-control" id="input1" placeholder="Quantity">
-                                        </div>
-                                        <div style="width: 130px;height: 38px">
-                                            <a class="btn btn-warning" href="#" value="<%item.id%>">Add <i
-                                                        class="fa-solid fa-cart-plus"></i></a>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <% } %>
-                </div>
-            </div>
-          </div>
-
-          <!-- Desserts -->
-          <div class="tab-content mt-5" id="pills-tabContent">
-            <div class="tab-pane fade show" id="pills-french-fry" role="tabpanel" aria-labelledby="pills-french-fry-tab">
-                <div class="row justify-content-center">
-
-                  <% for(let item of desserts) { %>
-                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
-                        <div class="single-item-wrap">
-                            <div class="thumb ps-3">
-                                <img class="img-fluid" src=<%=item.image_url%> alt="img">
-                            </div>
-                            <div class="wrap-details ">
-                                <h4><%=item.name%></h4>
-                                <h6 class="price">$<%=Math.floor(item.price/100).toFixed(2)%></h6>
-                                <p class="text-center text-muted"><%=item.description%></p>
-                                <div class="details-bottom p-3">
-                                    <form action="">
-                                        <div>
-                                            <!-- <label class="visually-hidden" for="autoSizingSelect">Preference</label>
-                                            <select style="width: 120px" class="form-select" id="quantity">
-                                                <option selected>Quantity</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select> -->
-                                            <input type="number" min='0' class="form-control" id="input1" placeholder="Quantity">
-                                        </div>
-                                        <div style="width: 130px;height: 38px">
-                                          <a class="btn btn-warning" href="#" value="<%item.id%>">Add <i
-                                                        class="fa-solid fa-cart-plus"></i></a>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <% } %>
-                </div>
-            </div>
-          </div>
-
-          <!-- Drinks -->
-          <div class="tab-content mt-5" id="pills-tabContent">
-            <div class="tab-pane fade show" id="pills-fast-food" role="tabpanel" aria-labelledby="pills-fast-food-tab">
-                <div class="row justify-content-center">
-
-                  <% for(let item of drinks) { %>
-                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
-                        <div class="single-item-wrap">
-                            <div class="thumb ps-3">
-                                <img class="img-fluid" src=<%=item.image_url%> alt="img">
-                            </div>
-                            <div class="wrap-details ">
-                                <h4><%=item.name%></h4>
-                                <h6 class="price">$<%=Math.floor(item.price/100).toFixed(2)%></h6>
-                                <p class="text-center text-muted"><%=item.description%></p>
-                                <div class="details-bottom p-3">
-                                    <form action="">
-                                        <div>
-                                            <!-- <label class="visually-hidden" for="autoSizingSelect">Preference</label>
-                                            <select style="width: 120px" class="form-select" id="quantity">
-                                                <option selected>Quantity</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select> -->
-                                            <input type="number" min='0' class="form-control" id="input1" placeholder="Quantity">
-                                        </div>
-                                        <div style="width: 130px;height: 38px">
-                                            <a class="btn btn-warning" href="#">Add <i
-                                                        class="fa-solid fa-cart-plus"></i></a>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <% } %>
-                </div>
-            </div>
-          </div>
+        <% } %>
 
 </section>
 <!-- product Area End -->

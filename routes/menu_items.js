@@ -1,98 +1,77 @@
-const { Template } = require('ejs');
 const express = require('express');
 const router = express.Router();
 
 module.exports = (db) => {
 
-  let vars = {}
-  getAllMenuItems = (db, res) => {
+  const getAllMenuItems = function(db, res) {
     // ALL ITEMS QUERY
     db.query(`
-    SELECT *
-    FROM menu_items
-    ORDER BY CASE
-      WHEN menu_items.category = 'Appetizer' THEN 1
-      WHEN menu_items.category = 'Main' THEN 2
-      WHEN menu_items.category = 'Dessert' THEN 3
-      WHEN menu_items.category = 'Drink' THEN 4
+      SELECT *
+      FROM menu_items
+      ORDER BY CASE
+      WHEN menu_items.category = 'appetizer' THEN 1
+      WHEN menu_items.category = 'main' THEN 2
+      WHEN menu_items.category = 'dessert' THEN 3
+      WHEN menu_items.category = 'drink' THEN 4
       END ASC, menu_items.name`
-      )
-    .then((data)=>{
-      const menuItems = data.rows;
-      vars.menuItems = menuItems
-    })
-    .then(()=>{
-      vars.appetizers = [];
-      vars.mains = [];
-      vars.desserts = [];
-      vars.drinks = [];
-      for(item of vars.menuItems){
-        switch (item.category) {
-          case 'Appetizer':
-            vars.appetizers.push(item);
-            break;
-          case 'Main':
-            vars.mains.push(item);
-            break;
-          case 'Dessert':
-            vars.desserts.push(item);
-            break;
-          case 'Drink':
-            vars.drinks.push(item);
-            break;
-          default:
-            break;
-        }
-      }
-    })
-    //FINAL RENDER
-    .then(()=>{
-      res.render('index', {menuItems: vars.menuItems, drinks : vars.drinks, appetizers : vars.appetizers, mains : vars.mains, desserts: vars.desserts})
-    }
     )
-    .catch((err) => {
-      res
-        .status(500)
-        .json({ error: err.message });
-      })
-    }
+      .then((data) => {
+        const menu = { allItems: [] };
 
-    router.get('/', (req, res) =>{
+        for (const item of data.rows) {
+          if (menu[item.category] === undefined) {
+            menu[item.category] = [];
+          }
+          menu[item.category].push(item);
+          menu.allItems.push(item);
+        }
+
+        res.render('index', { menu });
+
+      })
+      .catch((err) => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  };
+
+  router.get('/', (req, res) =>{
     getAllMenuItems(db, res);
-  })
+  });
 
   return router;
-}
+};
 /////////////////////////
 // IGNORE THIS FOR NOW //
 /////////////////////////
 
-  // getMenuItemsCategory = (db, res, category) => {
-  //   const queryParams = [category]
-  //   db.query(
-  //     `
-  //     SELECT *
-  //     FROM menu_items
-  //     WHERE menu_items.category = $1
-  //     `,
-  //     queryParams
-  //   )
+// getMenuItemsCategory = (db, res, category) => {
+//   const queryParams = [category]
+//   db.query(
+//     `
+//     SELECT *
+//     FROM menu_items
+//     WHERE menu_items.category = $1
+//     `,
+//     queryParams
+//   )
 
-  //   .then((data)=>{
-  //     const menuItems = data.rows;
-  //     const vars = {menuItems}
-  //     res.render('index', vars);
-  //   })
-  //   .catch((err) => {
-  //     res
-  //       .status(500)
-  //       .json({ error: err.message });
-  //     })
-  // }
+//   .then((data)=>{
+//     const menuItems = data.rows;
+//     const vars = {menuItems}
+//     res.render('index', vars);
+//   })
+//   .catch((err) => {
+//     res
+//       .status(500)
+//       .json({ error: err.message });
+//     })
+// }
 
-  // router.get('/category/:category', (req, res) => {
-  //   getMenuItemsCategory(db, res, req.params.category);
-  // })
+// router.get('/category/:category', (req, res) => {
+//   getMenuItemsCategory(db, res, req.params.category);
+// })
 
 
 
