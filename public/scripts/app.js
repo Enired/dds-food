@@ -25,6 +25,9 @@ const minusQuantity = function () {
     }
     quantity -= 1
     $('.input-text').val(quantity)
+    let singlePrice = $('.single-price').text()
+    singlePrice = Number(singlePrice.slice(1))
+    $('.total-price').text((singlePrice * quantity).toFixed(2))
   })
 }
 const addQuantity = function () {
@@ -32,6 +35,9 @@ const addQuantity = function () {
     let quantity = parseInt($('.input-text').val())
     quantity += 1
     $('.input-text').val(quantity)
+    let singlePrice = $('.single-price').text()
+    singlePrice = Number(singlePrice.slice(1))
+    $('.total-price').text((singlePrice * quantity).toFixed(2))
   })
 }
 
