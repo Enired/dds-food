@@ -150,6 +150,7 @@
 }
 
 .back-to-top {
+  display: none;
   position: fixed;
   right: 30px !important;
   bottom: 50px !important;
@@ -167,6 +168,22 @@
   -webkit-animation: backto-top-bounce 4s infinite ease-in-out;
   animation: backto-top-bounce 4s infinite ease-in-out;
   border-radius: 4px;
+}
+
+.back-to-top {
+  display: none;
+}
+
+@keyframes backto-top-bounce {
+  0% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(-5px);
+  }
 }
 
 /*# sourceMappingURL=main.css.map */
