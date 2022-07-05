@@ -17,6 +17,17 @@ getCartTotal = (db, orderId) => {
   return db.query(query, queryParams)
 }
 
+//Getting Order Specific to User
+getOrder = (db, customerId) => {
+  const queryParams = [customerId];
+  const query =
+  `
+  SELECT *
+  FROM orders
+  JOIN users ON users.id = orders.customer_ID
+  `
+}
+
 
 
 module.exports = (db) => {
