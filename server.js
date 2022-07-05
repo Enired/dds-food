@@ -77,7 +77,7 @@ app.get("/", (req, res) => {
   // if (!req.session['user_id']) {
   //   res.redirect('/login');
   // }
-  res.render("index");
+  res.redirect('/menu');
 });
 
 app.listen(PORT, () => {
