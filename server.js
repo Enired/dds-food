@@ -81,13 +81,13 @@ app.get("/", (req, res) => {
       user: {},
       errMsg: 'Please log in...'
     }
-    res.render('login', templateVars)
+    res.render('home', templateVars)
   }
   const templateVars = {
     user: req.session
   }
   console.log(templateVars)
-  res.render("index", templateVars);
+  res.render("home", templateVars);
 });
 
 app.listen(PORT, () => {
