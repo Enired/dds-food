@@ -15,7 +15,7 @@ const {Pool} = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
 db.connect(() => {
-  console.log('dds_food database connected!!!!')
+  console.log('dds_food database connected!!!!');
 });
 // check cookie-session works
 app.use(
@@ -50,20 +50,20 @@ app.use(express.static("public"));
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 const cartRoutes = require("./routes/cart");
-const loginRoutes = require("./routes/login")
-const registerRoutes = require("./routes/register")
-const logoutRoutes = require('./routes/logout')
+const loginRoutes = require("./routes/login");
+const registerRoutes = require("./routes/register");
+const logoutRoutes = require('./routes/logout');
 const menu_items = require("./routes/menu_items");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use("/login", loginRoutes(db))
-app.use("/register", registerRoutes(db))
-app.use("/logout", logoutRoutes(db))
+app.use("/login", loginRoutes(db));
+app.use("/register", registerRoutes(db));
+app.use("/logout", logoutRoutes(db));
 app.use("/users", usersRoutes(db));
-app.use("/cart", cartRoutes(db))
+app.use("/cart", cartRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
-app.use("/menu", menu_items(db))
+app.use("/menu", menu_items(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -72,11 +72,11 @@ app.use("/menu", menu_items(db))
 
 // index page
 app.get("/", (req, res) => {
-  console.log('req.session=====', req.session)
-  //with out user_id redirect to login page
-  if (!req.session['user_id']) {
-    res.redirect('/login')
-  }
+  // console.log('req.session=====', req.session);
+  // //with out user_id redirect to login page
+  // if (!req.session['user_id']) {
+  //   res.redirect('/login');
+  // }
   res.render("index");
 });
 
