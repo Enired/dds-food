@@ -28,6 +28,7 @@ const minusQuantity = function () {
     let singlePrice = $('.single-price').text()
     singlePrice = Number(singlePrice.slice(1))
     $('.total-price').text((singlePrice * quantity).toFixed(2))
+    $('.headerTotal').text((singlePrice * quantity).toFixed(2) + '$')
   })
 }
 const addQuantity = function () {
@@ -38,6 +39,7 @@ const addQuantity = function () {
     let singlePrice = $('.single-price').text()
     singlePrice = Number(singlePrice.slice(1))
     $('.total-price').text((singlePrice * quantity).toFixed(2))
+    $('.headerTotal').text((singlePrice * quantity).toFixed(2) + '$')
   })
 }
 
