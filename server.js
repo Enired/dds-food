@@ -71,11 +71,19 @@ app.use("/api/widgets", widgetsRoutes(db));
 // index page
 app.get("/", (req, res) => {
   console.log('req.session=====', req.session)
-  //with out user_id redirect to login page
-  if (!req.session['user_id']) {
-    res.redirect('/login')
+  // with out uid redirect to login page
+  if (!req.session['uid']) {
+    const templateVars = {
+      user: {},
+      errMsg: 'Please log in...'
+    }
+    res.render('login', templateVars)
   }
-  res.render("index");
+  const templateVars = {
+    user: req.session
+  }
+  console.log(templateVars)
+  res.render("index", templateVars);
 });
 
 app.listen(PORT, () => {

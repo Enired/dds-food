@@ -5,7 +5,11 @@ const router = express.Router();
 module.exports = (db) => {
   router.get("/",
     (req, res) => {
-      res.render("cart");
+      // console.log('cart====',req.session)
+      const templateVar = {
+        user: req.session
+      }
+      res.render("cart",templateVar);
     });
   return router;
 }
