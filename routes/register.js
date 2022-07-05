@@ -6,22 +6,30 @@ router.use(express.urlencoded({extended: true}))
 module.exports = (db) => {
   router.get("/", (req, res) => {
     //if user already login cannot show register page
-    console.log(req.session['user_id'])
-    if(req.session['user_id']){
+    // console.log(req.session['uid'])
+    if (req.session['uid']) {
       res.redirect('/')
     }
-    res.render("register")
+    const templateVars = {
+      user: {},
+      errMsg: 'Please fill out all the information...'
+    }
+    res.render("register", templateVars)
   })
   //  register
   router.post("/", (req, res) => {
     console.log('register~~~~~~')
     const {email, firstName, lastName, password, phoneNumber} = req.body;
-
     //hash password 10 is salt
     const hashPassword = bcrypt.hashSync(password, 10)
     if (!email) {
-      const errMsg = 'You have to enter your email!'
-      res.status(400).send(errMsg)
+      const errMsg = 'You have to enter your email...'
+      const templateVars = {
+        user: {},
+        errMsg
+      }
+      res.render("register", templateVars)
+      return
     }
 
     return db.query(`
@@ -32,8 +40,13 @@ module.exports = (db) => {
 
       .then(result => {
         if (result.rows.length !== 0) {
-          const errMsg = 'Email already exists!'
-          return res.status(400).send(errMsg)
+          const errMsg = 'Email already exists...'
+          const templateVars = {
+            user: {},
+            errMsg
+          }
+          res.render("register", templateVars)
+          return
         }
         return db.query(`
           INSERT INTO users(first_name, last_name, password, email, phone_number)
@@ -43,12 +56,15 @@ module.exports = (db) => {
           .then((result) => {
             const newUser = result.rows[0]
             console.log('NewUser=================', newUser)
-            req.session["user_id"] = result.rows[0].id
-            req.session["email"] = result.rows[0].email
-            req.session["first_name"] = result.rows[0]['first_name']
-            req.session["last_name"] = result.rows[0]['last_name']
-            req.session["phone_number"] = result.rows[0]['phone_number']
-            res.redirect('/')
+            req.session["uid"] = newUser.id
+            req.session["email"] = newUser.email
+            req.session["first_name"] = newUser['first_name']
+            req.session["last_name"] = newUser['last_name']
+            req.session["phone_number"] = newUser['phone_number']
+            const templateVars = {
+              user: newUser
+            }
+            res.render('index', templateVars)
           })
           .catch(err => {
             console.log(err.message)

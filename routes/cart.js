@@ -33,13 +33,11 @@ getOrder = (db, customerId) => {
 module.exports = (db) => {
   router.get("/",
     (req, res) => {
-      const templateVars = {};
-      const orderTotal = getCartTotal(db, 1)
-      orderTotal.then((data) => {templateVars.orderTotal = data.rows[0]})
-      .then(()=>{
-        res.render("cart", {templateVars});
-
-      })
+      // console.log('cart====',req.session)
+      const templateVar = {
+        user: req.session
+      }
+      res.render("cart",templateVar);
     });
   return router;
 }
