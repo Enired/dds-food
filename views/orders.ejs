@@ -56,6 +56,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="table-responsive mb-4">
+                  <%for(order in templateVars.orderIds) {%>
                     <table class="table">
                         <thead>
                         <tr>
@@ -73,12 +74,12 @@
                         <tr>
 
                             <td class="table-close-btn"><a href="#"><i class="fa-solid fa-xmark"></i></a></td>
-                            <td><%=templateVars.orderId%></td>
-                            <th scope="row"><img src="<%=templateVars.orderItems[0].image_url%>" alt="img"></th>
+                            <td><%=templateVars.orderIds[order]%></td>
+                            <th scope="row"><img src="<%=templateVars.orderItems[order][0].image_url%>" alt="img"></th>
                             <td colspan="2" class="item-name">
                                 <div class="details">
                                     <ul>
-                                      <% for(item of templateVars.orderItems){%>
+                                      <% for(item of templateVars.orderItems[order]){%>
                                         <li><span><%=item.quantity%></span>x <%=item.name%></li>
 
                                         <%}%>
@@ -88,10 +89,11 @@
                             <!-- <td>$50.00</td>
                             <td class="table-quantity">
                             </td> -->
-                            <td>$<%=templateVars.orderTotal.subtotal%></td>
+                            <td>$<%=templateVars.orderItems[order][0].order_total%></td>
                         </tr>
                         </tbody>
                     </table>
+                    <%}%>
                 </div>
             </div>
             <div class="col-lg-5">

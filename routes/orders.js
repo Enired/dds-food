@@ -22,7 +22,7 @@ getOrder = (db, customerId) => {
   const queryParams = [customerId];
   const query =
   `
-  SELECT *
+  SELECT orders.id
   FROM orders
   JOIN users ON users.id = orders.customer_ID
   WHERE orders.customer_Id = $1
@@ -32,11 +32,16 @@ getOrder = (db, customerId) => {
 }
 
 //Getting Oder Items of An Order
-getOrderItems = (db, orderId) => {
+getOrderDetails = (db, orderId) => {
   const queryParams = [orderId];
   const query =
   `
-  SELECT  orders.id, menu_items.name, order_items.quantity, menu_items.image_url
+  SELECT  orders.id as order_Id, menu_items.name, order_items.quantity, menu_items.image_url,
+	(SELECT SUM(menu_items.price * order_items.quantity)/100 as order_total
+  FROM order_items
+  JOIN menu_items on menu_items.id = order_items.menu_item
+  JOIN orders on orders.id = order_items.order_id
+  WHERE orders.id = $1)
   FROM orders
   JOIN order_items on orders.id = order_items.order_id
   JOIN menu_items on menu_items.id = order_items.menu_item
@@ -48,29 +53,73 @@ getOrderItems = (db, orderId) => {
 module.exports = (db) => {
   router.get("/",
     (req, res) => {
-      const templateVars = {};
-      getOrder(db, 2)
-      .then((data) => {templateVars.orderId = data.rows[0].id})
-      .then(()=>{
-        getOrderItems(db, templateVars.orderId)
-        .then((data)=>{templateVars.orderItems = data.rows})
-        .then(()=>{
-          getOrderTotal(db, templateVars.orderId)
-          .then((data) => {templateVars.orderTotal = data.rows[0]})
-          .then(()=>{console.log(templateVars.orderItems[0].image_url)})
-          .then(()=>{
-            res.render("orders", {templateVars});})
-        })
-      })
+
+      const p1 = getOrder(db, 4)
+      // Promise.all([p1]).then(values=>{
+      //   for(value of values[0].rows){
+      //     Promise.all([getOrderItems(db,value.id)]).then(results => {console.log(results[0].rows)})
+      //   }
+      // })
+Promise.resolve(p1)
+.then(results => {orderIds = results.rows; return orderIds})
+.then(results=>{
+  findingOrderItems = []
+  for(value of results){
+    id = value.id
+    findingOrderItems.push(getOrderDetails(db,id))
+  }
+  return findingOrderItems;
+})
+.then(results => {
+  Promise.all(results).then(values => {
+    orderIds = []
+    orderItems = []
+    for(value of values){
+      for(row of value.rows){
+        if(!orderIds.includes(row.order_id)){
+          orderIds.push(row.order_id);
+        }
       }
-      )
-  return router;
-}
+      orderItems.push(value.rows)
+    }
+    const templateVars = {orderIds,orderItems}
+    return templateVars
+  })
+  .then((templateVars)=>{res.render("orders", {templateVars})})
+})
 
-/////////////////////
-// PSEUDOCODE JUNK //
-/////////////////////
 
+//Array of objects
+      // findingOrderItems = []
+      // for(order of orders){
+      //   orderId = Object.values(order)
+      //   findingOrderItems.push(getOrderItems(db,orderId))
+      // }
+      // Promise.all(findingOrderItems).then(results=>{console.log(res)})
+
+    }
+    )
+    return router;
+  }
+
+  /////////////////////
+  // PSEUDOCODE JUNK //
+  /////////////////////
+  ////////original code for cart
+  // const templateVars = {};
+  // getOrder(db, 2)
+  // .then((data) => {templateVars.orderId = data.rows[0].id})
+  // .then(()=>{
+  //   getOrderItems(db, templateVars.orderId)
+  //   .then((data)=>{templateVars.orderItems = data.rows})
+  //   .then(()=>{
+  //     getOrderTotal(db, templateVars.orderId)
+  //     .then((data) => {templateVars.orderTotal = data.rows[0]})
+  //     .then(()=>{console.log(templateVars.orderItems[0].image_url)})
+  //     .then(()=>{
+  //       res.render("orders", {templateVars});})
+  //   })
+  // })
 // So I want the adding to cart button to add an order item to a new order
 /*
 
