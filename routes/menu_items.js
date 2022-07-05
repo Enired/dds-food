@@ -3,7 +3,7 @@ const router = express.Router();
 
 module.exports = (db) => {
 
-  const getAllMenuItems = function(db, res) {
+  const getAllMenuItems = function(db, res,req) {
     // ALL ITEMS QUERY
     db.query(`
       SELECT *
@@ -26,7 +26,7 @@ module.exports = (db) => {
           menu.allItems.push(item);
         }
 
-        res.render('index', { menu });
+        res.render('index', { menu, user: req.session});
 
       })
       .catch((err) => {
@@ -37,7 +37,7 @@ module.exports = (db) => {
   };
 
   router.get('/', (req, res) =>{
-    getAllMenuItems(db, res);
+    getAllMenuItems(db, res, req);
   });
 
   return router;

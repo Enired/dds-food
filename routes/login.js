@@ -62,7 +62,9 @@ module.exports = (db) => {
         const templateVars = {
           user
         }
-        res.render('index', templateVars)
+        // res.render('index', templateVars)
+        res.redirect('/menu')
+        return
       })
       .catch(err => console.error(err))
   })

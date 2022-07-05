@@ -81,7 +81,7 @@ module.exports = (db) => {
           const templateVars = {orderIds,orderItems}
           return templateVars
         })
-        .then((templateVars)=>{res.render("orders", {templateVars})})
+        .then((templateVars)=>{res.render("orders", {templateVars, user: req.session})})
       })
     })
   return router;

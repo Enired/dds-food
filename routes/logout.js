@@ -8,7 +8,7 @@ module.exports = () => {
     const templateVars = {
       user: {},
     }
-    res.status(200).render('index', templateVars);
+    res.redirect('login');
   });
   return router;
 }
