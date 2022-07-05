@@ -1,9 +1,10 @@
+const e = require('express');
 const express = require('express');
 const router = express.Router();
 
 
-//Getting Cart Total
-getCartTotal = (db, orderId) => {
+//Getting Order Total
+getOrderTotal = (db, orderId) => {
   const queryParams = [orderId]
   const query =
   `
@@ -26,7 +27,21 @@ getOrder = (db, customerId) => {
   JOIN users ON users.id = orders.customer_ID
   WHERE orders.customer_Id = $1
   `
+  return db.query(query, queryParams)
 
+}
+
+//Getting Oder Items of An Order
+getOrderItems = (db, orderId) => {
+  const queryParams = [orderId];
+  const query =
+  `
+  SELECT  orders.id, menu_items.name, order_items.quantity, menu_items.image_url
+  FROM orders
+  JOIN order_items on orders.id = order_items.order_id
+  JOIN menu_items on menu_items.id = order_items.menu_item
+  WHERE orders.id = $1;
+  `
   return db.query(query, queryParams)
 }
 
@@ -34,13 +49,21 @@ module.exports = (db) => {
   router.get("/",
     (req, res) => {
       const templateVars = {};
-      const orderTotal = getCartTotal(db, 1)
-      orderTotal.then((data) => {templateVars.orderTotal = data.rows[0]})
+      getOrder(db, 2)
+      .then((data) => {templateVars.orderId = data.rows[0].id})
       .then(()=>{
-        res.render("cart", {templateVars});
-
+        getOrderItems(db, templateVars.orderId)
+        .then((data)=>{templateVars.orderItems = data.rows})
+        .then(()=>{
+          getOrderTotal(db, templateVars.orderId)
+          .then((data) => {templateVars.orderTotal = data.rows[0]})
+          .then(()=>{console.log(templateVars.orderItems[0].image_url)})
+          .then(()=>{
+            res.render("orders", {templateVars});})
+        })
       })
-    });
+      }
+      )
   return router;
 }
 
