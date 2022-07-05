@@ -54,53 +54,38 @@ module.exports = (db) => {
   router.get("/",
     (req, res) => {
 
-      const p1 = getOrder(db, 4)
-      // Promise.all([p1]).then(values=>{
-      //   for(value of values[0].rows){
-      //     Promise.all([getOrderItems(db,value.id)]).then(results => {console.log(results[0].rows)})
-      //   }
-      // })
-Promise.resolve(p1)
-.then(results => {orderIds = results.rows; return orderIds})
-.then(results=>{
-  findingOrderItems = []
-  for(value of results){
-    id = value.id
-    findingOrderItems.push(getOrderDetails(db,id))
-  }
-  return findingOrderItems;
-})
-.then(results => {
-  Promise.all(results).then(values => {
-    orderIds = []
-    orderItems = []
-    for(value of values){
-      for(row of value.rows){
-        if(!orderIds.includes(row.order_id)){
-          orderIds.push(row.order_id);
+      const p1 = getOrder(db, 2)
+
+      Promise.resolve(p1)
+      .then(results => {orderIds = results.rows; return orderIds})
+      .then(results=>{
+        findingOrderItems = []
+        for(value of results){
+          id = value.id
+          findingOrderItems.push(getOrderDetails(db,id))
         }
-      }
-      orderItems.push(value.rows)
-    }
-    const templateVars = {orderIds,orderItems}
-    return templateVars
-  })
-  .then((templateVars)=>{res.render("orders", {templateVars})})
-})
-
-
-//Array of objects
-      // findingOrderItems = []
-      // for(order of orders){
-      //   orderId = Object.values(order)
-      //   findingOrderItems.push(getOrderItems(db,orderId))
-      // }
-      // Promise.all(findingOrderItems).then(results=>{console.log(res)})
-
-    }
-    )
-    return router;
-  }
+        return findingOrderItems;
+      })
+      .then(results => {
+        Promise.all(results).then(values => {
+          orderIds = []
+          orderItems = []
+          for(value of values){
+            for(row of value.rows){
+              if(!orderIds.includes(row.order_id)){
+                orderIds.push(row.order_id);
+              }
+            }
+            orderItems.push(value.rows)
+          }
+          const templateVars = {orderIds,orderItems}
+          return templateVars
+        })
+        .then((templateVars)=>{res.render("orders", {templateVars})})
+      })
+    })
+  return router;
+}
 
   /////////////////////
   // PSEUDOCODE JUNK //
