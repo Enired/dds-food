@@ -64,6 +64,18 @@ getOrderDetails = (db, orderId) => {
   return db.query(query, queryParams)
 }
 
+markOrderAsCompleted = (db, orderId) => {
+  params = [orderId]
+  const query =
+  `
+   UPDATE orders
+   SET completed_at = now()
+   WHERE orders.id =$1
+  `
+
+  return db.query(query,params)
+}
+
 module.exports = (db) => {
   router.get("/",
     (req, res) => {
@@ -110,6 +122,15 @@ module.exports = (db) => {
         .then((templateVars)=>{res.render(pageToRender, {templateVars, user: req.session})})
       })
     })
+
+
+  router.post("/", (req,res)=>{
+   orderId = req.body.hello
+
+
+   Promise.resolve(markOrderAsCompleted(db,orderId)).then(res.redirect('/orders'))
+
+  })
   return router;
 }
 
