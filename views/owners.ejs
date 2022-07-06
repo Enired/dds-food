@@ -74,7 +74,7 @@
                       <tbody>
                         <%for(order in templateVars.orderIds) {%>
                         <tr>
-                          <td><%=templateVars.orderIds[order]%></td>
+                          <td class="order_number"><%=templateVars.orderIds[order]%></td>
                           <td></td>
                             <th><img class="table-img" src="<%=templateVars.orderItems[order][0].image_url%>" alt="img"></th>
                             <td colspan="2" class="item-name">
@@ -95,7 +95,10 @@
                             <td><div>
                               <input type="number" min='0' value="0" class="form-control" id="input1" placeholder="Quantity">
                               <button class="btn btn-warning send-time-estimate">Send Time Estimate</button>
-                              <button class="btn btn-success order-complete">Order Finished</button>
+                              <form action="/orders" method="post">
+                                <input type="hidden" name="hello" value="<%=templateVars.orderIds[order]%>"/>
+                                <button class="btn btn-success order-complete" type="submit">Order Finished</button>
+                              </form>
                             </div>
                           </td>
 
