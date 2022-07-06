@@ -47,7 +47,7 @@
                     <% if (!user['email']) { %>
                         <ul class="navbar-nav me-auto sm-3 fw-bold mb-lg-0">
                             <li class="phone-contact"><i class="fa-solid fa-phone"></i>
-                              1-888-569-6898
+                              +1-555-867-5309
 
                             </li>
                             <li class="menu-cart">
@@ -60,10 +60,9 @@
                             <li class="phone-contact"><i class="fa-solid fa-user-check"></i>
                                 <%= user.first_name %>  <%= user.last_name %>
                             </li>
-                            <li class="menu-cart"><a href="/cart"><i style="color: black;font-size: larger"
+                            <li class="menu-cart"><a href="/cart"><i style="color: black; font-size: larger; margin-right: 20px;"
                                                                      class="fa-solid fa-cart-plus"></i>
-                                    <span>1</span></a></li>
-                            <li style="color: red">49.50 $</li>
+                                    <span id="cart-counter-display">0</span></a></li>
                             <li class="logout">
                                 <a href="/logout">Logout</a>
                             </li>
