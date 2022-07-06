@@ -106,6 +106,7 @@ const deleteCartItem = function () {
     $(this).closest('tr').remove()
     updateTotalPrice()
     updateTopCartNum()
+    addTax()
   })
 }
 
