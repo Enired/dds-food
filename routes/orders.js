@@ -31,6 +31,20 @@ getOrder = (db, customerId) => {
 
 }
 
+//Getting all open orders
+getOpenOrders = (db) => {
+  const query =
+  `
+  SELECT orders.id
+  FROM orders
+  JOIN users ON users.id = orders.customer_ID
+  WHERE orders.completed_at IS null
+  `
+  return db.query(query)
+
+}
+
+
 //Getting Oder Items of An Order
 getOrderDetails = (db, orderId) => {
   const queryParams = [orderId];
@@ -54,7 +68,19 @@ module.exports = (db) => {
   router.get("/",
     (req, res) => {
 
-      const p1 = getOrder(db, 2)
+      let p1;
+      let pageToRender;
+
+      const customerId = req.session.uid
+      const is_owner = req.session.is_owner
+      if(is_owner){
+        p1 = getOpenOrders(db)
+        pageToRender = "owners"
+      }
+      else{
+        p1 = getOrder(db, customerId)
+        pageToRender = "orders"
+      }
 
       Promise.resolve(p1)
       .then(results => {orderIds = results.rows; return orderIds})
@@ -81,7 +107,7 @@ module.exports = (db) => {
           const templateVars = {orderIds,orderItems}
           return templateVars
         })
-        .then((templateVars)=>{res.render("orders", {templateVars, user: req.session})})
+        .then((templateVars)=>{res.render(pageToRender, {templateVars, user: req.session})})
       })
     })
   return router;
