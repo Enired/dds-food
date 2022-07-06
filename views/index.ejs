@@ -128,16 +128,13 @@
                                   <h6 class="price">$<%=(item.price/100).toFixed(2)%></h6>
                                   <p class="text-center text-muted"><%=item.description%></p>
                                   <div class="details-bottom p-3">
-                                      <form action="">
-                                          <div>
-                                            <input type="number" min='0' class="form-control" id="input1" placeholder="Quantity">
-                                          </div>
-                                          <div style="width: 150px; height: 3px;">
-                                            <button class="btn btn-warning" value=<%=item.id%>>Add
-                                              <i class="fa-solid fa-cart-plus"></i>
-                                            </button>
-                                          </div>
-                                      </form>
+                                      <div style="display: flex; justify-content: space-between;">
+                                        <input type="number" min='0' placeholder="Qty." class="form-control" style="width: 35%;">
+                                        <button class="btn btn-warning add-to-cart" style="width: 60%;" value=<%=item.id%>>
+                                          Add
+                                          <i class="fa-solid fa-cart-plus"></i>
+                                        </button>
+                                      </div>
                                   </div>
                               </div>
                           </div>
