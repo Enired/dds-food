@@ -5,7 +5,7 @@ const router = express.Router();
 
 //Getting Order Total
 getOrderTotal = (db, orderId) => {
-  const queryParams = [orderId]
+  const queryParams = [orderId];
   const query =
   `
   SELECT SUM(menu_items.price * order_items.quantity)/100 as subtotal
@@ -13,9 +13,9 @@ getOrderTotal = (db, orderId) => {
   JOIN menu_items on menu_items.id = order_items.menu_item
   JOIN orders on orders.id = order_items.order_id
   WHERE orders.id = $1;
-  `
-  return db.query(query, queryParams)
-}
+  `;
+  return db.query(query, queryParams);
+};
 
 //Getting Order Specific to User
 getOrder = (db, customerId) => {
@@ -26,10 +26,10 @@ getOrder = (db, customerId) => {
   FROM orders
   JOIN users ON users.id = orders.customer_ID
   WHERE orders.customer_Id = $1
-  `
-  return db.query(query, queryParams)
+  `;
+  return db.query(query, queryParams);
 
-}
+};
 
 //Getting all open orders
 getOpenOrders = (db) => {
@@ -39,10 +39,10 @@ getOpenOrders = (db) => {
   FROM orders
   JOIN users ON users.id = orders.customer_ID
   WHERE orders.completed_at IS null
-  `
-  return db.query(query)
+  `;
+  return db.query(query);
 
-}
+};
 
 
 //Getting Oder Items of An Order
@@ -60,21 +60,21 @@ getOrderDetails = (db, orderId) => {
   JOIN order_items on orders.id = order_items.order_id
   JOIN menu_items on menu_items.id = order_items.menu_item
   WHERE orders.id = $1;
-  `
-  return db.query(query, queryParams)
-}
+  `;
+  return db.query(query, queryParams);
+};
 
 markOrderAsCompleted = (db, orderId) => {
-  params = [orderId]
+  params = [orderId];
   const query =
   `
    UPDATE orders
    SET completed_at = now()
    WHERE orders.id =$1
-  `
+  `;
 
-  return db.query(query,params)
-}
+  return db.query(query,params);
+};
 
 module.exports = (db) => {
   router.get("/",
@@ -83,75 +83,78 @@ module.exports = (db) => {
       let p1;
       let pageToRender;
 
-      const customerId = req.session.uid
-      const is_owner = req.session.is_owner
-      if(is_owner){
-        p1 = getOpenOrders(db)
-        pageToRender = "owners"
-      }
-      else{
-        p1 = getOrder(db, customerId)
-        pageToRender = "orders"
+      const customerId = req.session.uid;
+      const is_owner = req.session.is_owner;
+      if (is_owner) {
+        p1 = getOpenOrders(db);
+        pageToRender = "owners";
+      } else {
+        p1 = getOrder(db, customerId);
+        pageToRender = "orders";
       }
 
       Promise.resolve(p1)
-      .then(results => {orderIds = results.rows; return orderIds})
-      .then(results=>{
-        findingOrderItems = []
-        for(value of results){
-          id = value.id
-          findingOrderItems.push(getOrderDetails(db,id))
-        }
-        return findingOrderItems;
-      })
-      .then(results => {
-        Promise.all(results).then(values => {
-          orderIds = []
-          orderItems = []
-          for(value of values){
-            for(row of value.rows){
-              if(!orderIds.includes(row.order_id)){
-                orderIds.push(row.order_id);
-              }
-            }
-            orderItems.push(value.rows)
-          }
-          const templateVars = {orderIds,orderItems}
-          return templateVars
+        .then(results => {
+          orderIds = results.rows; return orderIds;
         })
-        .then((templateVars)=>{res.render(pageToRender, {templateVars, user: req.session})})
-      })
-    })
+        .then(results=>{
+          findingOrderItems = [];
+          for (value of results) {
+            id = value.id;
+            findingOrderItems.push(getOrderDetails(db,id));
+          }
+          return findingOrderItems;
+        })
+        .then(results => {
+          Promise.all(results).then(values => {
+            orderIds = [];
+            orderItems = [];
+            for (value of values) {
+              for (row of value.rows) {
+                if (!orderIds.includes(row.order_id)) {
+                  orderIds.push(row.order_id);
+                }
+              }
+              orderItems.push(value.rows);
+            }
+            const templateVars = {orderIds,orderItems};
+            return templateVars;
+          })
+            .then((templateVars)=>{
+              res.render(pageToRender, {templateVars, user: req.session});
+            });
+        });
+    });
 
 
   router.post("/", (req,res)=>{
-   orderId = req.body.hello
+    orderId = req.body.hello;
 
 
-   Promise.resolve(markOrderAsCompleted(db,orderId)).then(res.redirect('/orders'))
+    Promise.resolve(markOrderAsCompleted(db,orderId)).then(res.redirect('/orders'));
 
-  })
+  });
   return router;
-}
+};
 
-  /////////////////////
-  // PSEUDOCODE JUNK //
-  /////////////////////
-  ////////original code for cart
-  // const templateVars = {};
-  // getOrder(db, 2)
-  // .then((data) => {templateVars.orderId = data.rows[0].id})
-  // .then(()=>{
-  //   getOrderItems(db, templateVars.orderId)
-  //   .then((data)=>{templateVars.orderItems = data.rows})
-  //   .then(()=>{
-  //     getOrderTotal(db, templateVars.orderId)
-  //     .then((data) => {templateVars.orderTotal = data.rows[0]})
-  //     .then(()=>{console.log(templateVars.orderItems[0].image_url)})
-  //     .then(()=>{
-  //       res.render("orders", {templateVars});})
-  //   })
-  // })
+/////////////////////
+// PSEUDOCODE JUNK //
+/////////////////////
+////////original code for cart
+// const templateVars = {};
+// getOrder(db, 2)
+// .then((data) => {templateVars.orderId = data.rows[0].id})
+// .then(()=>{
+//   getOrderItems(db, templateVars.orderId)
+//   .then((data)=>{templateVars.orderItems = data.rows})
+//   .then(()=>{
+//     getOrderTotal(db, templateVars.orderId)
+//     .then((data) => {templateVars.orderTotal = data.rows[0]})
+//     .then(()=>{console.log(templateVars.orderItems[0].image_url)})
+//     .then(()=>{
+//       res.render("orders", {templateVars});})
+//   })
+// })
 // So I want the adding to cart button to add an order item to a new order
 /*
 

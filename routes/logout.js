@@ -7,8 +7,8 @@ module.exports = () => {
     req.session = null;
     const templateVars = {
       user: {},
-    }
+    };
     res.redirect('login');
   });
   return router;
-}
+};
