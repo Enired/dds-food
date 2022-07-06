@@ -16,6 +16,35 @@ $(document).scroll(function () {
   }
 })
 
+//cartQuantity
+const minusQuantity = function () {
+  $('.minus').on('click', function () {
+    let quantity = parseInt($('.input-text').val())
+    if (quantity === 1) {
+      return
+    }
+    quantity -= 1
+    $('.input-text').val(quantity)
+    let singlePrice = $('.single-price').text()
+    singlePrice = Number(singlePrice.slice(1))
+    $('.total-price').text((singlePrice * quantity).toFixed(2))
+    $('.headerTotal').text((singlePrice * quantity).toFixed(2) + '$')
+  })
+}
+const addQuantity = function () {
+  $('.plus').on('click', function () {
+    let quantity = parseInt($('.input-text').val())
+    quantity += 1
+    $('.input-text').val(quantity)
+    let singlePrice = $('.single-price').text()
+    singlePrice = Number(singlePrice.slice(1))
+    $('.total-price').text((singlePrice * quantity).toFixed(2))
+    $('.headerTotal').text((singlePrice * quantity).toFixed(2) + '$')
+  })
+}
+
 $(document).ready(function () {
   backToTop()
+  addQuantity()
+  minusQuantity()
 })
