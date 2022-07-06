@@ -7,13 +7,13 @@ const router = express.Router();
 getOrderTotal = (db, orderId) => {
   const queryParams = [orderId];
   const query =
-  `
-  SELECT SUM(menu_items.price * order_items.quantity)/100 as subtotal
-  FROM order_items
-  JOIN menu_items on menu_items.id = order_items.menu_item
-  JOIN orders on orders.id = order_items.order_id
-  WHERE orders.id = $1;
-  `;
+    `
+      SELECT SUM(menu_items.price * order_items.quantity) / 100 as subtotal
+      FROM order_items
+             JOIN menu_items on menu_items.id = order_items.menu_item
+             JOIN orders on orders.id = order_items.order_id
+      WHERE orders.id = $1;
+    `;
   return db.query(query, queryParams);
 };
 
@@ -21,12 +21,12 @@ getOrderTotal = (db, orderId) => {
 getOrder = (db, customerId) => {
   const queryParams = [customerId];
   const query =
-  `
-  SELECT orders.id
-  FROM orders
-  JOIN users ON users.id = orders.customer_ID
-  WHERE orders.customer_Id = $1
-  `;
+    `
+      SELECT orders.id
+      FROM orders
+             JOIN users ON users.id = orders.customer_ID
+      WHERE orders.customer_Id = $1
+    `;
   return db.query(query, queryParams);
 
 };
@@ -34,12 +34,12 @@ getOrder = (db, customerId) => {
 //Getting all open orders
 getOpenOrders = (db) => {
   const query =
-  `
-  SELECT orders.id
-  FROM orders
-  JOIN users ON users.id = orders.customer_ID
-  WHERE orders.completed_at IS null
-  `;
+    `
+      SELECT orders.id
+      FROM orders
+             JOIN users ON users.id = orders.customer_ID
+      WHERE orders.completed_at IS null
+    `;
   return db.query(query);
 
 };
@@ -49,31 +49,36 @@ getOpenOrders = (db) => {
 getOrderDetails = (db, orderId) => {
   const queryParams = [orderId];
   const query =
-  `
-  SELECT  orders.id as order_Id, orders.created_at,menu_items.name, orders.completed_at, order_items.quantity, menu_items.image_url,
-	(SELECT SUM(menu_items.price * order_items.quantity)/100 as order_total
-  FROM order_items
-  JOIN menu_items on menu_items.id = order_items.menu_item
-  JOIN orders on orders.id = order_items.order_id
-  WHERE orders.id = $1)
-  FROM orders
-  JOIN order_items on orders.id = order_items.order_id
-  JOIN menu_items on menu_items.id = order_items.menu_item
-  WHERE orders.id = $1;
-  `;
+    `
+      SELECT orders.id as order_Id,
+             orders.created_at,
+             menu_items.name,
+             orders.completed_at,
+             order_items.quantity,
+             menu_items.image_url,
+             (SELECT SUM(menu_items.price * order_items.quantity) / 100 as order_total
+              FROM order_items
+                     JOIN menu_items on menu_items.id = order_items.menu_item
+                     JOIN orders on orders.id = order_items.order_id
+              WHERE orders.id = $1)
+      FROM orders
+             JOIN order_items on orders.id = order_items.order_id
+             JOIN menu_items on menu_items.id = order_items.menu_item
+      WHERE orders.id = $1;
+    `;
   return db.query(query, queryParams);
 };
 
 markOrderAsCompleted = (db, orderId) => {
   params = [orderId];
   const query =
-  `
-   UPDATE orders
-   SET completed_at = now()
-   WHERE orders.id =$1
-  `;
+    `
+      UPDATE orders
+      SET completed_at = now()
+      WHERE orders.id = $1
+    `;
 
-  return db.query(query,params);
+  return db.query(query, params);
 };
 
 module.exports = (db) => {
@@ -95,13 +100,14 @@ module.exports = (db) => {
 
       Promise.resolve(p1)
         .then(results => {
-          orderIds = results.rows; return orderIds;
+          orderIds = results.rows;
+          return orderIds;
         })
-        .then(results=>{
+        .then(results => {
           findingOrderItems = [];
           for (value of results) {
             id = value.id;
-            findingOrderItems.push(getOrderDetails(db,id));
+            findingOrderItems.push(getOrderDetails(db, id));
           }
           return findingOrderItems;
         })
@@ -117,22 +123,19 @@ module.exports = (db) => {
               }
               orderItems.push(value.rows);
             }
-            const templateVars = {orderIds,orderItems};
+            const templateVars = {orderIds, orderItems};
             return templateVars;
           })
-            .then((templateVars)=>{
+            .then((templateVars) => {
               res.render(pageToRender, {templateVars, user: req.session});
             });
         });
     });
 
 
-  router.post("/", (req,res)=>{
+  router.post("/", (req, res) => {
     orderId = req.body.hello;
-
-
-    Promise.resolve(markOrderAsCompleted(db,orderId)).then(res.redirect('/orders'));
-
+    Promise.resolve(markOrderAsCompleted(db, orderId)).then(res.redirect('/orders'));
   });
   return router;
 };
