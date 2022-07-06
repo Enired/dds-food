@@ -73,9 +73,9 @@ const updateTotalPrice = function () {
   totalPriceFakeList = totalPriceFakeList.slice(1)
   const totalPriceArray = totalPriceFakeList.split('$')
   const totalPriceNum = sum(totalPriceArray)
-  // console.log(totalPriceNum)
-  $('.headerTotal').text(totalPriceNum.toFixed(2) + '$')
-  $('.subTotal').text(totalPriceNum.toFixed(2) + '$')
+  console.log(totalPriceNum)
+  $('.headerTotal').text(Number(totalPriceNum).toFixed(2) + '$')
+  $('.subTotal').text(Number(totalPriceNum).toFixed(2) + '$')
 }
 
 // add Tax
@@ -110,6 +110,30 @@ const deleteCartItem = function () {
   })
 }
 
+//send order
+const sendOrder = function () {
+  $('.submit-order').on('click', function (e) {
+    const quantity =
+      e.preventDefault()
+    $.ajax({
+      type: "POST",  // 使用post方式
+      url: "/order",
+      // quantity menu_item
+      data: {
+        quantity: 3
+      },
+      success: function (result) {
+        if (result.resultCode === 200) {
+
+        }
+      },
+      error: function (err) {
+        console.log(err)
+      }
+    });
+  })
+}
+
 $(document).ready(function () {
   backToTop()
   addQuantity()
@@ -118,4 +142,5 @@ $(document).ready(function () {
   addTax()
   updateTopCartNum()
   deleteCartItem()
+  sendOrder()
 })
