@@ -54,7 +54,7 @@ const loginRoutes = require("./routes/login");
 const registerRoutes = require("./routes/register");
 const logoutRoutes = require('./routes/logout');
 const menu_items = require("./routes/menu_items");
-const orderRoutes = require("./routes/orders")
+const orderRoutes = require("./routes/orders");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -74,19 +74,19 @@ app.use("/orders", orderRoutes(db));
 
 // index page
 app.get("/", (req, res) => {
-  console.log('req.session=====', req.session)
+  console.log('req.session=====', req.session);
   // with out uid redirect to login page
   if (!req.session['uid']) {
     const templateVars = {
       user: {},
       errMsg: 'Please log in...'
-    }
-    res.render('home', templateVars)
+    };
+    res.render('home', templateVars);
   }
   const templateVars = {
     user: req.session
-  }
-  console.log(templateVars)
+  };
+  console.log(templateVars);
   res.render("home", templateVars);
 });
 

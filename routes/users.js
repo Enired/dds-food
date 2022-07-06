@@ -6,7 +6,7 @@
  */
 const express = require('express');
 const router = express.Router();
-router.use(express.urlencoded({extended: true}))
+router.use(express.urlencoded({extended: true}));
 
 module.exports = (db) => {
   router.get("/", (req, res) => {

@@ -4,7 +4,7 @@ const router = express.Router();
 
 //Getting Cart Total
 getCartTotal = (db, orderId) => {
-  const queryParams = [orderId]
+  const queryParams = [orderId];
   const query =
   `
   SELECT SUM(menu_items.price * order_items.quantity)/100 as subtotal
@@ -12,9 +12,9 @@ getCartTotal = (db, orderId) => {
   JOIN menu_items on menu_items.id = order_items.menu_item
   JOIN orders on orders.id = order_items.order_id
   WHERE orders.id = $1;
-  `
-  return db.query(query, queryParams)
-}
+  `;
+  return db.query(query, queryParams);
+};
 
 //Getting Order Specific to User
 getOrder = (db, customerId) => {
@@ -25,10 +25,10 @@ getOrder = (db, customerId) => {
   FROM orders
   JOIN users ON users.id = orders.customer_ID
   WHERE orders.customer_Id = $1
-  `
+  `;
 
-  return db.query(query, queryParams)
-}
+  return db.query(query, queryParams);
+};
 
 module.exports = (db) => {
   router.get("/",
@@ -36,11 +36,11 @@ module.exports = (db) => {
       // console.log('cart====',req.session)
       const templateVar = {
         user: req.session
-      }
+      };
       res.render("cart",templateVar);
     });
   return router;
-}
+};
 
 /////////////////////
 // PSEUDOCODE JUNK //
