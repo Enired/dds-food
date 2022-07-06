@@ -50,12 +50,12 @@ module.exports = (db) => {
           } else {
             orderId = undefined
           }
-
           getOrderItemsByOrderId(db, orderId)
             .then((result) => {
               console.log('inner', result.rows)
               // req.session
               console.log(JSON.stringify(result.rows))
+              res.cookie('cart', result.rows)
               orderCartInformation = result.rows
               const templateVar = {
                 user: req.session,

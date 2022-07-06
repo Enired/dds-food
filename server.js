@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 8080;
 const sassMiddleware = require("./lib/sass-middleware");
 // cookie-session
 const cookieSession = require("cookie-session");
+const cookieParser = require("cookie-parser");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
@@ -17,7 +18,7 @@ const db = new Pool(dbParams);
 db.connect(() => {
   console.log('dds_food database connected!!!!')
 });
-// check cookie-session works
+// use cookie_session to keep user information secure
 app.use(
   cookieSession({
     name: "dds_food",
@@ -25,6 +26,7 @@ app.use(
     maxAge: 24 * 60 * 60 * 1000,
   })
 );
+app.use(cookieParser())
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
