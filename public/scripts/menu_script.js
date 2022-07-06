@@ -6,12 +6,19 @@
   // Add cart button event listeners
   $(document).ready(function() {
 
-    const $addToCartButtons = $('.btn.btn-warning.add-to-cart');
-    for (const button of $addToCartButtons) {
-      $(button).on('click', addItemToCart);
-    }
+    const $logout = $('a[href="/logout"]')[0];
 
-    updateCartCounter();
+    // Only add listeners if user is logged in
+    if ($logout) {
+
+      const $addToCartButtons = $('.btn.btn-warning.add-to-cart');
+      for (const button of $addToCartButtons) {
+        $(button).on('click', addItemToCart);
+      }
+
+      updateCartCounter();
+
+    }
 
   });
 
