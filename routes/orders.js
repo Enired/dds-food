@@ -50,7 +50,7 @@ getOrderDetails = (db, orderId) => {
   const queryParams = [orderId];
   const query =
   `
-  SELECT  orders.id as order_Id, menu_items.name, order_items.quantity, menu_items.image_url,
+  SELECT  orders.id as order_Id, orders.created_at,menu_items.name, order_items.quantity, menu_items.image_url,
 	(SELECT SUM(menu_items.price * order_items.quantity)/100 as order_total
   FROM order_items
   JOIN menu_items on menu_items.id = order_items.menu_item
