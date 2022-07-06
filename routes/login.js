@@ -7,16 +7,27 @@ module.exports = (db) => {
   //  login
   router.get('/', (req, res) => {
     //if user already login cannot show login page
-    if (req.session['user_id']) {
+    if (req.session['uid']) {
       res.redirect('/')
     }
-    res.render("login")
+    const errMsg = 'Please login first...'
+    const templateVars = {
+      user: {},
+      errMsg
+    }
+    res.render("login", templateVars)
   })
 
   router.post("/", (req, res) => {
     const {email, password} = req.body;
     if (!email) {
-      res.send('You have to enter your email!')
+      const errMsg = 'You have to enter your email...'
+      const templateVars = {
+        user: {},
+        errMsg
+      }
+      res.render('login', templateVars)
+      return
     }
     return db.query(`
       SELECT *
@@ -25,11 +36,12 @@ module.exports = (db) => {
     `, [email.trim()])
       .then(result => {
         if (!result.rows[0]) {
-          const errMsg = 'Authentication failed!'
+          const errMsg = 'Authentication failed...'
           const templateVars = {
+            user: {},
             errMsg
           }
-          res.status(400).render('login', templateVars)
+          res.render('login', templateVars)
           return
         }
         const hashedPassword = result.rows[0].password
@@ -41,13 +53,19 @@ module.exports = (db) => {
         //  login success
         console.log('login success!')
         const user = result.rows[0]
-        // console.log(user)
-        req.session["user_id"] = result.rows[0].id
-        req.session["email"] = result.rows[0].email
-        req.session["first_name"] = result.rows[0]['first_name']
-        req.session["last_name"] = result.rows[0]['last_name']
-        req.session["phone_number"] = result.rows[0]['phone_number']
-        res.redirect('/')
+        console.log(user)
+        req.session["uid"] = user.id
+        req.session["email"] = user.email
+        req.session["first_name"] = user['first_name']
+        req.session["last_name"] = user['last_name']
+        req.session["phone_number"] = user['phone_number']
+        req.session["is_owner"] = user['is_owner']
+        const templateVars = {
+          user
+        }
+        // res.render('index', templateVars)
+        res.redirect('/menu')
+        return
       })
       .catch(err => console.error(err))
   })

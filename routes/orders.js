@@ -22,7 +22,7 @@ getOrder = (db, customerId) => {
   const queryParams = [customerId];
   const query =
   `
-  SELECT *
+  SELECT orders.id
   FROM orders
   JOIN users ON users.id = orders.customer_ID
   WHERE orders.customer_Id = $1
@@ -31,12 +31,31 @@ getOrder = (db, customerId) => {
 
 }
 
+//Getting all open orders
+getOpenOrders = (db) => {
+  const query =
+  `
+  SELECT orders.id
+  FROM orders
+  JOIN users ON users.id = orders.customer_ID
+  WHERE orders.completed_at IS null
+  `
+  return db.query(query)
+
+}
+
+
 //Getting Oder Items of An Order
-getOrderItems = (db, orderId) => {
+getOrderDetails = (db, orderId) => {
   const queryParams = [orderId];
   const query =
   `
-  SELECT  orders.id, menu_items.name, order_items.quantity, menu_items.image_url
+  SELECT  orders.id as order_Id, orders.created_at,menu_items.name, order_items.quantity, menu_items.image_url,
+	(SELECT SUM(menu_items.price * order_items.quantity)/100 as order_total
+  FROM order_items
+  JOIN menu_items on menu_items.id = order_items.menu_item
+  JOIN orders on orders.id = order_items.order_id
+  WHERE orders.id = $1)
   FROM orders
   JOIN order_items on orders.id = order_items.order_id
   JOIN menu_items on menu_items.id = order_items.menu_item
@@ -45,32 +64,94 @@ getOrderItems = (db, orderId) => {
   return db.query(query, queryParams)
 }
 
+markOrderAsCompleted = (db, orderId) => {
+  params = [orderId]
+  const query =
+  `
+   UPDATE orders
+   SET completed_at = now()
+   WHERE orders.id =$1
+  `
+
+  return db.query(query,params)
+}
+
 module.exports = (db) => {
   router.get("/",
     (req, res) => {
-      const templateVars = {};
-      getOrder(db, 2)
-      .then((data) => {templateVars.orderId = data.rows[0].id})
-      .then(()=>{
-        getOrderItems(db, templateVars.orderId)
-        .then((data)=>{templateVars.orderItems = data.rows})
-        .then(()=>{
-          getOrderTotal(db, templateVars.orderId)
-          .then((data) => {templateVars.orderTotal = data.rows[0]})
-          .then(()=>{console.log(templateVars.orderItems[0].image_url)})
-          .then(()=>{
-            res.render("orders", {templateVars});})
-        })
-      })
+
+      let p1;
+      let pageToRender;
+
+      const customerId = req.session.uid
+      const is_owner = req.session.is_owner
+      if(is_owner){
+        p1 = getOpenOrders(db)
+        pageToRender = "owners"
       }
-      )
+      else{
+        p1 = getOrder(db, customerId)
+        pageToRender = "orders"
+      }
+
+      Promise.resolve(p1)
+      .then(results => {orderIds = results.rows; return orderIds})
+      .then(results=>{
+        findingOrderItems = []
+        for(value of results){
+          id = value.id
+          findingOrderItems.push(getOrderDetails(db,id))
+        }
+        return findingOrderItems;
+      })
+      .then(results => {
+        Promise.all(results).then(values => {
+          orderIds = []
+          orderItems = []
+          for(value of values){
+            for(row of value.rows){
+              if(!orderIds.includes(row.order_id)){
+                orderIds.push(row.order_id);
+              }
+            }
+            orderItems.push(value.rows)
+          }
+          const templateVars = {orderIds,orderItems}
+          return templateVars
+        })
+        .then((templateVars)=>{res.render(pageToRender, {templateVars, user: req.session})})
+      })
+    })
+
+
+  router.post("/", (req,res)=>{
+   orderId = req.body.hello
+
+
+   Promise.resolve(markOrderAsCompleted(db,orderId)).then(res.redirect('/orders'))
+
+  })
   return router;
 }
 
-/////////////////////
-// PSEUDOCODE JUNK //
-/////////////////////
-
+  /////////////////////
+  // PSEUDOCODE JUNK //
+  /////////////////////
+  ////////original code for cart
+  // const templateVars = {};
+  // getOrder(db, 2)
+  // .then((data) => {templateVars.orderId = data.rows[0].id})
+  // .then(()=>{
+  //   getOrderItems(db, templateVars.orderId)
+  //   .then((data)=>{templateVars.orderItems = data.rows})
+  //   .then(()=>{
+  //     getOrderTotal(db, templateVars.orderId)
+  //     .then((data) => {templateVars.orderTotal = data.rows[0]})
+  //     .then(()=>{console.log(templateVars.orderItems[0].image_url)})
+  //     .then(()=>{
+  //       res.render("orders", {templateVars});})
+  //   })
+  // })
 // So I want the adding to cart button to add an order item to a new order
 /*
 

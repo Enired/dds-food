@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css"/>
     <link rel="stylesheet" href="/styles/main.css" type="text/css"/>
     <link rel="stylesheet" href="/styles/layout.css" type="text/css"/>
-    <link rel="stylesheet" href="/styles/cart.css" type="text/css"/>
+    <link rel="stylesheet" href="/styles/orders.css" type="text/css"/>
     <!--Google Fonts-->
     <link
             href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&family=Bebas+Neue&family=Satisfy&family=Quattrocento:wght@400;700&display=swap"
@@ -27,6 +27,7 @@
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/owners_orders.js"></script>
 </head>
 <body>
 <!--navBar Start-->
@@ -38,9 +39,8 @@
     <div class="container-lg">
         <div class="row g-4 pt-5 justify-content-center align-items-center">
             <div class="banner-inner col-md-5 text-center text-md-start">
-                <h3>Cart Page</h3>
-                <h1>Check your order</h1>
-                <p class="lead my-4 text-muted fw-bold">Delivery - ASAP</p>
+                <h1>Your Orders</h1>
+                <!-- <p class="lead my-4 text-muted fw-bold">Delivery - ASAP</p> -->
                 <!-- open sidebar / offcanvas -->
             </div>
             <div class="col-md-5 text-center d-none d-md-block">
@@ -56,75 +56,79 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12">
-                <div class="table-responsive mb-4">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th class="blank"></th>
-                            <th class="blank"></th>
-                            <th class="blank"></th>
-                            <th class="title-name">Product</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
-                            <th>Total Price</th>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="blank">Order Number</th>
+                        <th></th>
+                        <th class="blank"></th>
+                        <th class="blank"></th>
+                        <th class="title-name">Items</th>
+                        <th scope="col">Total Price</th>
+                          <!-- <th scope="col">Quantity</th> -->
+                          <th>Order Recieved</th>
+                          <th>Estimated Time</th>
                         </tr>
-                        </thead>
-                        <tbody>
+                      </thead>
+                      <tbody>
+                        <%for(order in templateVars.orderIds) {%>
                         <tr>
-                            <td class="table-close-btn"><a href="#"><i class="fa-solid fa-xmark"></i></a></td>
-                            <th scope="row"><img src="assets/image/cart/cartProduct/01.png" alt="img"></th>
+                          <td class="order_number"><%=templateVars.orderIds[order]%></td>
+                          <td></td>
+                            <th><img class="table-img" src="<%=templateVars.orderItems[order][0].image_url%>" alt="img"></th>
                             <td colspan="2" class="item-name">
                                 <div class="details">
-                                    <h5>All Season Gulliver Pizza</h5>
-                                    <ul>
-                                        <li><span>Select Size: </span>Large</li>
-                                        <li><span>Select Crust: </span>Double Crust</li>
-                                    </ul>
+                                    <!-- <ul> -->
+                                      <% for(item of templateVars.orderItems[order]){%>
+                                        <!-- <li><span><%=item.quantity%></span>x <%=item.name%></li> -->
+                                        <p><%=item.quantity%></span>x <%=item.name%></p>
+                                        <%}%>
+                                    <!-- </ul> -->
                                 </div>
                             </td>
-                            <td>$49.50</td>
+                            <!-- <td>$50.00</td>
                             <td class="table-quantity">
-                                <form>
-                                    <div class="quantity buttons_added">
-                                        <input type="button" value="-" class="minus">
-                                        <input type="number" class="input-text qty text text-center" step="1" min="1"
-                                               max="10000"
-                                               name="quantity" value="1">
-                                        <input type="button" value="+" class="plus">
-                                    </div>
-                                </form>
-                            </td>
-                            <td>$49.50</td>
+                            </td> -->
+                            <td>$<%=templateVars.orderItems[order][0].order_total%></td>
+                            <td><%=templateVars.orderItems[order][0].created_at%></td>
+                            <td><div>
+                              <input type="number" min='0' value="0" class="form-control" id="input1" placeholder="Quantity">
+                              <button class="btn btn-warning send-time-estimate">Send Time Estimate</button>
+                              <form action="/orders" method="post">
+                                <input type="hidden" name="hello" value="<%=templateVars.orderIds[order]%>"/>
+                                <button class="btn btn-success order-complete" type="submit">Order Finished</button>
+                              </form>
+                            </div>
+                          </td>
+
                         </tr>
+                        <%}%>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="col-lg-5">
                 <div class="order-cart-area">
-                    <div class="order-cart">
+                    <!-- <div class="order-cart">
                         <h5>Cart totals</h5>
                         <ul>
-                            <li>Subtotal<span>$49.50</span></li>
+                            <li>Subtotal<span>$50.00</span></li>
                             <li>Tax<span>10%</span></li>
-                            <li class="total">Total<span>$51.975</span></li>
+                            <li class="total">Total<span>$55.00</span></li>
                         </ul>
-                    </div>
-                    <a class="btn btn-warning w-100" href="#"> PROCEED TO CHECKOUT</a>
+                    </div> -->
+                    <a class="btn btn-warning w-100" href="/menu" >Back to Main Page</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- cart area end -->
-<!-- back-to-top end -->
-<div class="back-to-top">
-    <span class="back-top"><i class="fas fa-angle-double-up"></i></span>
-</div>
+
 <!-- footer area start -->
 <%- include("./partials/footer") %>
 <!-- footer area end -->
-
 
 </body>
 </html>
