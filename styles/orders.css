@@ -155,4 +155,14 @@ cart-area .table {
   width: 200px;
 }
 
+.order_status_open {
+  color: red;
+  border: solid red;
+}
+
+.order_status_ready {
+  color: green;
+  border: solid green;
+}
+
 /*# sourceMappingURL=orders.css.map */
