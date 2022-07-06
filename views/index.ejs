@@ -66,34 +66,37 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="pills-allItems-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-allItems"
-                                type="button" role="tab" aria-controls="pills-allItems" aria-selected="true"><i class="fa-solid fa-utensils"></i> ALL ITEMS
+                                type="button" role="tab" aria-controls="pills-allItems" aria-selected="true"><i
+                                    class="fa-solid fa-utensils"></i> ALL ITEMS
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="pills-appetizer-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-appetizer"
-                                type="button" role="tab" aria-controls="pills-appetizer" aria-selected="false"><i class="fa-solid fa-bowl-rice"></i> APPETIZERS
+                                type="button" role="tab" aria-controls="pills-appetizer" aria-selected="false"><i
+                                    class="fa-solid fa-bowl-rice"></i> APPETIZERS
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="pills-main-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-main"
-                                type="button" role="tab" aria-controls="pills-main" aria-selected="false"><i class="fa-solid fa-bowl-food"></i> MAINS
+                                type="button" role="tab" aria-controls="pills-main" aria-selected="false"><i
+                                    class="fa-solid fa-bowl-food"></i> MAINS
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="pills-dessert-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-dessert"
                                 type="button" role="tab" aria-controls="pills-dessert" aria-selected="false">
-                                <i class="fa-solid fa-ice-cream"></i> DESSERTS
+                            <i class="fa-solid fa-ice-cream"></i> DESSERTS
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="pills-drink-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-drink"
                                 type="button" role="tab" aria-controls="pills-drink" aria-selected="false">
-                                <i class="fa-solid fa-glass-water"></i>
-                                DRINKS
+                            <i class="fa-solid fa-glass-water"></i>
+                            DRINKS
                         </button>
                     </li>
                     <!-- <li class="nav-item" role="presentation">
@@ -109,38 +112,41 @@
 
         <!-- menu creation -->
         <% for (const [category, items] of Object.entries(menu)) { %>
-          <div class="tab-content mt-5" id="pills-tabContent">
-            <div class="tab-pane fade show <%=category === 'allItems' ? 'active' : ''%>" id="pills-<%=category%>" role="tabpanel" aria-labelledby="pills-<%=category%>-tab">
+        <div class="tab-content mt-5" id="pills-tabContent">
+            <div class="tab-pane fade show <%= category === 'allItems' ? 'active' : '' %>" id="pills-<%= category %>"
+                 role="tabpanel" aria-labelledby="pills-<%= category %>-tab">
                 <div class="row justify-content-center">
-                  <% for (const item of items) { %>
-                      <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
-                          <div class="single-item-wrap">
-                              <div class="thumb ps-1">
-                                  <img class="img-fluid img-thumbnail" src=<%=item.image_url%> alt="img">
-                              </div>
-                              <br>
-                              <div class="wrap-details">
-                                  <h4><%=item.name%></h4>
-                                  <h6 class="price">$<%=(item.price/100).toFixed(2)%></h6>
-                                  <p class="text-center text-muted"><%=item.description%></p>
-                                  <div class="details-bottom p-3">
-                                      <div style="display: flex; justify-content: space-between;">
-                                        <input type="number" min='0' placeholder="Qty." class="form-control" style="width: 35%;">
-                                        <button class="btn btn-warning add-to-cart" style="width: 60%;" value=<%=item.id%>>
-                                          Add
-                                          <i class="fa-solid fa-cart-plus"></i>
+                    <% for (const item of items) { %>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                        <div class="single-item-wrap">
+                            <div class="thumb ps-1">
+                                <img class="img-fluid img-thumbnail" src=<%= item.image_url %> alt="img">
+                            </div>
+                            <br>
+                            <div class="wrap-details">
+                                <h4><%= item.name %></h4>
+                                <h6 class="price">$<%= (item.price / 100).toFixed(2) %></h6>
+                                <p class="text-center text-muted"><%= item.description %></p>
+                                <div class="details-bottom p-3">
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <input type="number" min='0' placeholder="Qty." class="form-control"
+                                               style="width: 35%;">
+                                        <button class="btn btn-warning add-to-cart" style="width: 60%;"
+                                                value=<%= item.id %>>
+                                            Add
+                                            <i class="fa-solid fa-cart-plus"></i>
                                         </button>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <% } %>
-                  </div>
-              </div>
+                </div>
             </div>
+        </div>
         <% } %>
-
+    </div>
 </section>
 <!-- product Area End -->
 

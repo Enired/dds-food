@@ -185,5 +185,9 @@
     transform: translateY(-5px);
   }
 }
+.img-thumbnail {
+  height: 300px !important;
+  width: 300px !important;
+}
 
 /*# sourceMappingURL=main.css.map */
