@@ -73,7 +73,6 @@ const updateTotalPrice = function () {
   totalPriceFakeList = totalPriceFakeList.slice(1)
   const totalPriceArray = totalPriceFakeList.split('$')
   const totalPriceNum = sum(totalPriceArray)
-  console.log(totalPriceNum)
   $('.headerTotal').text(Number(totalPriceNum).toFixed(2) + '$')
   $('.subTotal').text(Number(totalPriceNum).toFixed(2) + '$')
 }
