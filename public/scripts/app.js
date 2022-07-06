@@ -18,28 +18,118 @@ $(document).scroll(function () {
 
 //cartQuantity
 const minusQuantity = function () {
-  $('.minus').on('click', function () {
-    let quantity = parseInt($('.input-text').val())
-    if (quantity === 1) {
-      return
-    }
-    quantity -= 1
-    $('.input-text').val(quantity)
-    let singlePrice = $('.single-price').text()
-    singlePrice = Number(singlePrice.slice(1))
-    $('.total-price').text((singlePrice * quantity).toFixed(2))
-    $('.headerTotal').text((singlePrice * quantity).toFixed(2) + '$')
+  $('.minus').each(function (index, element) {
+    $(this).on('click', function () {
+      // console.log(element.parentNode)
+      let quantity = Number(element.parentNode.children[1].value)
+      if (quantity === 1) {
+        return
+      }
+      quantity -= 1
+      element.parentNode.children[1].value = quantity
+      let singlePriceFakeList = $('.single-price').text()
+      singlePriceFakeList = singlePriceFakeList.slice(1)
+      const singlePriceArray = singlePriceFakeList.split('$')
+      const singlePrice = Number(singlePriceArray[index])
+      let totalPriceFakeList = $('.total-price').text()
+      totalPriceFakeList = totalPriceFakeList.slice(1)
+      const totalPriceArray = singlePriceFakeList.split('$')
+      const totalPrice = Number(totalPriceArray[index] * quantity)
+      element.parentNode.parentNode.parentNode.nextSibling.nextSibling.innerText = `$${totalPrice.toFixed(2)}`
+      updateTotalPrice()
+      addTax()
+      updateTopCartNum()
+    })
   })
 }
 const addQuantity = function () {
-  $('.plus').on('click', function () {
-    let quantity = parseInt($('.input-text').val())
-    quantity += 1
-    $('.input-text').val(quantity)
-    let singlePrice = $('.single-price').text()
-    singlePrice = Number(singlePrice.slice(1))
-    $('.total-price').text((singlePrice * quantity).toFixed(2))
-    $('.headerTotal').text((singlePrice * quantity).toFixed(2) + '$')
+  $('.plus').each(function (index, element) {
+    $(this).on('click', function () {
+      // console.log(element.parentNode)
+      let quantity = Number(element.parentNode.children[1].value)
+      quantity += 1
+      element.parentNode.children[1].value = quantity
+      let singlePriceFakeList = $('.single-price').text()
+      singlePriceFakeList = singlePriceFakeList.slice(1)
+      const singlePriceArray = singlePriceFakeList.split('$')
+      // console.log(singlePriceArray)  //['9.00', '11.00', '20.00', '30.00', '20.00']
+      const singlePrice = Number(singlePriceArray[index])
+      let totalPriceFakeList = $('.total-price').text()
+      totalPriceFakeList = totalPriceFakeList.slice(1)
+      const totalPriceArray = singlePriceFakeList.split('$')
+      const totalPrice = Number(totalPriceArray[index] * quantity)
+      element.parentNode.parentNode.parentNode.nextSibling.nextSibling.innerText = `$${totalPrice.toFixed(2)}`
+      updateTotalPrice()
+      addTax()
+      updateTopCartNum()
+    })
+  })
+}
+
+//top right totalPrice
+const updateTotalPrice = function () {
+// $('.headerTotal').text((singlePrice * quantity).toFixed(2) + '$')
+  let totalPriceFakeList = $('.total-price').text()
+  totalPriceFakeList = totalPriceFakeList.slice(1)
+  const totalPriceArray = totalPriceFakeList.split('$')
+  const totalPriceNum = sum(totalPriceArray)
+  $('.headerTotal').text(Number(totalPriceNum).toFixed(2) + '$')
+  $('.subTotal').text(Number(totalPriceNum).toFixed(2) + '$')
+}
+
+// add Tax
+const addTax = function () {
+  let subtotal = $('.subTotal').text()
+  subtotal = subtotal.substr(0, subtotal.length - 1)
+  $('.taxed-total').text((subtotal * 1.1).toFixed(2) + '$')
+}
+
+//update topCartNum
+const updateTopCartNum = function () {
+  let topCartNum = 0
+  $('.qty').each(function () {
+    topCartNum += Number($(this).val())
+  })
+  $('.topCartNum').text(topCartNum)
+}
+
+// sum helper js
+function sum(arr) {
+  return arr.reduce(function (prev, curr) {
+    return Number(prev) + Number(curr)
+  });
+}
+
+//delete cartItem
+const deleteCartItem = function () {
+  $('.table').on('click', '.fa-xmark', function () {
+    $(this).closest('tr').remove()
+    updateTotalPrice()
+    updateTopCartNum()
+  })
+}
+
+//send order
+const sendOrder = function () {
+  $('.submit-order').on('click', function (e) {
+    const quantity =
+      e.preventDefault()
+    $.ajax({
+      type: "POST",  // 使用post方式
+      url: "/order",
+      // quantity menu_item
+      data: {
+        quantity: 3
+      },
+      success: function (result) {
+        if (result.resultCode === 200) {
+
+        }
+      },
+      error: function (err) {
+        console.log(err)
+      }
+    });
   })
 }
 
@@ -47,4 +137,9 @@ $(document).ready(function () {
   backToTop()
   addQuantity()
   minusQuantity()
+  updateTotalPrice()
+  addTax()
+  updateTopCartNum()
+  deleteCartItem()
+  sendOrder()
 })
