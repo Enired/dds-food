@@ -50,15 +50,25 @@ getOrderDetails = (db, orderId) => {
   const queryParams = [orderId];
   const query =
   `
-  SELECT  orders.id as order_Id, orders.created_at,menu_items.name, orders.completed_at, order_items.quantity, menu_items.image_url,
-	(SELECT SUM(menu_items.price * order_items.quantity)/100 as order_total
-  FROM order_items
-  JOIN menu_items on menu_items.id = order_items.menu_item
-  JOIN orders on orders.id = order_items.order_id
-  WHERE orders.id = $1)
+  SELECT  orders.id as order_Id,
+          orders.created_at,
+          menu_items.name,
+          orders.completed_at,
+          order_items.quantity,
+          menu_items.image_url,
+          users.first_name,
+          users.last_name,
+          users.email,
+          users.phone_number,
+	            (SELECT SUM(menu_items.price * order_items.quantity)/100 as order_total
+              FROM order_items
+              JOIN menu_items on menu_items.id = order_items.menu_item
+              JOIN orders on orders.id = order_items.order_id
+              WHERE orders.id = $1)
   FROM orders
   JOIN order_items on orders.id = order_items.order_id
   JOIN menu_items on menu_items.id = order_items.menu_item
+  JOIN users on users.id = orders.customer_id
   WHERE orders.id = $1;
   `;
   return db.query(query, queryParams);
