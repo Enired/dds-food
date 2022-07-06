@@ -67,6 +67,7 @@
                         <!-- <th scope="col">Price</th>
                           <th scope="col">Quantity</th> -->
                           <th>Total Price</th>
+                          <th>Status</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -89,6 +90,15 @@
                             <td class="table-quantity">
                             </td> -->
                             <td>$<%=templateVars.orderItems[order][0].order_total%></td>
+                            <%if(templateVars.orderItems[order][0].completed_at === null){%>
+                              <td><p class="order_status_open">In progress</p></td>
+                              <%} else{%>
+                                <td>
+                                  <p class="order_status_ready">READY FOR PICKUP</p>
+                                  <br/>
+                                  <p><%=templateVars.orderItems[order][0].completed_at%></p>
+                                  </td>
+                              <%}%>
                         </tr>
                         <%}%>
                         </tbody>
