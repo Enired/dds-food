@@ -90,7 +90,7 @@
                             <!-- <td>$50.00</td>
                             <td class="table-quantity">
                             </td> -->
-                            <td>$<%=templateVars.orderItems[order][0].order_total%></td>
+                            <td>$<span class="order-total"><%=templateVars.orderItems[order][0].order_total%></span></td>
                             <td><%=templateVars.orderItems[order][0].created_at%></td>
                             <td><div>
                               <input type="number" min='0' value="0" class="form-control" id="input1" placeholder="Quantity">
