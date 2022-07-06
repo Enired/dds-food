@@ -61,8 +61,9 @@
                         <thead>
                         <tr>
                             <th class="blank">Order Number</th>
-                            <th></th>
                             <th class="blank"></th>
+                            <th>Customer: </th>
+                            <th></th>
                             <th class="blank"></th>
                             <th class="title-name">Items</th>
                             <th scope="col">Total Price</th>
@@ -74,10 +75,19 @@
                         <tbody>
                         <% for(order in templateVars.orderIds) { %>
                         <tr>
-                            <td class="order_number"><%= templateVars.orderIds[order] %></td>
-                            <td></td>
-                            <th><img class="table-img" src="<%= templateVars.orderItems[order][0].image_url %>"
-                                     alt="img"></th>
+                            <td colspan="2"class="order_number"><%= templateVars.orderIds[order] %></td>
+                            <td>
+                              <p>Name: <%=templateVars.orderItems[order][0].first_name%> <%=templateVars.orderItems[order][0].last_name%></p>
+                              <br/>
+                              <p>Phone Number: <%=templateVars.orderItems[order][0].phone_number%></p>
+
+
+
+                            </td>
+                            <td>
+                              <!-- <img class="table-img" src="<%= templateVars.orderItems[order][0].image_url %>"
+                                     alt="img"> -->
+                                    </td>
                             <td colspan="2" class="item-name">
                                 <div class="details">
                                     <!-- <ul> -->
