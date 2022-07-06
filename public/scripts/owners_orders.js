@@ -18,9 +18,8 @@ const test = () =>{
     })
   })
   $('.order-complete').each(function(_, element){
-    $(this).on('click', function(){
-      console.log('Order Complete! Please come to pick up your order!')
-
+    $(this).on('click', function(event){
+      console.log('You\'re order is ready. Please come to pick it up.')
     })
   })
 }
