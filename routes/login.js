@@ -59,6 +59,7 @@ module.exports = (db) => {
         req.session["first_name"] = user['first_name']
         req.session["last_name"] = user['last_name']
         req.session["phone_number"] = user['phone_number']
+        req.session["is_owner"] = user['is_owner']
         const templateVars = {
           user
         }
