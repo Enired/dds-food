@@ -30,6 +30,7 @@
       return;
     }
 
+    console.log(getCartCookie());
     let cart = getCartCookie().split(',');
     let existsInCart = false;
 
@@ -90,6 +91,7 @@
         return cookie.split('cart=')[1];
       }
     }
+    return '';
   };
 
 })(jQuery);

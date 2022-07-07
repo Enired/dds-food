@@ -62,8 +62,8 @@ app.use("/login", loginRoutes(db));
 app.use("/register", registerRoutes(db));
 app.use("/logout", logoutRoutes(db));
 app.use("/users", usersRoutes(db));
-app.use("/cart", cartRoutes(db))
-app.use("/order", orderRoutes(db))
+app.use("/cart", cartRoutes(db));
+app.use("/order", orderRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 app.use("/menu", menu_items(db));
 app.use("/orders", orderRoutes(db));

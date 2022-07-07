@@ -11,13 +11,13 @@ getOrderIdForLoginUser = (db, customerId) => {
              JOIN users
                   ON users.id = orders.customer_ID
       WHERE orders.customer_id = $1
-    `
-  return db.query(query, queryParams)
-}
+    `;
+  return db.query(query, queryParams);
+};
 
 // get order items of an order ===？ to get table tr for cartPage
 getOrderItemsByOrderId = (db, orderId) => {
-  const queryParams = [orderId]
+  const queryParams = [orderId];
   const query =
     `
       SELECT orders.id,
@@ -30,10 +30,10 @@ getOrderItemsByOrderId = (db, orderId) => {
              JOIN order_items on orders.id = order_items.order_id
              JOIN menu_items on menu_items.id = order_items.menu_item
       WHERE orders.id = $1
-    `
-  return db.query(query, queryParams)
+    `;
+  return db.query(query, queryParams);
 
-}
+};
 
 
 //Getting Cart Total
@@ -68,32 +68,32 @@ module.exports = (db) => {
   router.get("/",
     (req, res) => {
       // get customer_id
-      const customerId = req.session.uid
-      let orderId = 5
-      let orderCartInformation = []
+      const customerId = req.session.uid;
+      let orderId = 5;
+      let orderCartInformation = [];
       getOrderIdForLoginUser(db, customerId)
         .then((result) => {
           if (result.rows[0]) {
-            orderId = result.rows[0].orderid
+            orderId = result.rows[0].orderid;
           } else {
-            orderId = undefined
+            orderId = undefined;
           }
 
           getOrderItemsByOrderId(db, orderId)
             .then((result) => {
-              console.log('inner', result.rows)
+              console.log('inner', result.rows);
               // req.session
-              console.log(JSON.stringify(result.rows))
-              orderCartInformation = result.rows
+              console.log(JSON.stringify(result.rows));
+              orderCartInformation = result.rows;
               const templateVar = {
                 user: req.session,
                 orderCartInformation
-              }
+              };
               res.render("cart", templateVar);
             })
-            .catch(err => console.log(err))
+            .catch(err => console.log(err));
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
     });
 
   return router;
