@@ -1,3 +1,7 @@
+
+
+
+
 const sendETAlert = (time) =>{
   if (time === 0) {
     return alert('Please enter a time greater than 0');
@@ -14,13 +18,8 @@ const smsControls = () =>{
         event.preventDefault();
         return alert('Please enter a time greater than 0');
       } else {
-        event.preventDefault();
-        $.post('/orders/sendSMS', _ ,()=>{
-          const etaMsg = `About ${time} minutes  until your order is ready`;
-          console.log(time);
-          alert('Text Sent');
-
-        });
+        // event.preventDefault();
+        alert('Text Sent');
       }
     });
   });
