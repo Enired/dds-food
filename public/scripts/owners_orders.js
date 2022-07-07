@@ -11,10 +11,23 @@ const sendETAlert = (time) =>{
 const smsControls = () =>{
 
   $('.send-time-estimate').each(function(_, element){
-    $(this).on('click', function(){
-     let time = element.parentNode.children[0].value
-     sendETAlert(Number(time));
+    $(this).on('click', function(event){
+      let time = element.parentNode.children[0].value
+      if(Number(time)===0){
+        event.preventDefault();
+        return alert('Please enter a time greater than 0')
+     }
+     else{
+      event.preventDefault()
+      $.post('/orders/sendSMS', _ ,()=>{
+        // const time = data
+        // const etaMsg = `About ${time} minutes  until your order is ready`
+        const etaMsg = `About ${time} minutes  until your order is ready`
+        console.log(time)
+        alert('Text Sent')
 
+      } )
+     }
     })
   })
   $('.order-complete').each(function(_, element){

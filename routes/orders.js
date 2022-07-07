@@ -137,13 +137,21 @@ module.exports = (db) => {
     });
 
 
-  router.post("/", (req,res)=>{
+  router.post("/order-complete", (req,res)=>{
     orderId = req.body.hello;
-
-
+    console.log(orderId)
     Promise.resolve(markOrderAsCompleted(db,orderId)).then(res.redirect('/orders'));
-
   });
+
+  //Backup in case the jquery doesn't work properly.
+  router.post("/sendSMS",(req,res)=>{
+    const time = Number(req.body.orderETA)
+    const etaMsg = `About ${time} minutes  until your order is ready`
+    console.log(etaMsg)
+
+    res.redirect('/orders')
+
+  })
   return router;
 };
 

@@ -103,10 +103,13 @@
                             </td> -->
                             <td>$<span class="order-total"><%=templateVars.orderItems[order][0].order_total%></span></td>
                             <td><%=templateVars.orderItems[order][0].created_at%></td>
-                            <td><div>
-                              <input type="number" min='0' value="0" class="form-control" id="input1" placeholder="Quantity">
-                              <button class="btn btn-warning send-time-estimate">Send Time Estimate</button>
-                              <form action="/orders" method="post">
+                            <td><div><form action="/sendSMS" method="post">
+                              <input type="number" name="orderETA" min='0' value="0" class="form-control time-input" id="input1" placeholder="Quantity">
+                              <button class="btn btn-warning send-time-estimate" type="submit">Send Time Estimate</button>
+
+
+                            </form>
+                              <form action="/orders/order-complete" method="post">
                                 <input type="hidden" name="hello" value="<%=templateVars.orderIds[order]%>"/>
                                 <button class="btn btn-success order-complete" type="submit">Order Finished</button>
                               </form>
