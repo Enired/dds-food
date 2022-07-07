@@ -1,10 +1,10 @@
 // Script for /menu route
 // Will include click event listeners for adding to cart
 
-(function($) {
+(function ($) {
 
   // Add cart button event listeners
-  $(document).ready(function() {
+  $(document).ready(function () {
 
     const $logout = $('a[href="/logout"]')[0];
 
@@ -17,13 +17,43 @@
       }
 
       updateCartCounter();
-
+      sidebarTrigger()
     }
     $('.added-to-cart-notification').hide();
 
   });
+  // sidebar trigger
+  const sidebarTrigger = function () {
+    $('#sidebarTrigger').on('click', function (e) {
+      const tbody = $('.sideBarTbody')
+      $.get("/sideBarCarts", function (result) {
+        if (tbody.children().length > 0) {
+          tbody.empty()
+        }
+        let subtotal = 0
+        for (const item of result) {
+          subtotal += Number(item.price / 100) * Number(item.quantity)
+          const $tr = $(
+            ` <tr>
+                    <td style='vertical-align: middle; text-align: center'>${item.name}</td>
+                    <td style='vertical-align: middle;text-align: center'>$${(item.price / 100).toFixed(2)}</td>
+                    <td style='vertical-align: middle;text-align: center'>
+                    <input type="number" disabled class="ps-5" value="${item.quantity}" min="1" max="100" step="1"/>
+                    </td>
+              </tr>
+             `
+          )
+          tbody.append($tr)
+        }
+        //  show Total
 
-  const addItemToCart = function() {
+        $('.subTotal').text(`$${subtotal.toFixed(2)}`)
+        $('.taxed-total').text(`$${(subtotal * 1.1).toFixed(2)}`)
+      })
+    })
+  }
+
+  const addItemToCart = function () {
 
     const $addedToCartNotification = $(this.parentElement.parentElement.children[1]);
     const $quantity = $(this.parentElement.children[0]);
@@ -31,13 +61,13 @@
     if ($quantity.val() === '' || $quantity.val() === '0') {
       $addedToCartNotification.text('Please enter something in the cart.');
       $addedToCartNotification.slideDown();
-      setTimeout(()=>$addedToCartNotification.slideUp(), 1000);
+      setTimeout(() => $addedToCartNotification.slideUp(), 1000);
       return;
     }
 
     $addedToCartNotification.text('Added to Cart!');
     $addedToCartNotification.slideDown();
-    setTimeout(()=>$addedToCartNotification.slideUp(), 1000);
+    setTimeout(() => $addedToCartNotification.slideUp(), 1000);
 
     let cart = getCartCookie().split(',');
     let existsInCart = false;
@@ -74,7 +104,7 @@
 
   };
 
-  const updateCartCounter = function() {
+  const updateCartCounter = function () {
     const $cartCounter = $('#cart-counter-display');
     let cart = getCartCookie().split(',');
     let total = 0;
@@ -85,14 +115,14 @@
     $cartCounter.text(total);
   };
 
-  const setCartCookie = function(cart) {
+  const setCartCookie = function (cart) {
     const expires = `;expires=${new Date((new Date()).valueOf() + 2 * 24 * 60 * 60 * 1000)};`;
     const path = ';path=/';
     let cookie = `cart=${cart}`;
     document.cookie = cookie + expires + path;
   };
 
-  const getCartCookie = function() {
+  const getCartCookie = function () {
     const cookies = document.cookie.split('; ');
     for (const cookie of cookies) {
       if (cookie.includes('cart=')) {
@@ -101,7 +131,6 @@
     }
     return '';
   };
-
 
 
 })(jQuery);
