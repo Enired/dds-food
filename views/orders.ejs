@@ -82,10 +82,11 @@
                                 <div class="details">
                                     <% for(item of templateVars.allOrdersItems[i]){ %>
                                     <p><%= item.quantity %></span>x <%= item.item %></p>
+                                    
                                     <% } %>
                                 </div>
                             </td>
-                            <td>$<span class="order-total"><%=templateVars.orderSubTotals[i]%></span></td>
+                            <td><i class="fa-thin fa-dollar-sign"></i><span class="order-total"><%=templateVars.orderSubTotals[i]%></span></td>
                             <%if(templateVars.orderCompleteTimes[i] === null){%>
                               <td><p class="order_status_open">In progress</p></td>
                               <%} else{%>
