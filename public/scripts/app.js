@@ -135,11 +135,6 @@ const sendOrder = function() {
 };
 
 $(document).ready(function() {
-
-  $.get(
-
-  );
-
   backToTop();
   addQuantity();
   minusQuantity();

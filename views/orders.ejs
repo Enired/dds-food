@@ -72,18 +72,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <% for(order in templateVars.orderIds) { %>
+                        <% for(let i=0; i < templateVars.orderNumbers.length; i++) { %>
                         <tr>
-                            <td><%= templateVars.orderIds[order] %></td>
+                            <td><%= templateVars.orderNumbers[i] %></td>
                             <td></td>
-                            <th><img class="table-img" src="<%= templateVars.orderItems[order][0].image_url %>"
+                            <th><img class="table-img" src="<%=templateVars.orderMenuPics[i]%>"
                                      alt="img"></th>
                             <td colspan="2" class="item-name">
                                 <div class="details">
                                     <!-- <ul> -->
-                                    <% for(item of templateVars.orderItems[order]){ %>
+                                    <% for(item of templateVars.allOrdersItems[i]){ %>
                                     <!-- <li><span><%= item.quantity %></span>x <%= item.name %></li> -->
-                                    <p><%= item.quantity %></span>x <%= item.name %></p>
+                                    <p><%= item.quantity %></span>x <%= item.item %></p>
                                     <% } %>
                                     <!-- </ul> -->
                                 </div>
@@ -91,14 +91,14 @@
                             <!-- <td>$50.00</td>
                             <td class="table-quantity">
                             </td> -->
-                            <td>$<span class="order-total"><%=templateVars.orderItems[order][0].order_total%></span></td>
-                            <%if(templateVars.orderItems[order][0].completed_at === null){%>
+                            <td>$<span class="order-total"><%=templateVars.orderSubTotals[i]%></span></td>
+                            <%if(templateVars.orderCompleteTimes[i] === null){%>
                               <td><p class="order_status_open">In progress</p></td>
                               <%} else{%>
                                 <td>
                                   <p class="order_status_ready">READY FOR PICKUP</p>
                                   <br/>
-                                  <p><%=templateVars.orderItems[order][0].completed_at%></p>
+                                  <p><%=templateVars.orderCompleteTimes[i]%></p>
                                   </td>
                               <%}%>
                         </tr>

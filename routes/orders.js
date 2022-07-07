@@ -2,23 +2,8 @@ const e = require('express');
 const express = require('express');
 const router = express.Router();
 
-
-//Getting Order Total
-getOrderTotal = (db, orderId) => {
-  const queryParams = [orderId];
-  const query =
-  `
-  SELECT SUM(menu_items.price * order_items.quantity)/100 as subtotal
-  FROM order_items
-  JOIN menu_items on menu_items.id = order_items.menu_item
-  JOIN orders on orders.id = order_items.order_id
-  WHERE orders.id = $1;
-  `;
-  return db.query(query, queryParams);
-};
-
 //Getting Order Specific to User
-getOrder = (db, customerId) => {
+const getOrder = (db, customerId) => {
   const queryParams = [customerId];
   const query =
   `
@@ -32,7 +17,7 @@ getOrder = (db, customerId) => {
 };
 
 //Getting all open orders
-getOpenOrders = (db) => {
+const getOpenOrders = (db) => {
   const query =
   `
   SELECT orders.id
@@ -44,27 +29,8 @@ getOpenOrders = (db) => {
 
 };
 
-
-//Getting Oder Items of An Order
-getOrderDetails = (db, orderId) => {
-  const queryParams = [orderId];
-  const query =
-  `
-  SELECT  orders.id as order_Id, orders.created_at,menu_items.name, orders.completed_at, order_items.quantity, menu_items.image_url,
-	(SELECT SUM(menu_items.price * order_items.quantity)/100 as order_total
-  FROM order_items
-  JOIN menu_items on menu_items.id = order_items.menu_item
-  JOIN orders on orders.id = order_items.order_id
-  WHERE orders.id = $1)
-  FROM orders
-  JOIN order_items on orders.id = order_items.order_id
-  JOIN menu_items on menu_items.id = order_items.menu_item
-  WHERE orders.id = $1;
-  `;
-  return db.query(query, queryParams);
-};
-
-markOrderAsCompleted = (db, orderId) => {
+//For the owner to clear an order from their side.
+const markOrderAsCompleted = (db, orderId) => {
   params = [orderId];
   const query =
   `
@@ -76,15 +42,109 @@ markOrderAsCompleted = (db, orderId) => {
   return db.query(query,params);
 };
 
+//Get first name, last name, and phone number of customer
+const getCustomerInfo = (db, orderId) => {
+  const params = [orderId]
+  const query =
+  `
+  SELECT users.first_name, users.last_name, users.phone_number
+  FROM users
+  JOIN orders ON orders.customer_id = users.id
+  WHERE orders.id = $1
+  `
+  return db.query(query, params)
+}
+
+// Get all items and quantity of items from an order.
+const getOrderItems = (db, orderId) => {
+  const params = [orderId]
+  const query =
+  `
+  SELECT  menu_items.name as item,
+          order_items.quantity as quantity
+  FROM    order_items
+  JOIN    orders ON orders.id = order_id
+  JOIN    menu_items ON order_items.menu_item = menu_items.id
+  WHERE   order_id = $1
+  `
+  return db.query(query, params)
+}
+
+//Get total cost of all items of an order.
+const getOrderTotal = (db, orderId) => {
+  const queryParams = [orderId];
+  const query =
+  `
+  SELECT SUM(menu_items.price * order_items.quantity)/100 as subtotal
+  FROM order_items
+  JOIN menu_items on menu_items.id = order_items.menu_item
+  JOIN orders on orders.id = order_items.order_id
+  WHERE orders.id = $1;
+  `
+  return db.query(query, queryParams);
+};
+
+//Get the time the order was completed.
+const getCompletedAtTime = (db, orderId) => {
+  const queryParams = [orderId];
+  const query =
+  `
+  SELECT orders.completed_at
+  FROM orders
+  WHERE orders.id = $1
+  `
+  return db.query(query, queryParams);
+}
+
+// Get the time the order was created
+const getCreatedAtTime = (db, orderId) => {
+  const queryParams = [orderId];
+  const query =
+  `
+  SELECT orders.created_at
+  FROM orders
+  WHERE orders.id = $1
+  `
+  return db.query(query, queryParams);
+};
+
+//Get the picture of the first item of an order.
+const getMenuPics = (db, orderId) =>{
+  const queryParams = [orderId];
+  const query =
+  `
+  SELECT menu_items.image_url as food_pic
+  FROM menu_items
+  JOIN order_items ON order_items.menu_item = menu_items.id
+  JOIN orders ON orders.id = order_items.order_id
+  WHERE orders.id = $1
+  LIMIT 1
+  `
+  return db.query(query, queryParams);
+}
+
 module.exports = (db) => {
   router.get("/",
     (req, res) => {
 
+
+
+      //Some Variables
       let p1;
       let pageToRender;
 
+      let orderNumbers =[]
+      let orderPromises = []
+
+      //Session Id
       const customerId = req.session.uid;
       const is_owner = req.session.is_owner;
+
+      //Assembling templateVars
+
+      const templateVars = {orderNumbers}
+
+      //Check whether Owner or Not to determine which page to render.
       if (is_owner) {
         p1 = getOpenOrders(db);
         pageToRender = "owners";
@@ -94,137 +154,194 @@ module.exports = (db) => {
       }
 
       Promise.resolve(p1)
-        .then(results => {
-          orderIds = results.rows; return orderIds;
+      .then((results)=>{
+        for(const orderIds of results.rows){
+          const orderNumber = orderIds.id
+          orderNumbers.push(orderNumber)
+        }
+        //Determining Order of Promise Resolution
+        console.log('Order Ids Retrieved')
+      })
+      .then(()=>{
+        orderPromises = []
+        for(const orderId of orderNumbers){
+          customerQuery = getCustomerInfo(db,orderId)
+          orderPromises.push(customerQuery)
+        }
+      })
+      .then(()=>{
+        results = Promise.all(orderPromises)
+        return results;
+      })
+      .then((results)=>{
+        const customers = []
+        for(const result of results){
+          const customer = result.rows[0];
+          const customerFirstName = customer.first_name;
+          const customerLastName = customer.last_name;
+          const customerFullName = `${customerFirstName} ${customerLastName}`;
+          const customerPhoneNumber = customer.phone_number
+
+          const customerObj = {customerFullName, customerPhoneNumber}
+          customers.push(customerObj)
+        }
+        templateVars.customers = customers;
+      })
+      .then(()=>{
+        orderPromises = []
+        for(const orderId of orderNumbers){
+          orderItems = getOrderItems(db,orderId)
+          orderPromises.push(orderItems)}
         })
-        .then(results=>{
-          findingOrderItems = [];
-          for (value of results) {
-            id = value.id;
-            findingOrderItems.push(getOrderDetails(db,id));
+      .then(()=>{
+        results = Promise.all(orderPromises)
+        return results
+      })
+      .then((results)=>{
+        allOrdersItems = [];
+        for(const result of results){
+          orderItems = []
+          for(item of result.rows){
+            orderItems.push(item)
           }
-          return findingOrderItems;
+          allOrdersItems.push(orderItems)
+        }
+        templateVars.allOrdersItems = allOrdersItems;
+      })
+      .then(()=>{
+        orderPromises = []
+        for(const orderId of orderNumbers){
+          totalPrices = getOrderTotal(db,orderId)
+          orderPromises.push(totalPrices)}
+      })
+      .then(()=>{
+          results = Promise.all(orderPromises)
+          return results
         })
-        .then(results => {
-          Promise.all(results).then(values => {
-            orderIds = [];
-            orderItems = [];
-            for (value of values) {
-              for (row of value.rows) {
-                if (!orderIds.includes(row.order_id)) {
-                  orderIds.push(row.order_id);
-                }
-              }
-              orderItems.push(value.rows);
-            }
-            const templateVars = {orderIds,orderItems};
-            return templateVars;
-          })
-            .then((templateVars)=>{
-              res.render(pageToRender, {templateVars, user: req.session});
-            });
-        });
+      .then((results)=>{
+        orderSubTotals = []
+        for(const result of results){
+          orderSubTotals.push(result.rows[0].subtotal)
+        }
+        templateVars.orderSubTotals = orderSubTotals
+      })
+      //Completed At Time
+      .then(()=>{
+        orderPromises = []
+        for(const orderId of orderNumbers){
+          completedAtTimes = getCompletedAtTime(db, orderId)
+          orderPromises.push(completedAtTimes)}
+      })
+      .then(()=>{
+          results = Promise.all(orderPromises)
+          return results
+        })
+      .then((results)=>{
+        orderCompleteTimes = []
+        for(const result of results){
+          orderCompleteTimes.push(result.rows[0].completed_at)
+        }
+        templateVars.orderCompleteTimes = orderCompleteTimes
+      })
+      //Created At time
+      .then(()=>{
+        orderPromises = []
+        for(const orderId of orderNumbers){
+          const orderCreationTimes = getCreatedAtTime(db, orderId)
+          orderPromises.push(orderCreationTimes)}
+      })
+      .then(()=>{
+          results = Promise.all(orderPromises)
+          return results
+        })
+      .then((results)=>{
+        const orderCreationTimes = []
+        for(const result of results){
+          orderCreationTimes.push(result.rows[0].created_at)
+        }
+        templateVars.orderCreationTimes = orderCreationTimes
+      })
+      //Menu Pics
+      .then(()=>{
+        orderPromises = []
+        for(const orderId of orderNumbers){
+          const orderThumbnailPics = getMenuPics(db, orderId)
+          orderPromises.push(orderThumbnailPics)}
+      })
+      .then(()=>{
+          results = Promise.all(orderPromises)
+          return results
+        })
+      .then((results)=>{
+        const orderMenuPics = []
+        for(const result of results){
+          orderMenuPics.push(result.rows[0].food_pic)
+        }
+        templateVars.orderMenuPics = orderMenuPics
+      })
+      .then(()=>{
+        res.render(pageToRender, {templateVars, user: req.session})
+      })
+
+
+
+      // // THIS IS WORKING CODE. SO DO NOT TOUCH BELOW HERE YOU PERVERT
+
+
+      // Promise.resolve(p1)
+      //   .then(results => {
+      //     orderIds = results.rows; return orderIds;
+      //   })
+      //   .then(results=>{
+      //     findingOrderItems = [];
+      //     for (value of results) {
+      //       id = value.id;
+      //       findingOrderItems.push(getOrderDetails(db,id));
+      //     }
+      //     return findingOrderItems;
+      //   })
+      //   .then(results => {
+      //     Promise.all(results).then(values => {
+      //       orderIds = [];
+      //       orderItems = [];
+      //       for (value of values) {
+      //         for (row of value.rows) {
+      //           if (!orderIds.includes(row.order_id)) {
+      //             orderIds.push(row.order_id);
+      //           }
+      //         }
+      //         orderItems.push(value.rows);
+      //       }
+      //       const templateVars = {orderIds,orderItems};
+      //       return templateVars;
+      //     })
+      //       .then((templateVars)=>{
+      //         res.render(pageToRender, {templateVars, user: req.session});
+      //       });
+      //   });
+      //   //END OF MY NONO ZONE
+
+
     });
 
 
-  router.post("/", (req,res)=>{
+  router.post("/order-complete", (req,res)=>{
     orderId = req.body.hello;
-
-
+    console.log(orderId);
     Promise.resolve(markOrderAsCompleted(db,orderId)).then(res.redirect('/orders'));
+  });
+
+  //Backup in case the jquery doesn't work properly.
+  router.post("/sendSMS",(req,res)=>{
+    const time = Number(req.body.orderETA);
+    const etaMsg = `About ${time} minutes  until your order is ready`;
+    console.log(etaMsg);
+
+    res.redirect('/orders');
 
   });
+
   return router;
 };
-
-/////////////////////
-// PSEUDOCODE JUNK //
-/////////////////////
-////////original code for cart
-// const templateVars = {};
-// getOrder(db, 2)
-// .then((data) => {templateVars.orderId = data.rows[0].id})
-// .then(()=>{
-//   getOrderItems(db, templateVars.orderId)
-//   .then((data)=>{templateVars.orderItems = data.rows})
-//   .then(()=>{
-//     getOrderTotal(db, templateVars.orderId)
-//     .then((data) => {templateVars.orderTotal = data.rows[0]})
-//     .then(()=>{console.log(templateVars.orderItems[0].image_url)})
-//     .then(()=>{
-//       res.render("orders", {templateVars});})
-//   })
-// })
-// So I want the adding to cart button to add an order item to a new order
-/*
-
-need a new order button?!!!?!?!?!?!?!?!?!?!?!?!?
-              when the user goes to the menu page a new order is created
-
-the current order will always be the last one in the database with a matching customer id
-each click on an add to cart button will add the item to the order_items db with the current order ID
-
-when the user goed to the cart page the last order that has the same customer_id will be shown
-  this is a joined table between orders and order_items on orders.id = order_items.id
-
-
-total will be calculated based on the order_items table
-   OR OR OR
-          create a new table selecting quantity * price as item total
-
-
-
-          /// Select (menu_items.price * order_items.quantity)/100 as subtotal
-from order_items
-join menu_items on menu_items.id = order_items.menu_item
-join orders on orders.id = order_items.order_id
-where orders.id = 1;
-
-
-
-/////////////////////// FINDING SUBTOTAL FOR SPECIFIC ORDER
-Select SUM(menu_items.price * order_items.quantity)/100 as subtotal
-from order_items
-join menu_items on menu_items.id = order_items.menu_item
-join orders on orders.id = order_items.order_id
-where orders.id = 1;
-
-
-////////// FINDING ITEMS AND QUANTITY CORRESPONDING TO SPECIFIC ORDER
-
-select  orders.id, menu_items.name, order_items.quantity
-from orders
-join order_items on orders.id = order_items.order_id
-join menu_items on menu_items.id = order_items.menu_item
-where orders.id = 2;
-
-
-//////////SELECT A CUSTOMER LAST ORDER
-select * from orders where orders.customer_id = 2 order by orders.created_at desc limit 1;
-
-/////////ADDING A NEW ORDER TO THE DATABASE
-INSERT INTO orders(customer_id) values (5);
-
-
-////  GETTING ALL ORDERS IN PROGRESS
-select * from orders where orders.completed_at is null;
-
-
-
-// Setting Orders completed value
-UPDATE orders SET completed_at = now() where orders.id = 2;
-
-//Setting orders accepted value
-UPDATE orders SET accepted_at = now() where orders.id = 2;
-
-//
-SELECT users.id from users where users.email = 'octane@legends.com'
-;
-
-
-
-
-
-*/
 
 
