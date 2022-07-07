@@ -80,17 +80,11 @@
                                      alt="img"></th>
                             <td colspan="2" class="item-name">
                                 <div class="details">
-                                    <!-- <ul> -->
                                     <% for(item of templateVars.allOrdersItems[i]){ %>
-                                    <!-- <li><span><%= item.quantity %></span>x <%= item.name %></li> -->
                                     <p><%= item.quantity %></span>x <%= item.item %></p>
                                     <% } %>
-                                    <!-- </ul> -->
                                 </div>
                             </td>
-                            <!-- <td>$50.00</td>
-                            <td class="table-quantity">
-                            </td> -->
                             <td>$<span class="order-total"><%=templateVars.orderSubTotals[i]%></span></td>
                             <%if(templateVars.orderCompleteTimes[i] === null){%>
                               <td><p class="order_status_open">In progress</p></td>
@@ -109,14 +103,6 @@
             </div>
             <div class="col-lg-5">
                 <div class="order-cart-area">
-                    <!-- <div class="order-cart">
-                        <h5>Cart totals</h5>
-                        <ul>
-                            <li>Subtotal<span>$50.00</span></li>
-                            <li>Tax<span>10%</span></li>
-                            <li class="total">Total<span>$55.00</span></li>
-                        </ul>
-                    </div> -->
                     <a class="btn btn-warning w-100 fw-bold" href="/menu">Back to Main Page</a>
                 </div>
             </div>
