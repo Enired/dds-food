@@ -340,39 +340,38 @@ module.exports = (db) => {
 
   router.post("/order-complete", (req,res)=>{
     orderId = req.body.hello;
-    const orderCompleteMsg = "Thank you for ordering from Yukihira! You're order is now ready for pickup! See you soon!"
-    Promise.resolve(markOrderAsCompleted(db,orderId))
+    const orderCompleteMsg = "Thank you for ordering from Yukihira! Your order is now ready for pickup! See you soon!";
+    Promise.resolve(markOrderAsCompleted(db,orderId));
 
     twilioClient.messages
-    .create(
-      {
-        body: orderCompleteMsg,
-        to: myPhoneNumber,
-        from: twilioPhoneNumber
-      }
-    )
-    .then((message)=> console.log(message.sid))
-    .then(()=>{
-      res.redirect('/orders');
-    })
+      .create(
+        {
+          body: orderCompleteMsg,
+          to: myPhoneNumber,
+          from: twilioPhoneNumber
+        }
+      )
+      .then((message)=> console.log(message.sid))
+      .then(()=>{
+        res.redirect('/orders');
+      });
   });
 
-  //Backup in case the jquery doesn't work properly.
   router.post("/sendSMS",(req,res)=>{
     const time = Number(req.body.orderETA);
-    const etaMsg = `Thank you for ordering from Yukihira! About ${time} minutes  until your order is ready.`;
+    const etaMsg = `Thank you for ordering from Yukihira! About ${time} minutes until your order is ready.`;
     twilioClient.messages
-    .create(
-      {
-        body: etaMsg,
-        to: myPhoneNumber,
-        from: twilioPhoneNumber
-      }
-    )
-    .then((message)=> console.log(message.sid))
-    .then(()=>{
-      res.redirect('/orders');
-    })
+      .create(
+        {
+          body: etaMsg,
+          to: myPhoneNumber,
+          from: twilioPhoneNumber
+        }
+      )
+      .then((message)=> console.log(message.sid))
+      .then(()=>{
+        res.redirect('/orders');
+      });
 
 
 
