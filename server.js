@@ -2,7 +2,7 @@
 require("dotenv").config();
 
 // Web server config
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8081;
 const sassMiddleware = require("./lib/sass-middleware");
 // cookie-session
 const cookieSession = require("cookie-session");
@@ -59,6 +59,8 @@ const registerRoutes = require("./routes/register");
 const logoutRoutes = require('./routes/logout');
 const menu_items = require("./routes/menu_items");
 const orderRoutes = require("./routes/orders");
+const sideBarCartRoutes = require("./routes/sideBarCart");
+app.use("/sideBarCarts", sideBarCartRoutes(db));
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
