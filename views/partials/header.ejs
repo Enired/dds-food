@@ -47,22 +47,34 @@
                     <% if (!user['email']) { %>
                         <ul class="navbar-nav me-auto sm-3 fw-bold mb-lg-0">
                             <li class="phone-contact"><i class="fa-solid fa-phone"></i>
-                              +1-555-867-5309
+                                +1-555-867-5309
 
                             </li>
                             <li class="menu-cart">
-                                <a href="/login"><i style="color: blue;font-size: larger"
-                                                   class="fa-solid fa-user"></i>
+                                <a href="/login">
+                                    <i style="color: blue;font-size: larger"
+                                       class="fa-solid fa-user"></i>
                                 </a></li>
                         </ul>
                     <% } else { %>
                         <ul class="navbar-nav me-auto sm-3 fw-bold mb-lg-0">
-                            <li class="phone-contact"><i class="fa-solid fa-user-check"></i>
+                            <li class="phone-contact">
+                                <% if (user['is_owner'] === null || user['is_owner'] === false ) { %>
+                                    <i class="fa-solid fa-user-check"></i>
+                                <% } else { %>
+                                    <i class="fa-solid fa-utensils"></i>
+                                <% } %>
                                 <%= user.first_name %>  <%= user.last_name %>
                             </li>
-                            <li class="menu-cart"><a href="/cart"><i style="color: black; font-size: larger; margin-right: 20px;"
-                                                                     class="fa-solid fa-cart-plus"></i>
-                                    <span id="cart-counter-display" class="topCartNum">0</span></a></li>
+                            <% if (user['is_owner'] === null) { %>
+                                <li class="menu-cart"><a href="/cart"><i
+                                                style="color: black; font-size: larger; margin-right: 20px;"
+                                                class="fa-solid fa-cart-plus"></i>
+                                        <span id="cart-counter-display" class="topCartNum">0</span></a></li>
+
+                            <% } else { %>
+
+                            <% } %>
                             <li class="logout">
                                 <a href="/logout">Logout</a>
                             </li>
