@@ -48,13 +48,13 @@ module.exports = (db) => {
         // console.log('hashedPassword ====', hashedPassword)
         // console.log(bcrypt.compareSync(password.trim(), hashedPassword))
         if (!bcrypt.compareSync(password.trim(), hashedPassword)) {
-          const errMsg = 'Authentication failed...'
+          const errMsg = 'Authentication failed...';
           const templateVars = {
             user: {},
             errMsg
-          }
-          res.render('login', templateVars)
-          return
+          };
+          res.render('login', templateVars);
+          return;
         }
         //  login success
         console.log('login success!');
