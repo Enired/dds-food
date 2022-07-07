@@ -19,16 +19,25 @@
       updateCartCounter();
 
     }
+    $('.added-to-cart-notification').hide()
 
   });
 
   const addItemToCart = function() {
 
+    const $addedToCartNotification = $(this.parentElement.parentElement.children[1]);
     const $quantity = $(this.parentElement.children[0]);
 
     if ($quantity.val() === '' || $quantity.val() === '0') {
+      $addedToCartNotification.text('Please enter something in the cart.')
+      $addedToCartNotification.slideDown()
+      setTimeout(()=>$addedToCartNotification.slideUp(), 1000)
       return;
     }
+
+    $addedToCartNotification.text('Added to Cart!')
+    $addedToCartNotification.slideDown()
+    setTimeout(()=>$addedToCartNotification.slideUp(), 1000)
 
     let cart = getCartCookie().split(',');
     let existsInCart = false;
@@ -63,6 +72,7 @@
     $quantity.val('');
     updateCartCounter();
 
+
   };
 
   const updateCartCounter = function() {
@@ -92,5 +102,7 @@
     }
     return '';
   };
+
+
 
 })(jQuery);
