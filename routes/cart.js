@@ -6,7 +6,7 @@ module.exports = (db) => {
   const getCartItems = function(db, res, req) {
 
     // Check right away if cart is empty, and don't even go any further if it is
-    if (req.cookies.cart === '') {
+    if (req.cookies.cart === '' || req.cookies.cart === undefined) {
       res.render('cart', { user: req.session, cartItems: [] });
       return;
     }
