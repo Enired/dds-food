@@ -2,14 +2,11 @@ const sendETAlert = (time) =>{
   if (time === 0) {
     return alert('Please enter a time greater than 0');
   } else {
-
     return console.log(`About ${time} min until your order is ready`);
   }
-
 };
 
 const smsControls = () =>{
-
   $('.send-time-estimate').each(function(_, element) {
     $(this).on('click', function(event) {
       let time = element.parentNode.children[0].value;
@@ -19,8 +16,6 @@ const smsControls = () =>{
       } else {
         event.preventDefault();
         $.post('/orders/sendSMS', _ ,()=>{
-        // const time = data
-        // const etaMsg = `About ${time} minutes  until your order is ready`
           const etaMsg = `About ${time} minutes  until your order is ready`;
           console.log(time);
           alert('Text Sent');
@@ -46,13 +41,10 @@ const showTotalWithTax = () => {
     const subtotal = Number($(this).text());
     const totalWithTax = addTaxToSubtotal(subtotal);
     $(this).text(totalWithTax);
-
   }
-
   );
-
-
 };
+
 $(document).ready(function() {
   smsControls();
   showTotalWithTax();
