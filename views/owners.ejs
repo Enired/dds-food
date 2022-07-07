@@ -91,7 +91,7 @@
                             </td>
                             <td>$<span class="order-total"><%=templateVars.orderSubTotals[i]%></span></td>
                             <td><%=templateVars.orderCreationTimes[i]%></td>
-                            <td><div><form action="/sendSMS" method="post">
+                            <td><div><form action="/orders/sendSMS" method="post">
                               <input type="number" name="orderETA" min='0' value="0" class="form-control time-input" id="input1" placeholder="Quantity">
                               <button class="btn btn-warning send-time-estimate" type="submit">Send Time Estimate</button>
                             </form>

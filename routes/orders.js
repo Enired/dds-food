@@ -1,6 +1,14 @@
 const e = require('express');
 const express = require('express');
 const router = express.Router();
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const myPhoneNumber = process.env.MY_PHONE_NUMBER;
+const twilioPhoneNumber = process.env.TWILIO_NUMBER;
+
+const twilioClient = require('twilio')(accountSid, authToken);
+
+
 
 //Getting Order Specific to User
 const getOrder = (db, customerId) => {
@@ -44,20 +52,20 @@ const markOrderAsCompleted = (db, orderId) => {
 
 //Get first name, last name, and phone number of customer
 const getCustomerInfo = (db, orderId) => {
-  const params = [orderId]
+  const params = [orderId];
   const query =
   `
   SELECT users.first_name, users.last_name, users.phone_number
   FROM users
   JOIN orders ON orders.customer_id = users.id
   WHERE orders.id = $1
-  `
-  return db.query(query, params)
-}
+  `;
+  return db.query(query, params);
+};
 
 // Get all items and quantity of items from an order.
 const getOrderItems = (db, orderId) => {
-  const params = [orderId]
+  const params = [orderId];
   const query =
   `
   SELECT  menu_items.name as item,
@@ -66,9 +74,9 @@ const getOrderItems = (db, orderId) => {
   JOIN    orders ON orders.id = order_id
   JOIN    menu_items ON order_items.menu_item = menu_items.id
   WHERE   order_id = $1
-  `
-  return db.query(query, params)
-}
+  `;
+  return db.query(query, params);
+};
 
 //Get total cost of all items of an order.
 const getOrderTotal = (db, orderId) => {
@@ -80,7 +88,7 @@ const getOrderTotal = (db, orderId) => {
   JOIN menu_items on menu_items.id = order_items.menu_item
   JOIN orders on orders.id = order_items.order_id
   WHERE orders.id = $1;
-  `
+  `;
   return db.query(query, queryParams);
 };
 
@@ -92,9 +100,9 @@ const getCompletedAtTime = (db, orderId) => {
   SELECT orders.completed_at
   FROM orders
   WHERE orders.id = $1
-  `
+  `;
   return db.query(query, queryParams);
-}
+};
 
 // Get the time the order was created
 const getCreatedAtTime = (db, orderId) => {
@@ -104,7 +112,7 @@ const getCreatedAtTime = (db, orderId) => {
   SELECT orders.created_at
   FROM orders
   WHERE orders.id = $1
-  `
+  `;
   return db.query(query, queryParams);
 };
 
@@ -119,9 +127,9 @@ const getMenuPics = (db, orderId) =>{
   JOIN orders ON orders.id = order_items.order_id
   WHERE orders.id = $1
   LIMIT 1
-  `
+  `;
   return db.query(query, queryParams);
-}
+};
 
 module.exports = (db) => {
   router.get("/",
@@ -133,8 +141,8 @@ module.exports = (db) => {
       let p1;
       let pageToRender;
 
-      let orderNumbers =[]
-      let orderPromises = []
+      let orderNumbers = [];
+      let orderPromises = [];
 
       //Session Id
       const customerId = req.session.uid;
@@ -142,7 +150,7 @@ module.exports = (db) => {
 
       //Assembling templateVars
 
-      const templateVars = {orderNumbers}
+      const templateVars = {orderNumbers};
 
       //Check whether Owner or Not to determine which page to render.
       if (is_owner) {
@@ -154,134 +162,139 @@ module.exports = (db) => {
       }
 
       Promise.resolve(p1)
-      .then((results)=>{
-        for(const orderIds of results.rows){
-          const orderNumber = orderIds.id
-          orderNumbers.push(orderNumber)
-        }
-        //Determining Order of Promise Resolution
-        console.log('Order Ids Retrieved')
-      })
-      .then(()=>{
-        orderPromises = []
-        for(const orderId of orderNumbers){
-          customerQuery = getCustomerInfo(db,orderId)
-          orderPromises.push(customerQuery)
-        }
-      })
-      .then(()=>{
-        results = Promise.all(orderPromises)
-        return results;
-      })
-      .then((results)=>{
-        const customers = []
-        for(const result of results){
-          const customer = result.rows[0];
-          const customerFirstName = customer.first_name;
-          const customerLastName = customer.last_name;
-          const customerFullName = `${customerFirstName} ${customerLastName}`;
-          const customerPhoneNumber = customer.phone_number
-
-          const customerObj = {customerFullName, customerPhoneNumber}
-          customers.push(customerObj)
-        }
-        templateVars.customers = customers;
-      })
-      .then(()=>{
-        orderPromises = []
-        for(const orderId of orderNumbers){
-          orderItems = getOrderItems(db,orderId)
-          orderPromises.push(orderItems)}
-        })
-      .then(()=>{
-        results = Promise.all(orderPromises)
-        return results
-      })
-      .then((results)=>{
-        allOrdersItems = [];
-        for(const result of results){
-          orderItems = []
-          for(item of result.rows){
-            orderItems.push(item)
+        .then((results)=>{
+          for (const orderIds of results.rows) {
+            const orderNumber = orderIds.id;
+            orderNumbers.push(orderNumber);
           }
-          allOrdersItems.push(orderItems)
-        }
-        templateVars.allOrdersItems = allOrdersItems;
-      })
-      .then(()=>{
-        orderPromises = []
-        for(const orderId of orderNumbers){
-          totalPrices = getOrderTotal(db,orderId)
-          orderPromises.push(totalPrices)}
-      })
-      .then(()=>{
-          results = Promise.all(orderPromises)
-          return results
+          //Determining Order of Promise Resolution
+          console.log('Order Ids Retrieved');
         })
-      .then((results)=>{
-        orderSubTotals = []
-        for(const result of results){
-          orderSubTotals.push(result.rows[0].subtotal)
-        }
-        templateVars.orderSubTotals = orderSubTotals
-      })
+        .then(()=>{
+          orderPromises = [];
+          for (const orderId of orderNumbers) {
+            customerQuery = getCustomerInfo(db,orderId);
+            orderPromises.push(customerQuery);
+          }
+        })
+        .then(()=>{
+          results = Promise.all(orderPromises);
+          return results;
+        })
+        .then((results)=>{
+          const customers = [];
+          for (const result of results) {
+            const customer = result.rows[0];
+            const customerFirstName = customer.first_name;
+            const customerLastName = customer.last_name;
+            const customerFullName = `${customerFirstName} ${customerLastName}`;
+            const customerPhoneNumber = customer.phone_number;
+
+            const customerObj = {customerFullName, customerPhoneNumber};
+            customers.push(customerObj);
+          }
+          templateVars.customers = customers;
+        })
+        .then(()=>{
+          orderPromises = [];
+          for (const orderId of orderNumbers) {
+            orderItems = getOrderItems(db,orderId);
+            orderPromises.push(orderItems);
+          }
+        })
+        .then(()=>{
+          results = Promise.all(orderPromises);
+          return results;
+        })
+        .then((results)=>{
+          allOrdersItems = [];
+          for (const result of results) {
+            orderItems = [];
+            for (item of result.rows) {
+              orderItems.push(item);
+            }
+            allOrdersItems.push(orderItems);
+          }
+          templateVars.allOrdersItems = allOrdersItems;
+        })
+        .then(()=>{
+          orderPromises = [];
+          for (const orderId of orderNumbers) {
+            totalPrices = getOrderTotal(db,orderId);
+            orderPromises.push(totalPrices);
+          }
+        })
+        .then(()=>{
+          results = Promise.all(orderPromises);
+          return results;
+        })
+        .then((results)=>{
+          orderSubTotals = [];
+          for (const result of results) {
+            orderSubTotals.push(result.rows[0].subtotal);
+          }
+          templateVars.orderSubTotals = orderSubTotals;
+        })
       //Completed At Time
-      .then(()=>{
-        orderPromises = []
-        for(const orderId of orderNumbers){
-          completedAtTimes = getCompletedAtTime(db, orderId)
-          orderPromises.push(completedAtTimes)}
-      })
-      .then(()=>{
-          results = Promise.all(orderPromises)
-          return results
+        .then(()=>{
+          orderPromises = [];
+          for (const orderId of orderNumbers) {
+            completedAtTimes = getCompletedAtTime(db, orderId);
+            orderPromises.push(completedAtTimes);
+          }
         })
-      .then((results)=>{
-        orderCompleteTimes = []
-        for(const result of results){
-          orderCompleteTimes.push(result.rows[0].completed_at)
-        }
-        templateVars.orderCompleteTimes = orderCompleteTimes
-      })
+        .then(()=>{
+          results = Promise.all(orderPromises);
+          return results;
+        })
+        .then((results)=>{
+          orderCompleteTimes = [];
+          for (const result of results) {
+            orderCompleteTimes.push(result.rows[0].completed_at);
+          }
+          templateVars.orderCompleteTimes = orderCompleteTimes;
+        })
       //Created At time
-      .then(()=>{
-        orderPromises = []
-        for(const orderId of orderNumbers){
-          const orderCreationTimes = getCreatedAtTime(db, orderId)
-          orderPromises.push(orderCreationTimes)}
-      })
-      .then(()=>{
-          results = Promise.all(orderPromises)
-          return results
+        .then(()=>{
+          orderPromises = [];
+          for (const orderId of orderNumbers) {
+            const orderCreationTimes = getCreatedAtTime(db, orderId);
+            orderPromises.push(orderCreationTimes);
+          }
         })
-      .then((results)=>{
-        const orderCreationTimes = []
-        for(const result of results){
-          orderCreationTimes.push(result.rows[0].created_at)
-        }
-        templateVars.orderCreationTimes = orderCreationTimes
-      })
+        .then(()=>{
+          results = Promise.all(orderPromises);
+          return results;
+        })
+        .then((results)=>{
+          const orderCreationTimes = [];
+          for (const result of results) {
+            orderCreationTimes.push(result.rows[0].created_at);
+          }
+          templateVars.orderCreationTimes = orderCreationTimes;
+        })
       //Menu Pics
-      .then(()=>{
-        orderPromises = []
-        for(const orderId of orderNumbers){
-          const orderThumbnailPics = getMenuPics(db, orderId)
-          orderPromises.push(orderThumbnailPics)}
-      })
-      .then(()=>{
-          results = Promise.all(orderPromises)
-          return results
+        .then(()=>{
+          orderPromises = [];
+          for (const orderId of orderNumbers) {
+            const orderThumbnailPics = getMenuPics(db, orderId);
+            orderPromises.push(orderThumbnailPics);
+          }
         })
-      .then((results)=>{
-        const orderMenuPics = []
-        for(const result of results){
-          orderMenuPics.push(result.rows[0].food_pic)
-        }
-        templateVars.orderMenuPics = orderMenuPics
-      })
-      .then(()=>{
-        res.render(pageToRender, {templateVars, user: req.session})
-      })
+        .then(()=>{
+          results = Promise.all(orderPromises);
+          return results;
+        })
+        .then((results)=>{
+          const orderMenuPics = [];
+          for (const result of results) {
+            orderMenuPics.push(result.rows[0].food_pic);
+          }
+          templateVars.orderMenuPics = orderMenuPics;
+        })
+        .then(()=>{
+          res.render(pageToRender, {templateVars, user: req.session});
+        });
 
 
 
@@ -327,17 +340,42 @@ module.exports = (db) => {
 
   router.post("/order-complete", (req,res)=>{
     orderId = req.body.hello;
-    console.log(orderId);
-    Promise.resolve(markOrderAsCompleted(db,orderId)).then(res.redirect('/orders'));
+    const orderCompleteMsg = "Thank you for ordering from Yukihira! You're order is now ready for pickup! See you soon!"
+    Promise.resolve(markOrderAsCompleted(db,orderId))
+
+    twilioClient.messages
+    .create(
+      {
+        body: orderCompleteMsg,
+        to: myPhoneNumber,
+        from: twilioPhoneNumber
+      }
+    )
+    .then((message)=> console.log(message.sid))
+    .then(()=>{
+      res.redirect('/orders');
+    })
   });
 
   //Backup in case the jquery doesn't work properly.
   router.post("/sendSMS",(req,res)=>{
     const time = Number(req.body.orderETA);
-    const etaMsg = `About ${time} minutes  until your order is ready`;
-    console.log(etaMsg);
+    const etaMsg = `Thank you for ordering from Yukihira! About ${time} minutes  until your order is ready.`;
+    twilioClient.messages
+    .create(
+      {
+        body: etaMsg,
+        to: myPhoneNumber,
+        from: twilioPhoneNumber
+      }
+    )
+    .then((message)=> console.log(message.sid))
+    .then(()=>{
+      res.redirect('/orders');
+    })
 
-    res.redirect('/orders');
+
+
 
   });
 
