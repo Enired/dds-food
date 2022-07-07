@@ -26,6 +26,10 @@ app.use(
   })
 );
 
+// Using cookie-parser for receiving cart items
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -62,8 +66,8 @@ app.use("/login", loginRoutes(db));
 app.use("/register", registerRoutes(db));
 app.use("/logout", logoutRoutes(db));
 app.use("/users", usersRoutes(db));
-app.use("/cart", cartRoutes(db))
-app.use("/order", orderRoutes(db))
+app.use("/cart", cartRoutes(db));
+app.use("/order", orderRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 app.use("/menu", menu_items(db));
 app.use("/orders", orderRoutes(db));
