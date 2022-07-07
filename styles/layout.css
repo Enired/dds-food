@@ -18,4 +18,11 @@ a {
   text-decoration: none;
 }
 
+.added-to-cart-notification {
+  margin-top: 1em;
+  padding: 2em;
+  color: red;
+  border: solid blue 3px;
+}
+
 /*# sourceMappingURL=layout.css.map */
