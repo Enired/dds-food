@@ -1,6 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const myPhoneNumber = process.env.MY_PHONE_NUMBER;
+const twilioPhoneNumber = process.env.TWILIO_NUMBER;
+
+const twilioClient = require('twilio')(accountSid, authToken);
+
 module.exports = (db) => {
 
   const getCartItems = function(db, res, req) {
@@ -66,20 +73,52 @@ module.exports = (db) => {
     `;
     return db.query(query, params);
   };
+  const getCustomerInfo = (db, orderId)=>{
+    const params = [orderId];
+    const query =
+    `
+    SELECT  users.first_name as firstName,
+            users.last_name as lastName,
+            users.phone_number as phoneNumber,
+            orders.id as orderId
+    FROM users
+    JOIN orders ON orders.customer_Id = users.id
+    WHERE orders.id = $1
+    `
+
+    return db.query(query,params)
+  }
+
+  const getOrderItems = (db, orderId)=>{
+    const params = [orderId];
+    const query =
+    `
+    SELECT order_items.quantity as quantity, menu_items.name as item
+    FROM order_items
+    JOIN menu_items ON order_items.menu_item = menu_items.id
+    WHERE order_items.order_id = $1
+    `
+
+    return db.query(query, params)
+  }
+
+
 
 
   router.post('/submit-order-now', (req, res) => {
-    const itemsAndQuantity = {};
+    const newOrderMsgHeaderPortion = `INCOMING NEW ORDER: \n`
+    let customerInfoMsgPortion;
+    let itemsAndQuantityMsgPortion = 'Order: \n';
     const placeholders = [];
     let cart = req.cookies.cart;
     cart = cart.split(',');
     const userId = req.session.uid;
+    let newOrderId
     Promise.resolve(submitOrder(db, userId))
       .then((results)=>{
-        const newOrderId = results.rows[0].new_order;
-        return newOrderId;
+        newOrderId = results.rows[0].new_order;
       })
-      .then((newOrderId)=>{
+      .then(()=>{
         const promises = [];
         for (item of cart) {
           const something = item.split('x');
@@ -90,12 +129,42 @@ module.exports = (db) => {
         return promises;
       })
       .then((promises)=>{
-        Promise.all(promises); //This is going through the list of items and adding it to that table. But no longer has access to customer info. no it's lost.
+        return Promise.all(promises); //This is going through the list of items and adding it to that table. But no longer has access to customer info. no it's lost.
       })
       .then(()=>{
-      /// TEXT THE RESTAURANT HERE.
-
-      ///Maybe query the details of the order here relevant to text? I don't know.
+        const items = getOrderItems(db, newOrderId)
+        return items
+      })
+      .then((items)=>{
+        for(item of items.rows){
+          itemsAndQuantityMsgPortion += `${item.quantity}x ${item.item}\n`
+        }
+      })
+      .then(()=>{
+        const customerInfo = getCustomerInfo(db, newOrderId)
+        return customerInfo
+      })
+      .then((customerInfo)=>{
+        const customer = customerInfo.rows[0]
+        const customerFirstName = customer.firstname;
+        const customerLastName = customer.lastname;
+        const customerPhoneNumber = customer.phonenumber;
+        customerInfoMsgPortion =
+        `Customer:\n${customerFirstName} ${customerLastName}\n${customerPhoneNumber}`
+      })
+      .then(()=>{
+        const newOrderAlert =`${newOrderMsgHeaderPortion}Order Number: ${newOrderId}\n${customerInfoMsgPortion}\n${itemsAndQuantityMsgPortion}`
+        return newOrderAlert
+      })
+      .then((msg)=>{
+        twilioClient.messages
+          .create(
+            {
+              body: msg,
+              to: myPhoneNumber,
+              from: twilioPhoneNumber
+            }
+          )
       })
       .then(()=>{
         res.redirect('/orders');
