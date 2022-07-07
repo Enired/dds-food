@@ -136,7 +136,7 @@ module.exports = (db) => {
       let orderNumbers =[]
       let orderPromises = []
 
-      //Session Id Garbage
+      //Session Id
       const customerId = req.session.uid;
       const is_owner = req.session.is_owner;
 
@@ -340,7 +340,7 @@ module.exports = (db) => {
     res.redirect('/orders');
 
   });
-  
+
   return router;
 };
 
