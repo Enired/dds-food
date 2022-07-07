@@ -43,5 +43,67 @@ module.exports = (db) => {
     getCartItems(db, res, req);
   });
 
+
+
+  //Submit Order
+
+  const submitOrder = (db, customerId) => {
+    const params = [customerId];
+    const query =
+    `
+    INSERT INTO orders(customer_id, created_at)
+    VALUES($1, now())
+    RETURNING id as new_order
+    `;
+    return db.query(query, params);
+  };
+  const submitOrderItems = (db, orderId, quantity, menuItem) =>{
+    const params = [orderId, quantity, menuItem];
+    const query =
+    `
+    INSERT INTO order_items(order_id, quantity, menu_item)
+    VALUES ($1, $2, $3)
+    `;
+    return db.query(query, params);
+  };
+
+
+  router.post('/submit-order-now', (req, res) => {
+    const itemsAndQuantity = {};
+    const placeholders = [];
+    let cart = req.cookies.cart;
+    cart = cart.split(',');
+    const userId = req.session.uid;
+    Promise.resolve(submitOrder(db, userId))
+      .then((results)=>{
+        const newOrderId = results.rows[0].new_order;
+        return newOrderId;
+      })
+      .then((newOrderId)=>{
+        const promises = [];
+        for (item of cart) {
+          const something = item.split('x');
+          const quantity = something[0];
+          const menu_item = something[1];
+          promises.push(submitOrderItems(db, newOrderId, quantity, menu_item));
+        }
+        return promises;
+      })
+      .then((promises)=>{
+        Promise.all(promises); //This is going through the list of items and adding it to that table. But no longer has access to customer info. no it's lost.
+      })
+      .then(()=>{
+      /// TEXT THE RESTAURANT HERE.
+
+      ///Maybe query the details of the order here relevant to text? I don't know.
+      })
+      .then(()=>{
+        res.redirect('/orders');
+      });
+
+
+
+  });
+
   return router;
 };
