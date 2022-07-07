@@ -1,5 +1,9 @@
 // Client facing scripts here
 
+// const e = require("express");
+
+//I don't remember typing that....
+
 //back to top
 const backToTop = function() {
   $('.back-to-top').on('click', function() {
@@ -115,25 +119,13 @@ const deleteCartItem = function() {
 
 //send order
 const sendOrder = function() {
-  $('.submit-order').on('click', function(e) {
-    const quantity =
-      e.preventDefault();
-    $.ajax({
-      type: "POST",  // 使用post方式
-      url: "/order",
-      // quantity menu_item
-      data: {
-        quantity: 3
-      },
-      success: function(result) {
-        if (result.resultCode === 200) {
+  $('.submit-order').on('click', function(event) {
 
-        }
-      },
-      error: function(err) {
-        console.log(err);
-      }
-    });
+    const cart = getCartCookie();
+
+    deleteCartCookie(cart);
+
+
   });
 };
 
@@ -183,6 +175,13 @@ const setCartCookie = function(cart) {
   let cookie = `cart=${cart}`;
   document.cookie = cookie + expires + path;
 };
+
+const deleteCartCookie = function(cart) {
+  const maxAge = `;max-age=10`;
+  const path = ';path=/';
+  let cookie = `cart=${cart}`;
+  document.cookie = cookie + maxAge + path;
+}; //This is one I duped just now
 
 const getCartCookie = function() {
   const cookies = document.cookie.split('; ');
