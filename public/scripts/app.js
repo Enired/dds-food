@@ -1,13 +1,13 @@
 // Client facing scripts here
 
 //back to top
-const backToTop = function() {
-  $('.back-to-top').on('click', function() {
+const backToTop = function () {
+  $('.back-to-top').on('click', function () {
     $('html,body').animate({scrollTop: 0}, 100);
   });
 };
 // hide and show backTop button
-$(document).scroll(function() {
+$(document).scroll(function () {
   if ($(this).scrollTop() > 10) {
     $('.back-to-top').show();
   }
@@ -17,9 +17,9 @@ $(document).scroll(function() {
 });
 
 //cartQuantity
-const minusQuantity = function() {
-  $('.minus').each(function(index, element) {
-    $(this).on('click', function() {
+const minusQuantity = function () {
+  $('.minus').each(function (index, element) {
+    $(this).on('click', function () {
       // console.log(element.parentNode)
       let quantity = Number(element.parentNode.children[1].value);
       if (quantity === 1) {
@@ -42,9 +42,9 @@ const minusQuantity = function() {
     });
   });
 };
-const addQuantity = function() {
-  $('.plus').each(function(index, element) {
-    $(this).on('click', function() {
+const addQuantity = function () {
+  $('.plus').each(function (index, element) {
+    $(this).on('click', function () {
       // console.log(element.parentNode)
       let quantity = Number(element.parentNode.children[1].value);
       quantity += 1;
@@ -67,7 +67,7 @@ const addQuantity = function() {
 };
 
 //top right totalPrice
-const updateTotalPrice = function() {
+const updateTotalPrice = function () {
 // $('.headerTotal').text((singlePrice * quantity).toFixed(2) + '$')
   let totalPriceFakeList = $('.total-price').text();
   totalPriceFakeList = totalPriceFakeList.slice(1);
@@ -78,16 +78,16 @@ const updateTotalPrice = function() {
 };
 
 // add Tax
-const addTax = function() {
+const addTax = function () {
   let subtotal = $('.subTotal').text();
   subtotal = subtotal.substr(0, subtotal.length - 1);
   $('.taxed-total').text((subtotal * 1.1).toFixed(2) + '$');
 };
 
 //update topCartNum
-const updateTopCartNum = function() {
+const updateTopCartNum = function () {
   let topCartNum = 0;
-  $('.qty').each(function() {
+  $('.qty').each(function () {
     topCartNum += Number($(this).val());
   });
   $('.topCartNum').text(topCartNum);
@@ -95,14 +95,14 @@ const updateTopCartNum = function() {
 
 // sum helper js
 function sum(arr) {
-  return arr.reduce(function(prev, curr) {
+  return arr.reduce(function (prev, curr) {
     return Number(prev) + Number(curr);
   });
 }
 
 //delete cartItem
-const deleteCartItem = function() {
-  $('.table').on('click', '.fa-xmark', function() {
+const deleteCartItem = function () {
+  $('.table').on('click', '.fa-xmark', function () {
     $(this).closest('tr').remove();
     updateTotalPrice();
     updateTopCartNum();
@@ -111,8 +111,8 @@ const deleteCartItem = function() {
 };
 
 //send order
-const sendOrder = function() {
-  $('.submit-order').on('click', function(e) {
+const sendOrder = function () {
+  $('.submit-order').on('click', function (e) {
     const quantity =
       e.preventDefault();
     $.ajax({
@@ -122,19 +122,20 @@ const sendOrder = function() {
       data: {
         quantity: 3
       },
-      success: function(result) {
+      success: function (result) {
         if (result.resultCode === 200) {
 
         }
       },
-      error: function(err) {
+      error: function (err) {
         console.log(err);
       }
     });
   });
 };
 
-$(document).ready(function() {
+
+$(document).ready(function () {
   backToTop();
   addQuantity();
   minusQuantity();

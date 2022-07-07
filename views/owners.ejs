@@ -60,7 +60,7 @@
                         <tr>
                             <th class="blank">Order Number</th>
                             <th class="blank"></th>
-                            <th>Customer: </th>
+                            <th>Customer:</th>
                             <th></th>
                             <th class="blank"></th>
                             <th class="title-name">Items</th>
@@ -71,37 +71,47 @@
                         </thead>
                         <tbody>
                         <% for(order in templateVars.orderIds) { %>
-                        <tr>
-                            <td colspan="2"class="order_number"><%= templateVars.orderIds[order] %></td>
-                            <td>
-                              <p>Name: <%=templateVars.orderItems[order][0].first_name%> <%=templateVars.orderItems[order][0].last_name%></p>
-                              <br/>
-                              <p>Phone Number: <%=templateVars.orderItems[order][0].phone_number%></p>
+                            <tr>
+                                <td colspan="2" class="order_number"><%= templateVars.orderIds[order] %></td>
+                                <td>
+                                    <p>
+                                        Name: <%= templateVars.orderItems[order][0].first_name %> <%= templateVars.orderItems[order][0].last_name %></p>
+                                    <br/>
+                                    <p>Phone Number: <%= templateVars.orderItems[order][0].phone_number %></p>
 
 
-
-                            </td>
-                            <td></td>
-                            <td colspan="2" class="item-name">
-                                <div class="details">
-                                    <% for(item of templateVars.orderItems[order]){ %>
-                                    <p><span><%= item.quantity %></span>x <%= item.name %></p>
-                                    <% } %>
-                                </div>
-                            </td>
-                            <td>$<span class="order-total"><%=templateVars.orderItems[order][0].order_total%></span></td>
-                            <td><%=templateVars.orderItems[order][0].created_at%></td>
-                            <td><div><form action="/sendSMS" method="post">
-                              <input type="number" name="orderETA" min='0' value="0" class="form-control time-input" id="input1" placeholder="Quantity">
-                              <button class="btn btn-warning send-time-estimate" type="submit">Send Time Estimate</button>
-                            </form>
-                              <form action="/orders/order-complete" method="post">
-                                <input type="hidden" name="hello" value="<%=templateVars.orderIds[order]%>"/>
-                                <button class="btn btn-success order-complete" type="submit">Order Finished</button>
-                              </form>
-                            </div>
-                          </td>
-                        </tr>
+                                </td>
+                                <td></td>
+                                <td colspan="2" class="item-name">
+                                    <div class="details">
+                                        <% for(item of templateVars.orderItems[order]){ %>
+                                            <p><span><%= item.quantity %></span>x <%= item.name %></p>
+                                        <% } %>
+                                    </div>
+                                </td>
+                                <td>
+                                    $<span class="order-total"><%= templateVars.orderItems[order][0].order_total %></span>
+                                </td>
+                                <td><%= templateVars.orderItems[order][0].created_at %></td>
+                                <td>
+                                    <div>
+                                        <form action="/sendSMS" method="post">
+                                            <input type="number" name="orderETA" min='0' value="0"
+                                                   class="form-control time-input" id="input1" placeholder="Quantity">
+                                            <button class="btn btn-warning send-time-estimate" type="submit">Send Time
+                                                Estimate
+                                            </button>
+                                        </form>
+                                        <form action="/orders/order-complete" method="post">
+                                            <input type="hidden" name="hello"
+                                                   value="<%= templateVars.orderIds[order] %>"/>
+                                            <button class="btn btn-success order-complete" type="submit">Order
+                                                Finished
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
                         <% } %>
                         </tbody>
                     </table>
@@ -125,6 +135,10 @@
     </div>
 </div>
 <!-- cart area end -->
+
+<div class="back-to-top">
+    <span class="back-top"><i class="fas fa-angle-double-up"></i></span>
+</div>
 
 <!-- footer area start -->
 <%- include("./partials/footer") %>

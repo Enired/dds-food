@@ -69,7 +69,7 @@ module.exports = (db) => {
     (req, res) => {
       // get customer_id
       const customerId = req.session.uid;
-      let orderId = 5;
+      let orderId = 0;
       let orderCartInformation = [];
       getOrderIdForLoginUser(db, customerId)
         .then((result) => {
@@ -78,12 +78,9 @@ module.exports = (db) => {
           } else {
             orderId = undefined;
           }
-
           getOrderItemsByOrderId(db, orderId)
             .then((result) => {
               console.log('inner', result.rows);
-              // req.session
-              console.log(JSON.stringify(result.rows));
               orderCartInformation = result.rows;
               const templateVar = {
                 user: req.session,

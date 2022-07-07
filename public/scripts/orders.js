@@ -4,16 +4,15 @@ const addTaxToSubtotal = (subtotal) => {
 };
 
 const showTotalWithTax = () => {
-  $('.order-total').each(function() {
-    const subtotal = Number($(this).text());
-    const totalWithTax = addTaxToSubtotal(subtotal);
-    $(this).text(totalWithTax);
-  }
-
+  $('.order-total').each(function () {
+      const subtotal = Number($(this).text());
+      const totalWithTax = addTaxToSubtotal(subtotal);
+      $(this).text(totalWithTax);
+    }
   );
 
 
 };
-$(document).ready(function() {
+$(document).ready(function () {
   showTotalWithTax();
 });

@@ -52,6 +52,53 @@
 </section>
 <!-- Banner Area End -->
 
+
+<!-- side panel / offcanvas -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebar-label">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="sidebar-label">Check Your Order</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body ">
+        <div class="container">
+            <table class="table sideBarTable table-striped table-hover">
+                <thead style='text-align: center;'>
+                <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+                </thead>
+                <tbody class="sideBarTbody">
+
+                </tbody>
+            </table>
+
+            <div class="order-cart-area">
+                <div class="order-cart">
+                    <ul class="fw-semibold text-center" style="list-style: none;margin-left: -30px">
+                        <li class="d-flex justify-content-between ">Subtotal<span class="subTotal">$49.50</span></li>
+                        <li class="d-flex justify-content-between ">Tax<span class="">10%</span></li>
+                        <li class="total d-flex justify-content-between">Total<span class="taxed-total">$51.975</span>
+                        </li>
+                    </ul>
+                </div>
+                <a class="btn btn-warning submit-order w-100 fw-bold" href="/cart"> PROCEED TO CHECKOUT</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- open sidebar / offcanvas -->
+<div class="sidebarTrigger position-fixed top-50 end-0">
+    <a id="sidebarTrigger" href="#sidebar" class="btn btn-dark mt-3 z-index-999" data-bs-toggle="offcanvas"
+       role="button"
+       aria-controls="sidebar">
+        <i class="fa-solid fa-cart-plus"></i> Check Your Cart
+    </a>
+</div>
+
+
 <!--product Area Start-->
 <section id="product-area" class="product-area pt-4">
     <div class="container">
@@ -112,39 +159,40 @@
 
         <!-- menu creation -->
         <% for (const [category, items] of Object.entries(menu)) { %>
-        <div class="tab-content mt-5" id="pills-tabContent">
-            <div class="tab-pane fade show <%= category === 'allItems' ? 'active' : '' %>" id="pills-<%= category %>"
-                 role="tabpanel" aria-labelledby="pills-<%= category %>-tab">
-                <div class="row justify-content-center">
-                    <% for (const item of items) { %>
-                    <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
-                        <div class="single-item-wrap">
-                            <div class="thumb ps-1">
-                                <img class="img-fluid img-thumbnail" src=<%= item.image_url %> alt="img">
-                            </div>
-                            <br>
-                            <div class="wrap-details">
-                                <h4><%= item.name %></h4>
-                                <h6 class="price">$<%= (item.price / 100).toFixed(2) %></h6>
-                                <p class="text-center text-muted"><%= item.description %></p>
-                                <div class="details-bottom p-3">
-                                    <div style="display: flex; justify-content: space-between;">
-                                        <input type="number" min='0' placeholder="Qty." class="form-control"
-                                               style="width: 35%;">
-                                        <button class="btn btn-warning add-to-cart" style="width: 60%;"
-                                                value=<%= item.id %>>
-                                            Add
-                                            <i class="fa-solid fa-cart-plus"></i>
-                                        </button>
+            <div class="tab-content mt-5" id="pills-tabContent">
+                <div class="tab-pane fade show <%= category === 'allItems' ? 'active' : '' %>"
+                     id="pills-<%= category %>"
+                     role="tabpanel" aria-labelledby="pills-<%= category %>-tab">
+                    <div class="row justify-content-center">
+                        <% for (const item of items) { %>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <div class="single-item-wrap">
+                                    <div class="thumb ps-1">
+                                        <img class="img-fluid img-thumbnail" src=<%= item.image_url %> alt="img">
+                                    </div>
+                                    <br>
+                                    <div class="wrap-details">
+                                        <h4><%= item.name %></h4>
+                                        <h6 class="price">$<%= (item.price / 100).toFixed(2) %></h6>
+                                        <p class="text-center text-muted"><%= item.description %></p>
+                                        <div class="details-bottom p-3">
+                                            <div style="display: flex; justify-content: space-between;">
+                                                <input type="number" min='0' placeholder="Qty." class="form-control"
+                                                       style="width: 35%;">
+                                                <button class="btn btn-warning add-to-cart" style="width: 60%;"
+                                                        value=<%= item.id %>>
+                                                    Add
+                                                    <i class="fa-solid fa-cart-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        <% } %>
                     </div>
-                    <% } %>
                 </div>
             </div>
-        </div>
         <% } %>
     </div>
 </section>
@@ -181,29 +229,6 @@
 <%- include("./partials/footer") %>
 <!-- footer area end -->
 
-
-<!-- side panel / offcanvas -->
-<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebar-label">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="sidebar-label">My Other Books</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. In minima ducimus excepturi quasi tempore fugit quis
-            voluptatibus aut error possimus, tenetur natus magni quam voluptatem quae eligendi repudiandae delectus eaque!</p>
-        <!-- dropdown -->
-        <div class="dropdown mt-3">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown">
-                Choose a book title
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="book-dropdown">
-                <li><a class="dropdown-item" href="#">Become a React Superhero</a></li>
-                <li><a class="dropdown-item" href="#">Conquering Vue.js</a></li>
-                <li><a class="dropdown-item" href="#">Levelling up Your Next.js</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
 
 <!-- back-to-top end -->
 <div class="back-to-top">

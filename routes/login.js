@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 router.use(express.urlencoded({extended: true}));
 
+
+
 module.exports = (db) => {
   //  login
   router.get('/', (req, res) => {
