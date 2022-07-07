@@ -37,11 +37,11 @@ A food ordering experience for a single restaurant.
 1. Receive new order from user (<font color="yellow">from User</font>) <b>BE</b>
 1. Add the new order to orders table in database (<font color="yellow">from User</font>) <b>BE</b>
 1. Send restaurant SMS with order details (<font color="goldenrod">to Restaurant</font>) <b>BE</b>
-1. Receive SMS from restaurant with time-to-fulfill (<font color="seafoam">from Restaurant</font>) <b>BE</b>
+1. Receive time-to-fulfill from restaurant (<font color="seafoam">from Restaurant</font>) <b>BE</b>
 1. Store time-to-fulfill in orders table in database (<font color="seafoam">from Restaurant</font>) <b>BE</b>
 1. Send user SMS to inform time-to-fulfill (<font color="pink">to User</font>) <b>BE</b>
 1. Update website with time-to-fulfill (<font color="pink">to User</font>) <b>BE -> FE</b>
-1. Countdown from time-to-fulfill to zero <b>BE</b>
+1. Countdown from time-to-fulfill to zero ?? Or wait for restaurant to say when ready <b>BE</b>
 1. Send user SMS to inform that order is ready (<font color="grayblue">to User</font>) <b>BE</b>
 1. Update website to tell user that order is ready (<font color="grayblue">to User</font>) <b>BE -> FE</b>
 
