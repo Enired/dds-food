@@ -66,8 +66,7 @@
       cart.shift();
     }
 
-    cart = cart.join(',');
-    updateCartCookie(cart);
+    setCartCookie(cart.join(','));
 
     $quantity.val('');
     updateCartCounter();
@@ -86,7 +85,7 @@
     $cartCounter.text(total);
   };
 
-  const updateCartCookie = function(cart) {
+  const setCartCookie = function(cart) {
     const expires = `;expires=${new Date((new Date()).valueOf() + 2 * 24 * 60 * 60 * 1000)};`;
     const path = ';path=/';
     let cookie = `cart=${cart}`;

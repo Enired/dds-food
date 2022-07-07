@@ -39,6 +39,7 @@ const minusQuantity = function() {
       updateTotalPrice();
       addTax();
       updateTopCartNum();
+      updateCookieQuantity(this);
     });
   });
 };
@@ -62,6 +63,7 @@ const addQuantity = function() {
       updateTotalPrice();
       addTax();
       updateTopCartNum();
+      updateCookieQuantity(this);
     });
   });
 };
@@ -107,6 +109,7 @@ const deleteCartItem = function() {
     updateTotalPrice();
     updateTopCartNum();
     addTax();
+    removeItemFromCookie(this);
   });
 };
 
@@ -132,6 +135,63 @@ const sendOrder = function() {
       }
     });
   });
+};
+
+
+// Functions for interacting with cart cookie
+const removeItemFromCookie = function(row) {
+  let cart = getCartCookie();
+  if (cart === '') return;
+
+  const value = row.children[0].value;
+  cart = cart.split(',');
+  let updatedCart = [];
+
+  for (let item of cart) {
+    item = item.split('x');
+    if (item[1] !== value) {
+      updatedCart.push(item.join('x'));
+    }
+  }
+
+  setCartCookie(updatedCart.join(','));
+};
+
+const updateCookieQuantity = function(row) {
+  let cart = getCartCookie();
+  if (cart === '') return;
+
+  const value = row.parentElement.parentElement.parentElement.parentElement.children[0].children[0].children[0].children[0].value;
+  const newQuantity = row.parentElement.children[1].value;
+  cart = cart.split(',');
+
+  for (let i = 0; i < cart.length; i++) {
+    let item = cart[i].split('x');
+    if (item[1] === value) {
+      item[0] = newQuantity;
+    }
+    cart[i] = item.join('x');
+  }
+
+  setCartCookie(cart.join(','));
+
+};
+
+const setCartCookie = function(cart) {
+  const expires = `;expires=${new Date((new Date()).valueOf() + 2 * 24 * 60 * 60 * 1000)};`;
+  const path = ';path=/';
+  let cookie = `cart=${cart}`;
+  document.cookie = cookie + expires + path;
+};
+
+const getCartCookie = function() {
+  const cookies = document.cookie.split('; ');
+  for (const cookie of cookies) {
+    if (cookie.includes('cart=')) {
+      return cookie.split('cart=')[1];
+    }
+  }
+  return '';
 };
 
 $(document).ready(function() {
