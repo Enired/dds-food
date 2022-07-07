@@ -30,7 +30,6 @@
       return;
     }
 
-    console.log(getCartCookie());
     let cart = getCartCookie().split(',');
     let existsInCart = false;
 
