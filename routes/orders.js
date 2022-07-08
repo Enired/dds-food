@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
-const customerPhoneNumber = process.env.MY_PHONE_NUMBER;
+const customerPhoneNumber = process.env.CUSTOMER_NUMBER;
 const twilioPhoneNumber = process.env.TWILIO_NUMBER;
 
 const twilioClient = require('twilio')(accountSid, authToken);
