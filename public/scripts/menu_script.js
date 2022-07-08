@@ -1,10 +1,10 @@
 // Script for /menu route
 // Will include click event listeners for adding to cart
 
-(function ($) {
+(function($) {
 
   // Add cart button event listeners
-  $(document).ready(function () {
+  $(document).ready(function() {
 
     const $logout = $('a[href="/logout"]')[0];
 
@@ -17,22 +17,22 @@
       }
 
       updateCartCounter();
-      sidebarTrigger()
+      sidebarTrigger();
     }
     $('.added-to-cart-notification').hide();
 
   });
   // sidebar trigger
-  const sidebarTrigger = function () {
-    $('#sidebarTrigger').on('click', function (e) {
-      const tbody = $('.sideBarTbody')
-      $.get("/sideBarCarts", function (result) {
+  const sidebarTrigger = function() {
+    $('#sidebarTrigger').on('click', function(e) {
+      const tbody = $('.sideBarTbody');
+      $.get("/sideBarCarts", function(result) {
         if (tbody.children().length > 0) {
-          tbody.empty()
+          tbody.empty();
         }
-        let subtotal = 0
+        let subtotal = 0;
         for (const item of result) {
-          subtotal += Number(item.price / 100) * Number(item.quantity)
+          subtotal += Number(item.price / 100) * Number(item.quantity);
           const $tr = $(
             ` <tr>
                     <td style='vertical-align: middle; text-align: center'>${item.name}</td>
@@ -42,18 +42,18 @@
                     </td>
               </tr>
              `
-          )
-          tbody.append($tr)
+          );
+          tbody.append($tr);
         }
         //  show Total
 
-        $('.subTotal').text(`$${subtotal.toFixed(2)}`)
-        $('.taxed-total').text(`$${(subtotal * 1.1).toFixed(2)}`)
-      })
-    })
-  }
+        $('.subTotal').text(`$${subtotal.toFixed(2)}`);
+        $('.taxed-total').text(`$${(subtotal * 1.1).toFixed(2)}`);
+      });
+    });
+  };
 
-  const addItemToCart = function () {
+  const addItemToCart = function() {
 
     const $addedToCartNotification = $(this.parentElement.parentElement.children[1]);
     const $quantity = $(this.parentElement.children[0]);
@@ -104,7 +104,7 @@
 
   };
 
-  const updateCartCounter = function () {
+  const updateCartCounter = function() {
     const $cartCounter = $('#cart-counter-display');
     let cart = getCartCookie().split(',');
     let total = 0;
@@ -115,14 +115,14 @@
     $cartCounter.text(total);
   };
 
-  const setCartCookie = function (cart) {
+  const setCartCookie = function(cart) {
     const expires = `;expires=${new Date((new Date()).valueOf() + 2 * 24 * 60 * 60 * 1000)};`;
     const path = ';path=/';
     let cookie = `cart=${cart}`;
     document.cookie = cookie + expires + path;
   };
 
-  const getCartCookie = function () {
+  const getCartCookie = function() {
     const cookies = document.cookie.split('; ');
     for (const cookie of cookies) {
       if (cookie.includes('cart=')) {
