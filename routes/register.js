@@ -61,6 +61,7 @@ module.exports = (db) => {
             req.session["first_name"] = newUser['first_name'];
             req.session["last_name"] = newUser['last_name'];
             req.session["phone_number"] = newUser['phone_number'];
+            req.session["is_owner"] = newUser['is_owner'];
             const templateVars = {
               user: newUser
             };
