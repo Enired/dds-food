@@ -60,9 +60,11 @@
 
     const $addedToCartNotification = $(this.parentElement.parentElement.children[1]);
     const $quantity = $(this.parentElement.children[0]);
+    $addedToCartNotification.removeClass("cart-error")
 
     if ($quantity.val() === '' || $quantity.val() === '0') {
       $addedToCartNotification.text('Please enter something in the cart.');
+      $addedToCartNotification.addClass("cart-error")
       $addedToCartNotification.slideDown();
       setTimeout(() => $addedToCartNotification.slideUp(), 1000);
       return;

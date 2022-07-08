@@ -22,6 +22,13 @@ a {
 .added-to-cart-notification{
   margin-top: 1em;
   padding: 2em;
-  color:red;
-  border: solid blue 3px
+  font-style: oblique;
+  color:black;
+  border: solid slategrey 6px;
+  background-color: whitesmoke;
+  border-radius: 10px;
+}
+
+.cart-error{
+  color: red;
 }
