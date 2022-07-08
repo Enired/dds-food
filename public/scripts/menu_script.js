@@ -17,40 +17,43 @@
       }
 
       updateCartCounter();
-      sidebarTrigger();
+      $('#sidebarTrigger').on('click', updateSidebar);
     }
     $('.added-to-cart-notification').hide();
 
   });
-  // sidebar trigger
-  const sidebarTrigger = function() {
-    $('#sidebarTrigger').on('click', function(e) {
-      const tbody = $('.sideBarTbody');
-      $.get("/sideBarCarts", function(result) {
-        if (tbody.children().length > 0) {
-          tbody.empty();
-        }
-        let subtotal = 0;
-        for (const item of result) {
-          subtotal += Number(item.price / 100) * Number(item.quantity);
-          const $tr = $(
-            ` <tr>
-                    <td style='vertical-align: middle; text-align: center'>${item.name}</td>
-                    <td style='vertical-align: middle;text-align: center'>$${(item.price / 100).toFixed(2)}</td>
-                    <td style='vertical-align: middle;text-align: center'>
-                    <input type="number" disabled class="ps-5" value="${item.quantity}" min="1" max="100" step="1"/>
-                    </td>
-              </tr>
-             `
-          );
-          tbody.append($tr);
-        }
-        //  show Total
 
-        $('.subTotal').text(`$${subtotal.toFixed(2)}`);
-        $('.taxed-total').text(`$${(subtotal * 1.1).toFixed(2)}`);
-      });
-    });
+  const updateSidebar = function() {
+    let cart = getCartCookie();
+    if (cart === '') return;
+
+    const $tbody = $('.sideBarTbody');
+    if ($tbody.children().length > 0) {
+      $tbody.empty();
+    }
+
+    cart = cart.split(',');
+    let subtotal = 0;
+    for (let item of cart) {
+      item = item.split('x');
+      const button = $(`button.add-to-cart[value="${item[1]}"]`)[0];
+      const name = button.parentElement.parentElement.parentElement.children[0].textContent;
+      const price = button.parentElement.parentElement.parentElement.children[1].textContent;
+      subtotal += Number(price.split('$')[1]) * Number(item[0]);
+      $tbody.append(`
+        <tr>
+          <td style='vertical-align: middle; text-align: center'>${name}</td>
+          <td style='vertical-align: middle;text-align: center'>${price}</td>
+          <td style='vertical-align: middle;text-align: center'>
+          <input type="number" disabled class="ps-5" value="${item[0]}" min="1" max="100" step="1"/>
+          </td>
+        </tr>
+      `);
+    }
+
+    $('.subTotal').text(`$${subtotal.toFixed(2)}`);
+    $('.taxed-total').text(`$${(subtotal * 1.1).toFixed(2)}`);
+
   };
 
   const addItemToCart = function() {
