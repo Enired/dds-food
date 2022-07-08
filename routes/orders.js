@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
-const myPhoneNumber = process.env.MY_PHONE_NUMBER;
+const customerPhoneNumber = process.env.MY_PHONE_NUMBER;
 const twilioPhoneNumber = process.env.TWILIO_NUMBER;
 
 const twilioClient = require('twilio')(accountSid, authToken);
@@ -295,46 +295,6 @@ module.exports = (db) => {
         .then(()=>{
           res.render(pageToRender, {templateVars, user: req.session});
         });
-
-
-
-      // // THIS IS WORKING CODE. SO DO NOT TOUCH BELOW HERE YOU PERVERT
-
-
-      // Promise.resolve(p1)
-      //   .then(results => {
-      //     orderIds = results.rows; return orderIds;
-      //   })
-      //   .then(results=>{
-      //     findingOrderItems = [];
-      //     for (value of results) {
-      //       id = value.id;
-      //       findingOrderItems.push(getOrderDetails(db,id));
-      //     }
-      //     return findingOrderItems;
-      //   })
-      //   .then(results => {
-      //     Promise.all(results).then(values => {
-      //       orderIds = [];
-      //       orderItems = [];
-      //       for (value of values) {
-      //         for (row of value.rows) {
-      //           if (!orderIds.includes(row.order_id)) {
-      //             orderIds.push(row.order_id);
-      //           }
-      //         }
-      //         orderItems.push(value.rows);
-      //       }
-      //       const templateVars = {orderIds,orderItems};
-      //       return templateVars;
-      //     })
-      //       .then((templateVars)=>{
-      //         res.render(pageToRender, {templateVars, user: req.session});
-      //       });
-      //   });
-      //   //END OF MY NONO ZONE
-
-
     });
 
 
@@ -347,7 +307,7 @@ module.exports = (db) => {
       .create(
         {
           body: orderCompleteMsg,
-          to: myPhoneNumber,
+          to: customerPhoneNumber,
           from: twilioPhoneNumber
         }
       )
@@ -364,7 +324,7 @@ module.exports = (db) => {
       .create(
         {
           body: etaMsg,
-          to: myPhoneNumber,
+          to: customerPhoneNumber,
           from: twilioPhoneNumber
         }
       )
