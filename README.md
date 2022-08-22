@@ -29,15 +29,15 @@ Food pick-up ordering app that allows a customer to create and submit an order f
 
 ## Gallery
 #### Homepage to Menu
-![Homepage to Menu]()
+![Homepage to Menu](https://github.com/Enired/dds-food/blob/master/docs/homepage.gif)
 #### Adding Items to Cart
-![Adding Items to Cart]()
+![Adding Items to Cart](https://github.com/Enired/dds-food/blob/master/docs/adding_items_to_cart.gif)
 #### Edit Cart and Submit Order
-![Edit Cart and Submit Order]()
+![Edit Cart and Submit Order](https://github.com/Enired/dds-food/blob/master/docs/edit_cart_and_submit_order.gif)
 #### Admin: Set Time Estimate/Mark Order Completed
-![Admin: Set Time Estimate/Mark Order Completed]()
+![Admin: Set Time Estimate/Mark Order Completed](https://github.com/Enired/dds-food/blob/master/docs/admin_set_time_estimate_mark_complete.gif)
 #### Order Complete
-![Order Complete]()
+![Order Complete](https://github.com/Enired/dds-food/blob/master/docs/order_complete.gif)
 
 
 ## Dependencies
